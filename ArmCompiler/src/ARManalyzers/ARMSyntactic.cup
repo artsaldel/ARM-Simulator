@@ -1,0 +1,95 @@
+package ARManalyzers;
+
+import java_cup.runtime.*;
+import java.io.FileReader;
+import javax.swing.JOptionPane;
+
+action code {:
+    /*Hay que poner las instancias de las memorias*/
+:}
+
+parser code {:
+    
+    public void report_error(String message, Object info) {
+        StringBuilder m = new StringBuilder("Error");
+        if (info instanceof java_cup.runtime.Symbol) {
+            java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+            if (s.left >= 0) {                
+                m.append(" in line "+(s.left+1));
+                if (s.right >= 0)
+                    m.append(", column "+(s.right+1));
+            }
+        }
+        m.append(" : "+message);
+        System.err.println(m);
+        JOptionPane.showMessageDialog(null,m);
+    }
+
+    public void report_fatal_error(String message, Object info) {
+        report_error(message, info);
+        System.exit(1);
+    }
+
+    public static void main(String[] args){
+        try {
+            parser asin = new parser(
+                    new LexicalAnalyzer( new FileReader(args[0])));
+            Object result = asin.parse().value;
+            System.out.println("\n*** FINAL RESULTS ***");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+:};
+
+
+
+terminal   AND, EOR, SUB , RSB , ADD , ADC , SBC , RSC , CMP , 
+           CMN , ORR , MOV , LSL , ASR , RRX , ROR , BIC, MVN,
+           MUL , MLA, STR, LDR, STRB, LDRB, B, BL;
+
+terminal REGISTER, COMA, SEMICOLON, ZEROX, SHARP, NEWLINE, OPENBRACKET,
+         CLOSEBRACKET;
+
+terminal Integer   INT;
+terminal String    HEX; 
+
+non terminal Object Program, Instruction, Instructions, InstructionsAux;
+
+precedence left REGISTER, COMA, SEMICOLON, ZEROX, SHARP, NEWLINE, OPENBRACKET;
+
+start with Program;
+
+Program::= Instructions
+                    {: 
+                    :}
+                    ;
+
+Instructions::= Instruction InstructionsAux
+                    {:
+                    :}
+                    ;
+
+InstructionsAux::= Instruction InstructionsAux 
+                    {:
+                    :}
+                    | /*NOTHING*/
+                    {:
+                    :}
+                    ;
+
+
+Instruction::=  ADD REGISTER:a COMA REGISTER:b COMA REGISTER:c SEMICOLON 
+                                {:
+                                    System.out.println(a + " = " + b + " + " + c);
+                                :}
+              | SUB REGISTER:a COMA REGISTER:b COMA REGISTER:c SEMICOLON 
+                                {:
+                                    System.out.println(a + " = " + b + " - " + c);
+                                :}
+              | NEWLINE
+              ;
+                                
+                
+
