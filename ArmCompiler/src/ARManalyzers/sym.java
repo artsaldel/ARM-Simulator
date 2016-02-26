@@ -12,34 +12,33 @@ public class sym {
   public static final int SBC = 8;
   public static final int LDR = 23;
   public static final int MVN = 19;
-  public static final int INT = 36;
-  public static final int HEX = 37;
   public static final int ORR = 12;
   public static final int REGISTER = 28;
   public static final int CMP = 10;
   public static final int CMN = 11;
   public static final int B = 26;
+  public static final int COMMENTARY = 31;
   public static final int SEMICOLON = 30;
   public static final int AND = 2;
   public static final int LSL = 14;
+  public static final int ADDRESS = 36;
   public static final int EOR = 3;
   public static final int MOV = 13;
   public static final int EOF = 0;
-  public static final int ZEROX = 31;
   public static final int ASR = 15;
   public static final int error = 1;
   public static final int MUL = 20;
   public static final int COMA = 29;
-  public static final int CLOSEBRACKET = 35;
-  public static final int NEWLINE = 33;
+  public static final int CLOSEBRACKET = 34;
+  public static final int NEWLINE = 32;
   public static final int ADD = 6;
   public static final int ADC = 7;
+  public static final int NUMBER = 35;
   public static final int MLA = 21;
   public static final int BL = 27;
   public static final int RSC = 9;
-  public static final int SHARP = 32;
   public static final int RSB = 5;
-  public static final int OPENBRACKET = 34;
+  public static final int OPENBRACKET = 33;
   public static final int RRX = 16;
   public static final int BIC = 18;
   public static final int ROR = 17;
@@ -78,13 +77,12 @@ public class sym {
   "REGISTER",
   "COMA",
   "SEMICOLON",
-  "ZEROX",
-  "SHARP",
+  "COMMENTARY",
   "NEWLINE",
   "OPENBRACKET",
   "CLOSEBRACKET",
-  "INT",
-  "HEX"
+  "NUMBER",
+  "ADDRESS"
   };
 }
 

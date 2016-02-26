@@ -4,6 +4,10 @@ import java_cup.runtime.*;
 import java.io.FileReader;
 import javax.swing.JOptionPane;
 
+/**************************************************************************
+****************************CODIGO DE ACCION*******************************
+***************************************************************************/
+
 action code {:
     /*Hay que poner las instancias de las memorias*/
 :}
@@ -44,22 +48,29 @@ parser code {:
 :};
 
 
+/**************************************************************************
+********************************TERMINALES*********************************
+***************************************************************************/
 
 terminal   AND, EOR, SUB , RSB , ADD , ADC , SBC , RSC , CMP , 
            CMN , ORR , MOV , LSL , ASR , RRX , ROR , BIC, MVN,
            MUL , MLA, STR, LDR, STRB, LDRB, B, BL;
 
-terminal REGISTER, COMA, SEMICOLON, ZEROX, SHARP, NEWLINE, OPENBRACKET,
-         CLOSEBRACKET;
+terminal REGISTER, COMA, SEMICOLON, COMMENTARY, NEWLINE, OPENBRACKET,
+         CLOSEBRACKET, NUMBER, ADDRESS;
 
-terminal Integer   INT;
-terminal String    HEX; 
+
+/**************************************************************************
+******************************NO TERMINALES********************************
+***************************************************************************/
 
 non terminal Object Program, Instruction, Instructions, InstructionsAux;
 
-precedence left REGISTER, COMA, SEMICOLON, ZEROX, SHARP, NEWLINE, OPENBRACKET;
-
 start with Program;
+
+/**************************************************************************
+*********************************GRAMATICA*********************************
+***************************************************************************/
 
 Program::= Instructions
                     {: 
@@ -80,15 +91,80 @@ InstructionsAux::= Instruction InstructionsAux
                     ;
 
 
-Instruction::=  ADD REGISTER:a COMA REGISTER:b COMA REGISTER:c SEMICOLON 
+Instruction::=  ADD REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     System.out.println(a + " = " + b + " + " + c);
                                 :}
-              | SUB REGISTER:a COMA REGISTER:b COMA REGISTER:c SEMICOLON 
+              | SUB REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     System.out.println(a + " = " + b + " - " + c);
                                 :}
+              | AND REGISTER:a COMA REGISTER:b COMA REGISTER:c 
+                                {:
+                                    System.out.println(a + " = " + b + " & " + c);
+                                :}
+              | ORR REGISTER:a COMA REGISTER:b COMA REGISTER:c 
+                                {:
+                                    System.out.println(a + " = " + b + " | " + c);
+                                :}   
+              | EOR REGISTER:a COMA REGISTER:b COMA REGISTER:c 
+                                {:
+                                    System.out.println(a + " = " + b + " XOR " + c);
+                                :}     
+              | BIC REGISTER:a COMA REGISTER:b COMA REGISTER:c 
+                                {:
+                                    System.out.println(a + " = " + b + " &~ " + c);
+                                :}   
+              | MUL REGISTER:a COMA REGISTER:b COMA REGISTER:c 
+                                {:
+                                    System.out.println(a + " = " + b + " x " + c);
+                                :}  
+              | LSL REGISTER:a COMA REGISTER:b COMA NUMBER:c 
+                                {:
+                                    System.out.println("LSL "+a+","+b+","+c);
+                                :} 
+              | ASR  REGISTER:a COMA REGISTER:b COMA NUMBER:c 
+                                {:
+                                    System.out.println("ASR "+a+","+b+","+c);
+                                :}  
+              | ROR  REGISTER:a COMA REGISTER:b COMA NUMBER:c 
+                                {:
+                                    System.out.println("ROR "+a+","+b+","+c);
+                                :} 
+              | MOV  REGISTER:a COMA NUMBER:b 
+                                {:
+                                    System.out.println("MOV "+a+","+b);
+                                :} 
+              | MOV  REGISTER:a COMA ADDRESS:b 
+                                {:
+                                    System.out.println("MOV "+a+","+b);
+                                :} 
+              | MOV  REGISTER:a COMA REGISTER:b 
+                                {:
+                                    System.out.println("MOV "+a+","+b);
+                                :}
+              | CMP  REGISTER:a COMA REGISTER:b 
+                                {:
+                                    System.out.println("CMP "+a+","+b);
+                                :} 
+              | LDR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA NUMBER:c CLOSEBRACKET
+                                {:
+                                    System.out.println("LDR "+a+",["+b+","+c+"]");
+                                :}   
+              | STR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA ADDRESS:c CLOSEBRACKET
+                                {:
+                                    System.out.println("STR "+a+",["+b+","+c+"]");
+                                :}      
+              | LDRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA REGISTER:c CLOSEBRACKET
+                                {:
+                                    System.out.println("LDRB "+a+",["+b+","+c+"]");
+                                :} 
+              | STRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA REGISTER:c CLOSEBRACKET
+                                {:
+                                    System.out.println("STRB "+a+",["+b+","+c+"]");
+                                :}                      
               | NEWLINE
+              | SEMICOLON COMMENTARY
               ;
                                 
                 
