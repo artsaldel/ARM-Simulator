@@ -17,7 +17,6 @@ public class sym {
   public static final int CMP = 10;
   public static final int CMN = 11;
   public static final int B = 26;
-  public static final int COMMENTARY = 31;
   public static final int SEMICOLON = 30;
   public static final int AND = 2;
   public static final int LSL = 14;
@@ -43,6 +42,7 @@ public class sym {
   public static final int BIC = 18;
   public static final int ROR = 17;
   public static final int LDRB = 25;
+  public static final int TEXT = 31;
   public static final int STRB = 24;
   public static final int SUB = 4;
   public static final String[] terminalNames = new String[] {
@@ -77,7 +77,7 @@ public class sym {
   "REGISTER",
   "COMA",
   "SEMICOLON",
-  "COMMENTARY",
+  "TEXT",
   "NEWLINE",
   "OPENBRACKET",
   "CLOSEBRACKET",

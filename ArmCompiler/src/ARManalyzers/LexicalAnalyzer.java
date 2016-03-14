@@ -41,8 +41,8 @@ class LexicalAnalyzer implements java_cup.runtime.Scanner {
     "\1\5\1\5\1\5\1\5\1\0\1\17\5\0\1\23\1\33\1\34"+
     "\1\25\1\26\1\11\2\4\1\42\2\4\1\40\1\35\1\24\1\27"+
     "\1\36\1\4\1\30\1\31\1\43\1\32\1\37\1\4\1\41\2\4"+
-    "\1\21\1\0\1\22\3\0\21\4\1\14\5\4\1\10\2\4\1\0"+
-    "\1\12\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uff93\0";
+    "\1\21\1\0\1\22\1\0\1\4\1\0\21\4\1\14\5\4\1\10"+
+    "\2\4\1\0\1\12\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uff93\0";
 
   /** 
    * Translates characters to character classes
@@ -322,7 +322,7 @@ class LexicalAnalyzer implements java_cup.runtime.Scanner {
     char [] map = new char[0x110000];
     int i = 0;  /* index in packed string  */
     int j = 0;  /* index in unpacked array */
-    while (i < 156) {
+    while (i < 160) {
       int  count = packed.charAt(i++);
       char value = packed.charAt(i++);
       do map[j++] = value; while (--count > 0);
@@ -686,7 +686,7 @@ class LexicalAnalyzer implements java_cup.runtime.Scanner {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1: 
-            { return symbol(sym.COMMENTARY);
+            { return symbol(sym.TEXT,    new String(yytext()));
             }
           case 38: break;
           case 2: 

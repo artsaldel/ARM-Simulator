@@ -22,7 +22,7 @@ import java.io.Reader;
 JUMP = \r|\n|\r\n
 SPACE = [ \t\f]
 
-COMMENTARY = ([a-zA-Z] | [0-9])*
+TEXT = ([a-zA-Z] | [0-9] | "_")*
 ADDRESS = "#0x"[[0-9]|[A-F]]+
 NUMBER = "#""-"?[0-9]+
 
@@ -84,7 +84,7 @@ NUMBER = "#""-"?[0-9]+
 
     {ADDRESS}          {  return symbol(sym.ADDRESS, new String(yytext()));   }
     {NUMBER}           {  return symbol(sym.NUMBER,  new String(yytext()));   }
-    {COMMENTARY}       {  return symbol(sym.COMMENTARY);                      }
+    {TEXT}             {  return symbol(sym.TEXT,    new String(yytext()));   }
 }
 
 [^]                    { throw new Error("Caracter ilegal <"+yytext()+">");  }

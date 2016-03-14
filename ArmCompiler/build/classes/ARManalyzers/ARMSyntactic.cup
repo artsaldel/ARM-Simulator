@@ -56,7 +56,7 @@ terminal   AND, EOR, SUB , RSB , ADD , ADC , SBC , RSC , CMP ,
            CMN , ORR , MOV , LSL , ASR , RRX , ROR , BIC, MVN,
            MUL , MLA, STR, LDR, STRB, LDRB, B, BL;
 
-terminal REGISTER, COMA, SEMICOLON, COMMENTARY, NEWLINE, OPENBRACKET,
+terminal REGISTER, COMA, SEMICOLON, TEXT, NEWLINE, OPENBRACKET,
          CLOSEBRACKET, NUMBER, ADDRESS;
 
 
@@ -91,7 +91,14 @@ InstructionsAux::= Instruction InstructionsAux
                     ;
 
 
-Instruction::=  ADD REGISTER:a COMA REGISTER:b COMA REGISTER:c 
+Instruction::= 
+
+                TEXT:a 
+                                {:
+                                    System.out.println("Label: " + a);
+                                :}
+
+              | ADD REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     System.out.println(a + " = " + b + " + " + c);
                                 :}
@@ -164,7 +171,7 @@ Instruction::=  ADD REGISTER:a COMA REGISTER:b COMA REGISTER:c
                                     System.out.println("STRB "+a+",["+b+","+c+"]");
                                 :}                      
               | NEWLINE
-              | SEMICOLON COMMENTARY
+              | SEMICOLON TEXT
               ;
                                 
                 
