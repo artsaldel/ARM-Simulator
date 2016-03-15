@@ -90,7 +90,7 @@ public class MultiplyTranslator {
         MultiplyTranslator.Rn = Rn;
     }
     
-    public String getInstruction (){
-        return null;
+    public void writeInstruction (){
+        String instruction;
     }    
 }

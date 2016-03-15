@@ -12,7 +12,7 @@ package Translator;
 public class MemoryTranslator {
     
     private static MemoryTranslator memory = null;
-    private static String cond, op, negI, P, U, B, W, L, Rn, Rd, Src2, imm12, shamt5, sh, Rm;
+    private static String cond, op, negI, P, U, B, W, L, Rn, Rd, imm12, shamt5, sh, Rm;
     
     protected MemoryTranslator (){
         /*solo para ser instanciado una vez*/
@@ -21,7 +21,7 @@ public class MemoryTranslator {
     public static MemoryTranslator getMemoryTranslator (){
         if (memory == null){
             memory = new MemoryTranslator();
-            cond = op = negI = P = U = B = W = L = Rn = Rd = Src2 =
+            cond = op = negI = P = U = B = W = L = Rn = Rd =
             imm12 = shamt5 = sh = Rm = "";
         }
         return memory;
@@ -106,14 +106,6 @@ public class MemoryTranslator {
     public void setRd(String Rd) {
         this.Rd = Rd;
     }
-
-    public String getSrc2() {
-        return Src2;
-    }
-
-    public void setSrc2(String Src2) {
-        this.Src2 = Src2;
-    }
     
     public static String getImm12() {
         return imm12;
@@ -147,7 +139,11 @@ public class MemoryTranslator {
         MemoryTranslator.Rm = Rm;
     }
     
-    public String getInstruction (){
-        return null;
+    public void writeInstructionImmediate (){
+        String instruction;
+    }
+    
+    public void writeInstructionRegister (){
+        String instruction;
     }
 }

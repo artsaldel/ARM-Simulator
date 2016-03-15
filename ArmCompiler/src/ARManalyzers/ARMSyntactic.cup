@@ -3,6 +3,7 @@ package ARManalyzers;
 import java_cup.runtime.*;
 import java.io.FileReader;
 import javax.swing.JOptionPane;
+import Translator.*;
 
 /**************************************************************************
 ****************************CODIGO DE ACCION*******************************
@@ -103,6 +104,17 @@ Instruction::=
               | ADD REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     System.out.println("ADD " + a + ", " + b + ", " + c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("0100");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5("0");
+                                    DataTranslator.getDataTranslator().setSh("00");
+                                    DataTranslator.getDataTranslator().setRm(c.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
                                 :}
               | ADD REGISTER:a COMA NUMBER:b  
                                 {:
@@ -115,6 +127,16 @@ Instruction::=
               | ADD REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     System.out.println("ADD " + a + ", " + b + ", " + c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("1");
+                                    DataTranslator.getDataTranslator().setCmd("0100");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRot("");
+                                    DataTranslator.getDataTranslator().setImm8(c.toString().split("#")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionImmediate();
                                 :}
               | ADD REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
@@ -126,6 +148,17 @@ Instruction::=
               | SUB REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     System.out.println("SUB " + a + ", " + b + ", " + c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("0010");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5("0");
+                                    DataTranslator.getDataTranslator().setSh("00");
+                                    DataTranslator.getDataTranslator().setRm(c.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
                                 :}
               | SUB REGISTER:a COMA NUMBER:b  
                                 {:
@@ -149,6 +182,17 @@ Instruction::=
               | AND REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     System.out.println("AND " + a + ", " + b + ", " + c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("0000");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5("0");
+                                    DataTranslator.getDataTranslator().setSh("00");
+                                    DataTranslator.getDataTranslator().setRm(c.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
                                 :}
               | AND REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
@@ -169,6 +213,17 @@ Instruction::=
               | ORR REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     System.out.println("ORR " + a + ", " + b + ", " + c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1100");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5("0");
+                                    DataTranslator.getDataTranslator().setSh("00");
+                                    DataTranslator.getDataTranslator().setRm(c.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
                                 :}
               | ORR REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
@@ -188,6 +243,17 @@ Instruction::=
               | EOR REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     System.out.println("EOR " + a + ", " + b + ", " + c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("0001");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5("0");
+                                    DataTranslator.getDataTranslator().setSh("00");
+                                    DataTranslator.getDataTranslator().setRm(c.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
                                 :}
               | EOR REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
@@ -239,9 +305,20 @@ Instruction::=
 
 /*********************LSL INSTRUCTION************************/
 
-              | LSL REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
+              | LSL REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     System.out.println("LSL "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0000");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5(c.toString().split("#")[1]);
+                                    DataTranslator.getDataTranslator().setSh("00");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
                                 :} 
               | LSL REGISTER:a COMA REGISTER:b 
                                 {:
@@ -259,6 +336,21 @@ Instruction::=
                                 {:
                                     System.out.println("ASR "+a+","+b+","+c);
                                 :}  
+              | ASR  REGISTER:a COMA REGISTER:b COMA REGISTER:c 
+                                {:
+                                    System.out.println("ASR "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0000");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRs(c.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setSh("10");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegisterShifted();
+                                :}  
 
 
 
@@ -267,6 +359,18 @@ Instruction::=
               | ROR  REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     System.out.println("ROR "+a+","+b+","+c);
+                                    System.out.println("LSL "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0000");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5(c.toString().split("#")[1]);
+                                    DataTranslator.getDataTranslator().setSh("11");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
                                 :}
               | ROR  REGISTER:a COMA REGISTER:b 
                                 {:
@@ -428,6 +532,17 @@ Instruction::=
               | RSB REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     System.out.println("RSB " + a + ", " + b + ", " + c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("0011");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5("00000");
+                                    DataTranslator.getDataTranslator().setSh("00");
+                                    DataTranslator.getDataTranslator().setRm(c.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
                                 :}
               | RSB REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:

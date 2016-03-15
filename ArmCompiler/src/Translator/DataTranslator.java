@@ -12,7 +12,7 @@ package Translator;
 public class DataTranslator {
     
     private static DataTranslator data = null;
-    private static String cond, op, cmd, S, Rn, Rd, Src2, rot, imm8, shamt5, sh, Rm, Rs;
+    private static String cond, op, I, cmd, S, Rn, Rd, rot, imm8, shamt5, sh, Rm, Rs;
     
     protected DataTranslator (){
         /*solo para ser instanciado una vez*/
@@ -21,7 +21,7 @@ public class DataTranslator {
     public static DataTranslator getDataTranslator (){
         if (data == null){
             data = new DataTranslator();
-            cond = op = cmd = S = Rn = Rd = Src2 =
+            cond = op = cmd = S = Rn = Rd =
             rot = imm8 = shamt5 = sh = Rm = Rs = "";
         }
         return data;
@@ -41,6 +41,14 @@ public class DataTranslator {
 
     public void setOp(String op) {
         this.op = op;
+    }
+    
+    public String getI() {
+        return I;
+    }
+
+    public void setI(String I) {
+        this.I = I;
     }
 
     public String getCmd() {
@@ -74,14 +82,6 @@ public class DataTranslator {
     public void setRd(String Rd) {
         this.Rd = Rd;
     }
-
-    public String getSrc2() {
-        return Src2;
-    }
-
-    public void setSrc2(String Src2) {
-        this.Src2 = Src2;
-    }  
     
     public static String getRot() {
         return rot;
@@ -131,7 +131,48 @@ public class DataTranslator {
         DataTranslator.Rs = Rs;
     }
     
-    public String getInstruction (){
-        return null;
+    public void writeInstructionImmediate(){
+        Rn = NumberTranslator.integerToBinary(Integer.parseInt(getRn()));
+        Rd = NumberTranslator.integerToBinary(Integer.parseInt(getRd()));
+        imm8 = NumberTranslator.integerToBinary(Integer.parseInt(getImm8()));
+        while (Rn.length() != 4){Rn = "0" + Rn;}
+        while (Rd.length() != 4){Rd = "0" + Rd;}
+        while (imm8.length() != 8){imm8 = "0" + imm8;}
+        while (rot.length() != 4){rot = "0" + rot;}
+        String instruction = getCond() + getOp() + getI() + getCmd() + getS() +
+                             Rn + Rd + getRot() + imm8; 
+        BinaryOutput.writeLine(instruction);
+    }
+    
+    public void writeInstructionRegister (){
+        Rn = NumberTranslator.integerToBinary(Integer.parseInt(getRn()));
+        Rd = NumberTranslator.integerToBinary(Integer.parseInt(getRd()));
+        Rm = NumberTranslator.integerToBinary(Integer.parseInt(getRm()));
+        shamt5 = NumberTranslator.integerToBinary(Integer.parseInt(getShamt5()));
+        
+        while (Rn.length() != 4){Rn = "0" + Rn;}
+        while (Rd.length() != 4){Rd = "0" + Rd;}
+        while (Rm.length() != 4){Rm = "0" + Rm;}
+        while (shamt5.length() != 5){shamt5 = "0" + shamt5;}
+        
+        String instruction = getCond() + getOp() + getI() + getCmd() + getS() +
+                             getRn() + getRd() + getShamt5() + getSh() + "0" + getRm(); 
+        BinaryOutput.writeLine(instruction);
+    }
+    
+    public void writeInstructionRegisterShifted(){
+        Rn = NumberTranslator.integerToBinary(Integer.parseInt(getRn()));
+        Rd = NumberTranslator.integerToBinary(Integer.parseInt(getRd()));
+        Rm = NumberTranslator.integerToBinary(Integer.parseInt(getRm()));
+        Rs = NumberTranslator.integerToBinary(Integer.parseInt(getRs()));
+        
+        while (Rn.length() != 4){Rn = "0" + Rn;}
+        while (Rd.length() != 4){Rd = "0" + Rd;}
+        while (Rm.length() != 4){Rm = "0" + Rm;}
+        while (Rs.length() != 4){Rs = "0" + Rs;}
+        
+        String instruction = getCond() + getOp() + getI() + getCmd() + getS() +
+                             getRn() + getRd() + getRs() + "0" + getSh() + "1" + getRm(); 
+        BinaryOutput.writeLine(instruction);
     }
 }
