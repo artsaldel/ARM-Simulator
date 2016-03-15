@@ -36,22 +36,17 @@ public class BinaryOutput {
     }
     
     public static void writeLine (String line){
-        Writer output;
-        try {
-            output = new BufferedWriter(new FileWriter("out.txt", true));
-            output.append(line);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        try(PrintWriter output = new PrintWriter(new FileWriter("out.txt",true))) 
+        {
+            output.printf("%s\r\n", line);
+        } 
+        catch (Exception e) {}
     }
     
-    public static void clearOutputFile (){
-        try{
-            outputFile = new File("out.txt");
-            outputFile.createNewFile();
-        }
-        catch (IOException e){
-            e.printStackTrace();
+    public static void clearOutputFile () throws IOException{
+        try (FileWriter fwOb = new FileWriter("out.txt", false); 
+             PrintWriter pwOb = new PrintWriter(fwOb, false)) {
+            pwOb.flush();
         }
     }
 }

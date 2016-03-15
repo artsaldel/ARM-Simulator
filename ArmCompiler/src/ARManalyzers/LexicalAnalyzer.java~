@@ -686,7 +686,7 @@ class LexicalAnalyzer implements java_cup.runtime.Scanner {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1: 
-            { return symbol(sym.TEXT),   new String(yytext()));
+            { return symbol(sym.TEXT,    new String(yytext()));
             }
           case 38: break;
           case 2: 

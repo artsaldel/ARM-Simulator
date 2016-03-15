@@ -57,7 +57,7 @@ public class BranchTranslator {
         BranchTranslator.imm24 = imm24;
     }
     
-    public void getInstruction (){
-        
+    public String getInstruction (){
+        return null;
     }
 }

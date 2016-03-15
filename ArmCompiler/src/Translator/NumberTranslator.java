@@ -34,4 +34,12 @@ public class NumberTranslator {
         String [] division = number.split("0x");
         return division[1];
     }
+    
+    public static int hexToInteger (String number){
+        return Integer.parseInt(number, 16);  
+    }
+    
+    public static int integerToHex (int number){
+        return Integer.valueOf(String.valueOf(number), 16);
+    }
 }

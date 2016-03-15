@@ -54,7 +54,7 @@ parser code {:
 
 terminal   AND, EOR, SUB , RSB , ADD , ADC , SBC , RSC , CMP , 
            CMN , ORR , MOV , LSL , ASR , RRX , ROR , BIC, MVN,
-           MUL , MLA, STR, LDR, STRB, LDRB, B, BL;
+           MUL , MLA, STR, LDR, STRB, LDRB, B, BL, BEQ, BNE, BGT, BLT;
 
 terminal REGISTER, COMA, SEMICOLON, TEXT, NEWLINE, OPENBRACKET,
          CLOSEBRACKET, NUMBER, ADDRESS;
@@ -98,78 +98,390 @@ Instruction::=
                                     System.out.println("Label: " + a);
                                 :}
 
+/*********************ADD INSTRUCTION************************/
+
               | ADD REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
-                                    System.out.println(a + " = " + b + " + " + c);
+                                    System.out.println("ADD " + a + ", " + b + ", " + c);
                                 :}
+              | ADD REGISTER:a COMA NUMBER:b  
+                                {:
+                                    System.out.println("ADD " + a + ", " + b);
+                                :}
+              | ADD REGISTER:a COMA REGISTER:b  
+                                {:
+                                    System.out.println("ADD " + a + ", " + b);
+                                :}
+              | ADD REGISTER:a COMA REGISTER:b COMA NUMBER:c 
+                                {:
+                                    System.out.println("ADD " + a + ", " + b + ", " + c);
+                                :}
+              | ADD REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
+                                {:
+                                    System.out.println("ADD " + a + ", " + b + ", " + c);
+                                :}
+
+/*********************SUB INSTRUCTION************************/
+
               | SUB REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
-                                    System.out.println(a + " = " + b + " - " + c);
+                                    System.out.println("SUB " + a + ", " + b + ", " + c);
                                 :}
+              | SUB REGISTER:a COMA NUMBER:b  
+                                {:
+                                    System.out.println("SUB " + a + ", " + b);
+                                :}
+              | SUB REGISTER:a COMA REGISTER:b  
+                                {:
+                                    System.out.println("SUB " + a + ", " + b);
+                                :}
+              | SUB REGISTER:a COMA REGISTER:b COMA NUMBER:c 
+                                {:
+                                    System.out.println("SUB " + a + ", " + b + ", " + c);
+                                :}
+              | SUB REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
+                                {:
+                                    System.out.println("SUB " + a + ", " + b + ", " + c);
+                                :}
+
+/*********************AND INSTRUCTION************************/
+
               | AND REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
-                                    System.out.println(a + " = " + b + " & " + c);
+                                    System.out.println("AND " + a + ", " + b + ", " + c);
                                 :}
+              | AND REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
+                                {:
+                                    System.out.println("AND " + a + ", " + b + ", " + c);
+                                :}
+              | AND REGISTER:a COMA REGISTER:b COMA NUMBER:c 
+                                {:
+                                    System.out.println("AND " + a + ", " + b + ", " + c);
+                                :}
+              | AND REGISTER:a COMA REGISTER:b 
+                                {:
+                                    System.out.println("AND " + a + ", " + b);
+                                :}
+
+
+/*********************ORR INSTRUCTION************************/
+
               | ORR REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
-                                    System.out.println(a + " = " + b + " | " + c);
-                                :}   
+                                    System.out.println("ORR " + a + ", " + b + ", " + c);
+                                :}
+              | ORR REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
+                                {:
+                                    System.out.println("ORR " + a + ", " + b + ", " + c);
+                                :}
+              | ORR REGISTER:a COMA REGISTER:b COMA NUMBER:c 
+                                {:
+                                    System.out.println("ORR " + a + ", " + b + ", " + c);
+                                :}
+              | ORR REGISTER:a COMA REGISTER:b 
+                                {:
+                                    System.out.println("ORR " + a + ", " + b);
+                                :}  
+
+/*********************EOR INSTRUCTION************************/
+
               | EOR REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
-                                    System.out.println(a + " = " + b + " XOR " + c);
-                                :}     
+                                    System.out.println("EOR " + a + ", " + b + ", " + c);
+                                :}
+              | EOR REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
+                                {:
+                                    System.out.println("EOR " + a + ", " + b + ", " + c);
+                                :}
+              | EOR REGISTER:a COMA REGISTER:b COMA NUMBER:c 
+                                {:
+                                    System.out.println("EOR " + a + ", " + b + ", " + c);
+                                :}
+              | EOR REGISTER:a COMA REGISTER:b 
+                                {:
+                                    System.out.println("EOR " + a + ", " + b);
+                                :}   
+
+
+/*********************BIC INSTRUCTION************************/
+  
               | BIC REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
-                                    System.out.println(a + " = " + b + " &~ " + c);
-                                :}   
+                                    System.out.println("BIC " + a + ", " + b + ", " + c);
+                                :}  
+              | BIC REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
+                                {:
+                                    System.out.println("BIC " + a + ", " + b + ", " + c);
+                                :}  
+              | BIC REGISTER:a COMA REGISTER:b
+                                {:
+                                    System.out.println("BIC " + a + ", " + b);
+                                :}  
+
+
+/*********************MUL INSTRUCTION************************/
+
               | MUL REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
-                                    System.out.println(a + " = " + b + " x " + c);
+                                    System.out.println("MUL " + a + ", " + b + ", " + c);
                                 :}  
-              | LSL REGISTER:a COMA REGISTER:b COMA NUMBER:c 
+              | MUL REGISTER:a COMA REGISTER:b 
+                                {:
+                                    System.out.println("MUL " + a + ", " + b);
+                                :} 
+
+/*********************MLA INSTRUCTION************************/
+
+              | MLA REGISTER:a COMA REGISTER:b COMA REGISTER:c COMA REGISTER:d
+                                {:
+                                    System.out.println("MLA " + a + ", " + b + ", " + c + ", " + d);
+                                :} 
+
+/*********************LSL INSTRUCTION************************/
+
+              | LSL REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     System.out.println("LSL "+a+","+b+","+c);
                                 :} 
+              | LSL REGISTER:a COMA REGISTER:b 
+                                {:
+                                    System.out.println("LSL " + a + ", " + b);
+                                :} 
+
+
+/*********************ASR INSTRUCTION************************/
+
+              | ASR  REGISTER:a COMA REGISTER:b 
+                                {:
+                                    System.out.println("ASR "+a+","+b);
+                                :}  
               | ASR  REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     System.out.println("ASR "+a+","+b+","+c);
                                 :}  
+
+
+
+/*********************ROR INSTRUCTION************************/
+
               | ROR  REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     System.out.println("ROR "+a+","+b+","+c);
-                                :} 
-              | MOV  REGISTER:a COMA NUMBER:b 
+                                :}
+              | ROR  REGISTER:a COMA REGISTER:b 
                                 {:
-                                    System.out.println("MOV "+a+","+b);
-                                :} 
-              | MOV  REGISTER:a COMA ADDRESS:b 
-                                {:
-                                    System.out.println("MOV "+a+","+b);
-                                :} 
+                                    System.out.println("ROR "+a+","+b);
+                                :}  
+                               
+
+
+/*********************MOV INSTRUCTION************************/
+
               | MOV  REGISTER:a COMA REGISTER:b 
                                 {:
-                                    System.out.println("MOV "+a+","+b);
+                                    System.out.println("MOV "+a+", "+b);
                                 :}
+              | MOV  REGISTER:a COMA NUMBER:b 
+                                {:
+                                    System.out.println("MOV "+a+", "+b);
+                                :} 
+
+/*********************MVN INSTRUCTION************************/
+
+              | MVN  REGISTER:a COMA REGISTER:b 
+                                {:
+                                    System.out.println("MVN "+a+", "+b);
+                                :}
+
+
+/*********************CMP INSTRUCTION************************/
+
               | CMP  REGISTER:a COMA REGISTER:b 
                                 {:
-                                    System.out.println("CMP "+a+","+b);
+                                    System.out.println("CMP " + a + ", " + b);
                                 :} 
+              | CMP  REGISTER:a COMA NUMBER:b 
+                                {:
+                                    System.out.println("CMP " + a + ", " + b);
+                                :} 
+              | CMP  REGISTER:a COMA ADDRESS:b 
+                                {:
+                                    System.out.println("CMP " + a + ", " + b);
+                                :} 
+
+/*********************CMN INSTRUCTION************************/
+
+              | CMN  REGISTER:a COMA REGISTER:b 
+                                {:
+                                    System.out.println("CMN " + a + ", " + b);
+                                :} 
+              | CMN  REGISTER:a COMA NUMBER:b 
+                                {:
+                                    System.out.println("CMN " + a + ", " + b);
+                                :} 
+              | CMN  REGISTER:a COMA ADDRESS:b 
+                                {:
+                                    System.out.println("CMN " + a + ", " + b);
+                                :} 
+
+
+/*********************LDR INSTRUCTION************************/
+
+              | LDR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA ADDRESS:c CLOSEBRACKET
+                                {:
+                                    System.out.println("LDR "+a+",["+b+","+c+"]");
+                                :}  
+              | LDR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA REGISTER:c CLOSEBRACKET
+                                {:
+                                    System.out.println("LDR "+a+",["+b+","+c+"]");
+                                :}  
               | LDR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA NUMBER:c CLOSEBRACKET
                                 {:
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
-                                :}   
+                                :}  
+ 
+
+/*********************STR INSTRUCTION************************/
+
               | STR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA ADDRESS:c CLOSEBRACKET
                                 {:
                                     System.out.println("STR "+a+",["+b+","+c+"]");
-                                :}      
+                                :}  
+              | STR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA REGISTER:c CLOSEBRACKET
+                                {:
+                                    System.out.println("STR "+a+",["+b+","+c+"]");
+                                :}  
+              | STR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA NUMBER:c CLOSEBRACKET
+                                {:
+                                    System.out.println("STR "+a+",["+b+","+c+"]");
+                                :}    
+
+  
+/*********************LDRB INSTRUCTION************************/
+
+              | LDRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA ADDRESS:c CLOSEBRACKET
+                                {:
+                                    System.out.println("LDRB "+a+",["+b+","+c+"]");
+                                :}  
               | LDRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA REGISTER:c CLOSEBRACKET
                                 {:
                                     System.out.println("LDRB "+a+",["+b+","+c+"]");
-                                :} 
+                                :}  
+              | LDRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA NUMBER:c CLOSEBRACKET
+                                {:
+                                    System.out.println("LDRB "+a+",["+b+","+c+"]");
+                                :}   
+
+
+/*********************STRB INSTRUCTION************************/
+
+              | STRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA ADDRESS:c CLOSEBRACKET
+                                {:
+                                    System.out.println("STRB "+a+",["+b+","+c+"]");
+                                :}  
               | STRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA REGISTER:c CLOSEBRACKET
                                 {:
                                     System.out.println("STRB "+a+",["+b+","+c+"]");
-                                :}                      
+                                :}  
+              | STRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA NUMBER:c CLOSEBRACKET
+                                {:
+                                    System.out.println("STRB "+a+",["+b+","+c+"]");
+                                :}  
+
+/*********************RRX INSTRUCTION************************/
+
+              | RRX  REGISTER:a COMA REGISTER:b 
+                                {:
+                                    System.out.println("RRX " + a + ", " + b);
+                                :} 
+              | RRX  REGISTER:a COMA NUMBER:b 
+                                {:
+                                    System.out.println("RRX " + a + ", " + b);
+                                :} 
+              | RRX  REGISTER:a COMA ADDRESS:b 
+                                {:
+                                    System.out.println("RRX " + a + ", " + b);
+                                :} 
+
+/*********************SBC INSTRUCTION************************/
+
+              | SBC  REGISTER:a COMA REGISTER:b 
+                                {:
+                                    System.out.println("SBC " + a + ", " + b);
+                                :}   
+
+
+/*********************ADC INSTRUCTION************************/
+
+              | ADC REGISTER:a COMA REGISTER:b COMA REGISTER:c 
+                                {:
+                                    System.out.println("ADC " + a + ", " + b + ", " + c);
+                                :}  
+              | ADC REGISTER:a COMA REGISTER:b
+                                {:
+                                    System.out.println("ADC " + a + ", " + b);
+                                :} 
+
+
+/*********************RSB INSTRUCTION************************/
+
+              | RSB REGISTER:a COMA REGISTER:b COMA REGISTER:c 
+                                {:
+                                    System.out.println("RSB " + a + ", " + b + ", " + c);
+                                :}
+              | RSB REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
+                                {:
+                                    System.out.println("RSB " + a + ", " + b + ", " + c);
+                                :}
+              | RSB REGISTER:a COMA REGISTER:b COMA NUMBER:c 
+                                {:
+                                    System.out.println("RSB " + a + ", " + b + ", " + c);
+                                :}
+
+/*********************RSC INSTRUCTION************************/
+
+              | RSC REGISTER:a COMA REGISTER:b COMA REGISTER:c 
+                                {:
+                                    System.out.println("RSC " + a + ", " + b + ", " + c);
+                                :}
+              | RSC REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
+                                {:
+                                    System.out.println("RSC " + a + ", " + b + ", " + c);
+                                :}
+              | RSC REGISTER:a COMA REGISTER:b COMA NUMBER:c 
+                                {:
+                                    System.out.println("RSC " + a + ", " + b + ", " + c);
+                                :}
+
+/*******************BRANCH INSTRUCTIONS*********************/
+
+              | B TEXT:a 
+                                {:
+                                    System.out.println("B " + a);
+                                :}
+              | BL TEXT:a 
+                                {:
+                                    System.out.println("BL " + a);
+                                :}
+              | BEQ TEXT:a 
+                                {:
+                                    System.out.println("BEQ " + a);
+                                :}
+              | BNE TEXT:a 
+                                {:
+                                    System.out.println("BNE " + a);
+                                :}
+              | BGT TEXT:a 
+                                {:
+                                    System.out.println("BGT " + a);
+                                :}
+              | BLT TEXT:a 
+                                {:
+                                    System.out.println("BLT " + a);
+                                :}
+
+/*************************EXTRA********************************/
+
               | NEWLINE
               | SEMICOLON TEXT
               ;

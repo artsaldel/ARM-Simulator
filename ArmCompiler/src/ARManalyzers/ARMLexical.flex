@@ -78,6 +78,10 @@ NUMBER = "#""-"?[0-9]+
     "LDRB"             {  return symbol(sym.LDRB);  }
     "B"                {  return symbol(sym.B);     }
     "BL"               {  return symbol(sym.BL);    }
+    "BEQ"              {  return symbol(sym.BEQ);   }
+    "BNE"              {  return symbol(sym.BNE);   }
+    "BGT"              {  return symbol(sym.BGT);   }
+    "BLT"              {  return symbol(sym.BLT);   }
 
     {JUMP}             {  return symbol(sym.NEWLINE);        }
     {SPACE}            {  /* do nothing */                   }
