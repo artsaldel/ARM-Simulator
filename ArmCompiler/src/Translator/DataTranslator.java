@@ -5,6 +5,8 @@
  */
 package Translator;
 
+import java.util.Arrays;
+
 /**
  *
  * @author Arturo Salas
@@ -131,16 +133,58 @@ public class DataTranslator {
         DataTranslator.Rs = Rs;
     }
     
+    private void createRot (){
+        //el inmediato ingresa como un numero binario
+        if (imm8.length() <= 8){
+            while (imm8.length() != 8){imm8 = "0" + imm8;}
+            rot = "0000";
+        }
+        else{
+            String tempImm8 = "";
+            String originalImm8 = imm8;
+            while (originalImm8.length() != 32){originalImm8 = "0" + originalImm8;}
+            int bits8Ctdr = 0;
+            for (int ctdr = 0; ctdr < imm8.length() && bits8Ctdr < 8; ctdr++){
+                if (imm8.charAt(ctdr) == '1'){
+                    tempImm8 = tempImm8 + imm8.charAt(ctdr);
+                    bits8Ctdr++;
+                }
+            }
+            imm8 = tempImm8;
+            String bits32 = "000000000000000000000000" + imm8;
+            String[] array1 = bits32.split("");
+            String[] array2 = originalImm8.split("");
+            int shift = circularShift(array1, array2);
+            rot = NumberTranslator.integerToBinary(shift/2);
+            while (rot.length() != 4) {rot = "0" + rot;}
+        }
+    }
+    
+    private int circularShift(String[] array, String[] original) {  
+         String[] tempArray = new String[32];
+         int shift = 0;
+         for (int i = 0; !Arrays.equals(tempArray, original) && i<32; i++){
+             tempArray[0] = array[31];
+             for (int j = 1; j<32; j++){
+                 tempArray[j] = array[j-1];
+             }
+             System.arraycopy( tempArray, 0, array, 0, tempArray.length );
+             shift++;
+         }
+         return shift;
+    }  
+    
     public void writeInstructionImmediate(){
         Rn = NumberTranslator.integerToBinary(Integer.parseInt(getRn()));
         Rd = NumberTranslator.integerToBinary(Integer.parseInt(getRd()));
         imm8 = NumberTranslator.integerToBinary(Integer.parseInt(getImm8()));
         while (Rn.length() != 4){Rn = "0" + Rn;}
         while (Rd.length() != 4){Rd = "0" + Rd;}
-        while (imm8.length() != 8){imm8 = "0" + imm8;}
-        while (rot.length() != 4){rot = "0" + rot;}
+        //Primero se crea el rot, luego se edita el imm8, respetar ese orden
+        createRot ();
         String instruction = getCond() + getOp() + getI() + getCmd() + getS() +
                              Rn + Rd + getRot() + imm8; 
+        //instruction = NumberTranslator.binaryToHex(instruction);
         BinaryOutput.writeLine(instruction);
     }
     
@@ -157,6 +201,7 @@ public class DataTranslator {
         
         String instruction = getCond() + getOp() + getI() + getCmd() + getS() +
                              getRn() + getRd() + getShamt5() + getSh() + "0" + getRm(); 
+        instruction = NumberTranslator.binaryToHex(instruction);
         BinaryOutput.writeLine(instruction);
     }
     
@@ -173,6 +218,7 @@ public class DataTranslator {
         
         String instruction = getCond() + getOp() + getI() + getCmd() + getS() +
                              getRn() + getRd() + getRs() + "0" + getSh() + "1" + getRm(); 
+        instruction = NumberTranslator.binaryToHex(instruction);
         BinaryOutput.writeLine(instruction);
     }
 }

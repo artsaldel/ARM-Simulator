@@ -42,4 +42,10 @@ public class NumberTranslator {
     public static int integerToHex (int number){
         return Integer.valueOf(String.valueOf(number), 16);
     }
+    
+    public static String binaryToHex(String number){
+        String hex = Long.toHexString(Long.parseLong(number, 2));
+        while (hex.length() != 8) { hex = "0" + hex; }
+        return hex;
+    }
 }

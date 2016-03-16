@@ -801,7 +801,7 @@ class CUP$parser$actions {
                                     DataTranslator.getDataTranslator().setS("0");
                                     DataTranslator.getDataTranslator().setRn(b.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
-                                    DataTranslator.getDataTranslator().setRot("");
+                                    //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
                                     DataTranslator.getDataTranslator().setImm8(c.toString().split("#")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
                                 
@@ -824,6 +824,18 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     System.out.println("ADD " + a + ", " + b + ", " + c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("1");
+                                    DataTranslator.getDataTranslator().setCmd("0100");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
+                                    DataTranslator.getDataTranslator().setImm8(
+                                                Integer.toString(NumberTranslator.hexToInteger( 
+                                                c.toString().split("#0x")[1])  )  );
+                                    DataTranslator.getDataTranslator().writeInstructionImmediate();
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }

@@ -1,4 +1,2 @@
 
-ROR r3,r5,#21
-ASR r5,r1,r12
-ORR r1,r2,r3
+ADD r2,r3,#0xFF0
