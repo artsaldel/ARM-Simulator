@@ -116,14 +116,6 @@ Instruction::=
                                     DataTranslator.getDataTranslator().setRm(c.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionRegister();
                                 :}
-              | ADD REGISTER:a COMA NUMBER:b  
-                                {:
-                                    System.out.println("ADD " + a + ", " + b);
-                                :}
-              | ADD REGISTER:a COMA REGISTER:b  
-                                {:
-                                    System.out.println("ADD " + a + ", " + b);
-                                :}
               | ADD REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     System.out.println("ADD " + a + ", " + b + ", " + c);
@@ -160,14 +152,6 @@ Instruction::=
                                     DataTranslator.getDataTranslator().setRm(c.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionRegister();
                                 :}
-              | SUB REGISTER:a COMA NUMBER:b  
-                                {:
-                                    System.out.println("SUB " + a + ", " + b);
-                                :}
-              | SUB REGISTER:a COMA REGISTER:b  
-                                {:
-                                    System.out.println("SUB " + a + ", " + b);
-                                :}
               | SUB REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     System.out.println("SUB " + a + ", " + b + ", " + c);
@@ -202,10 +186,6 @@ Instruction::=
                                 {:
                                     System.out.println("AND " + a + ", " + b + ", " + c);
                                 :}
-              | AND REGISTER:a COMA REGISTER:b 
-                                {:
-                                    System.out.println("AND " + a + ", " + b);
-                                :}
 
 
 /*********************ORR INSTRUCTION************************/
@@ -233,10 +213,7 @@ Instruction::=
                                 {:
                                     System.out.println("ORR " + a + ", " + b + ", " + c);
                                 :}
-              | ORR REGISTER:a COMA REGISTER:b 
-                                {:
-                                    System.out.println("ORR " + a + ", " + b);
-                                :}  
+
 
 /*********************EOR INSTRUCTION************************/
 
@@ -263,10 +240,6 @@ Instruction::=
                                 {:
                                     System.out.println("EOR " + a + ", " + b + ", " + c);
                                 :}
-              | EOR REGISTER:a COMA REGISTER:b 
-                                {:
-                                    System.out.println("EOR " + a + ", " + b);
-                                :}   
 
 
 /*********************BIC INSTRUCTION************************/
@@ -279,10 +252,6 @@ Instruction::=
                                 {:
                                     System.out.println("BIC " + a + ", " + b + ", " + c);
                                 :}  
-              | BIC REGISTER:a COMA REGISTER:b
-                                {:
-                                    System.out.println("BIC " + a + ", " + b);
-                                :}  
 
 
 /*********************MUL INSTRUCTION************************/
@@ -291,10 +260,6 @@ Instruction::=
                                 {:
                                     System.out.println("MUL " + a + ", " + b + ", " + c);
                                 :}  
-              | MUL REGISTER:a COMA REGISTER:b 
-                                {:
-                                    System.out.println("MUL " + a + ", " + b);
-                                :} 
 
 /*********************MLA INSTRUCTION************************/
 
@@ -320,18 +285,10 @@ Instruction::=
                                     DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionRegister();
                                 :} 
-              | LSL REGISTER:a COMA REGISTER:b 
-                                {:
-                                    System.out.println("LSL " + a + ", " + b);
-                                :} 
 
 
 /*********************ASR INSTRUCTION************************/
 
-              | ASR  REGISTER:a COMA REGISTER:b 
-                                {:
-                                    System.out.println("ASR "+a+","+b);
-                                :}  
               | ASR  REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     System.out.println("ASR "+a+","+b+","+c);
@@ -371,12 +328,7 @@ Instruction::=
                                     DataTranslator.getDataTranslator().setSh("11");
                                     DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionRegister();
-                                :}
-              | ROR  REGISTER:a COMA REGISTER:b 
-                                {:
-                                    System.out.println("ROR "+a+","+b);
-                                :}  
-                               
+                                :}                               
 
 
 /*********************MOV INSTRUCTION************************/
@@ -389,6 +341,7 @@ Instruction::=
                                 {:
                                     System.out.println("MOV "+a+", "+b);
                                 :} 
+
 
 /*********************MVN INSTRUCTION************************/
 
