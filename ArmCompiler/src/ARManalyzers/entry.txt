@@ -1,2 +1,35 @@
+ADD r5,r6,r7
+ADD r0,r1,#42
+ADD r1,r2,#0xAB
+SUB r8,r9,r10
+SUB r2,r3,#56
+SUB r2,r3,#0xFF0
+AND r3,r5,r7
+AND r6,r8,#32
+AND r5,r0,#0x2A
+ORR r2,r9,r7
+ORR r5,r1,#32
+ORR r7,r0,#0xFF0
+EOR r1,r7,r1
+EOR r2,r3,#5
+EOR r7,r7,#0xFF
+RSB r1,r7,r1
+RSB r2,r3,#5
+RSB r7,r7,#0xFF
+RSC r1,r7,r1
+RSC r2,r3,#5
+RSC r7,r7,#0xFF
+BIC r1,r7,r1
+BIC r2,r3,#5
+BIC r7,r7,#0xFF
+SBC r1,r7,r1
+SBC r2,r3,#5
+SBC r7,r7,#0xFF
+ADC r1,r7,r1
+ADC r2,r3,#5
+ADC r7,r7,#0xFF
+LSL r0,r9,#7
+ROR r3,r5,#21
+STR r11,[r5],#26
 
-ADD r2,r3,#0xFF0
+

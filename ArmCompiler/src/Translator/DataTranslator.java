@@ -184,7 +184,7 @@ public class DataTranslator {
         createRot ();
         String instruction = getCond() + getOp() + getI() + getCmd() + getS() +
                              Rn + Rd + getRot() + imm8; 
-        //instruction = NumberTranslator.binaryToHex(instruction);
+        instruction = NumberTranslator.binaryToHex(instruction);
         BinaryOutput.writeLine(instruction);
     }
     
