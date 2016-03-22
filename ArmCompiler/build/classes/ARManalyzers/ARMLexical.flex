@@ -51,6 +51,7 @@ NUMBER = "#""-"?[0-9]+
     ","                {  return symbol(sym.COMA);          }
     "["                {  return symbol(sym.OPENBRACKET);   }
     "]"                {  return symbol(sym.CLOSEBRACKET);  }
+    "-"                {  return symbol(sym.LESS);          }
 
     "AND"              {  return symbol(sym.AND);   }
     "EOR"              {  return symbol(sym.EOR);   }

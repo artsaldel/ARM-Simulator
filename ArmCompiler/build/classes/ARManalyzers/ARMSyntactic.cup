@@ -14,7 +14,8 @@ action code {:
 :}
 
 parser code {:
-    
+    int PC = -4;
+
     public void report_error(String message, Object info) {
         StringBuilder m = new StringBuilder("Error");
         if (info instanceof java_cup.runtime.Symbol) {
@@ -58,7 +59,7 @@ terminal   AND, EOR, SUB , RSB , ADD , ADC , SBC , RSC , CMP ,
            MUL , MLA, STR, LDR, STRB, LDRB, B, BL, BEQ, BNE, BGT, BLT;
 
 terminal REGISTER, COMA, SEMICOLON, TEXT, NEWLINE, OPENBRACKET,
-         CLOSEBRACKET, NUMBER, ADDRESS;
+         CLOSEBRACKET, NUMBER, ADDRESS, LESS;
 
 
 /**************************************************************************
@@ -80,6 +81,7 @@ Program::= Instructions
 
 Instructions::= Instruction InstructionsAux
                     {:
+                    System.out.println("PC = " + PC);
                     :}
                     ;
 
@@ -94,15 +96,18 @@ InstructionsAux::= Instruction InstructionsAux
 
 Instruction::= 
 
+/*********************LABEL************************/
                 TEXT:a 
-                                {:
-                                    System.out.println("Label: " + a);
-                                :}
+                    {:
+                        System.out.println("Label: " + a);
+                        BranchTranslator.getBranchTranslator().insertLabel(a.toString(), PC + 4);
+                    :}
 
 /*********************ADD INSTRUCTION************************/
 
               | ADD REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("ADD " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -118,6 +123,7 @@ Instruction::=
                                 :}
               | ADD REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("ADD " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -132,6 +138,7 @@ Instruction::=
                                 :}
               | ADD REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("ADD " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -151,6 +158,7 @@ Instruction::=
 
               | SUB REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("SUB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -166,6 +174,7 @@ Instruction::=
                                 :}
               | SUB REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("SUB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -180,6 +189,7 @@ Instruction::=
                                 :}
               | SUB REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("SUB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -199,6 +209,7 @@ Instruction::=
 
               | AND REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("AND " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -214,6 +225,7 @@ Instruction::=
                                 :}
               | AND REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("AND " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -230,6 +242,7 @@ Instruction::=
                                 :}
               | AND REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("AND " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -248,6 +261,7 @@ Instruction::=
 
               | ORR REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("ORR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -263,6 +277,7 @@ Instruction::=
                                 :}
               | ORR REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("ORR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -279,6 +294,7 @@ Instruction::=
                                 :}
               | ORR REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("ORR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -297,6 +313,7 @@ Instruction::=
 
               | EOR REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("EOR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -312,6 +329,7 @@ Instruction::=
                                 :}
               | EOR REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("EOR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -328,6 +346,7 @@ Instruction::=
                                 :}
               | EOR REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("EOR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -346,6 +365,7 @@ Instruction::=
   
               | BIC REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("BIC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -361,6 +381,7 @@ Instruction::=
                                 :}  
               | BIC REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("BIC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -377,6 +398,7 @@ Instruction::=
                                 :} 
               | BIC REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("BIC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -395,20 +417,41 @@ Instruction::=
 
               | MUL REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("MUL " + a + ", " + b + ", " + c);
+                                    MultiplyTranslator.getMultiplyTranslator().setCond("1110");
+                                    MultiplyTranslator.getMultiplyTranslator().setOp("00");
+                                    MultiplyTranslator.getMultiplyTranslator().setCmd("000");
+                                    MultiplyTranslator.getMultiplyTranslator().setS("0");
+                                    MultiplyTranslator.getMultiplyTranslator().setRd(a.toString().split("r")[1]);
+                                    MultiplyTranslator.getMultiplyTranslator().setRa("0");
+                                    MultiplyTranslator.getMultiplyTranslator().setRm(c.toString().split("r")[1]);
+                                    MultiplyTranslator.getMultiplyTranslator().setRn(b.toString().split("r")[1]);
+                                    MultiplyTranslator.getMultiplyTranslator().writeInstruction();
                                 :}  
 
 /*********************MLA INSTRUCTION************************/
 
               | MLA REGISTER:a COMA REGISTER:b COMA REGISTER:c COMA REGISTER:d
                                 {:
+                                    PC += 4;
                                     System.out.println("MLA " + a + ", " + b + ", " + c + ", " + d);
+                                    MultiplyTranslator.getMultiplyTranslator().setCond("1110");
+                                    MultiplyTranslator.getMultiplyTranslator().setOp("00");
+                                    MultiplyTranslator.getMultiplyTranslator().setCmd("001");
+                                    MultiplyTranslator.getMultiplyTranslator().setS("0");
+                                    MultiplyTranslator.getMultiplyTranslator().setRd(a.toString().split("r")[1]);
+                                    MultiplyTranslator.getMultiplyTranslator().setRa(d.toString().split("r")[1]);
+                                    MultiplyTranslator.getMultiplyTranslator().setRm(c.toString().split("r")[1]);
+                                    MultiplyTranslator.getMultiplyTranslator().setRn(b.toString().split("r")[1]);
+                                    MultiplyTranslator.getMultiplyTranslator().writeInstruction();
                                 :} 
 
 /*********************LSL INSTRUCTION************************/
 
               | LSL REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("LSL "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -428,10 +471,12 @@ Instruction::=
 
               | ASR  REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("ASR "+a+","+b+","+c);
                                 :}  
               | ASR  REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("ASR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -452,6 +497,7 @@ Instruction::=
 
               | ROR  REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("ROR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -471,10 +517,12 @@ Instruction::=
 
               | MOV  REGISTER:a COMA REGISTER:b 
                                 {:
+                                    PC += 4;
                                     System.out.println("MOV "+a+", "+b);
                                 :}
               | MOV  REGISTER:a COMA NUMBER:b 
                                 {:
+                                    PC += 4;
                                     System.out.println("MOV "+a+", "+b);
                                 :} 
 
@@ -483,6 +531,7 @@ Instruction::=
 
               | MVN  REGISTER:a COMA REGISTER:b 
                                 {:
+                                    PC += 4;
                                     System.out.println("MVN "+a+", "+b);
                                 :}
 
@@ -491,14 +540,17 @@ Instruction::=
 
               | CMP  REGISTER:a COMA REGISTER:b 
                                 {:
+                                    PC += 4;
                                     System.out.println("CMP " + a + ", " + b);
                                 :} 
               | CMP  REGISTER:a COMA NUMBER:b 
                                 {:
+                                    PC += 4;
                                     System.out.println("CMP " + a + ", " + b);
                                 :} 
               | CMP  REGISTER:a COMA ADDRESS:b 
                                 {:
+                                    PC += 4;
                                     System.out.println("CMP " + a + ", " + b);
                                 :} 
 
@@ -506,14 +558,17 @@ Instruction::=
 
               | CMN  REGISTER:a COMA REGISTER:b 
                                 {:
+                                    PC += 4;
                                     System.out.println("CMN " + a + ", " + b);
                                 :} 
               | CMN  REGISTER:a COMA NUMBER:b 
                                 {:
+                                    PC += 4;
                                     System.out.println("CMN " + a + ", " + b);
                                 :} 
               | CMN  REGISTER:a COMA ADDRESS:b 
                                 {:
+                                    PC += 4;
                                     System.out.println("CMN " + a + ", " + b);
                                 :} 
 
@@ -522,6 +577,7 @@ Instruction::=
  
               | LDR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA ADDRESS:c CLOSEBRACKET
                                 {:
+                                    PC += 4;
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -543,6 +599,7 @@ Instruction::=
                                 :}  
               | LDR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA NUMBER:c CLOSEBRACKET
                                 {:
+                                    PC += 4;
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -560,46 +617,51 @@ Instruction::=
                                     MemoryTranslator.getMemoryTranslator().setImm12(c.toString().split("#")[1]);
                                     MemoryTranslator.getMemoryTranslator().writeInstructionImmediate();
                                 :}  
-              | LDR  REGISTER:a COMA OPENBRACKET REGISTER:b CLOSEBRACKET COMA ADDRESS:c 
+              | LDR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA REGISTER:c CLOSEBRACKET
                                 {:
-                                    System.out.println("LDR "+a+",["+b+"], "+c);
+                                    PC += 4;
+                                    System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
-                                    MemoryTranslator.getMemoryTranslator().setNegI("0");
-                                    MemoryTranslator.getMemoryTranslator().setP("0");
+                                    MemoryTranslator.getMemoryTranslator().setNegI("1");
+                                    MemoryTranslator.getMemoryTranslator().setP("1");
                                     MemoryTranslator.getMemoryTranslator().setU("1");
                                     MemoryTranslator.getMemoryTranslator().setB("0");
                                     MemoryTranslator.getMemoryTranslator().setW("0");
                                     MemoryTranslator.getMemoryTranslator().setL("1");
                                     MemoryTranslator.getMemoryTranslator().setRn(b.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
-                                    MemoryTranslator.getMemoryTranslator().setImm12(
-                                                Integer.toString(NumberTranslator.hexToInteger( 
-                                                c.toString().split("#0x")[1])  )  );
-                                    MemoryTranslator.getMemoryTranslator().writeInstructionImmediate();
-                                :}
-              | LDR  REGISTER:a COMA OPENBRACKET REGISTER:b CLOSEBRACKET COMA NUMBER:c 
+                                    MemoryTranslator.getMemoryTranslator().setShamt5("0");
+                                    MemoryTranslator.getMemoryTranslator().setSh("00");
+                                    MemoryTranslator.getMemoryTranslator().setRm(c.toString().split("r")[1]);
+                                    MemoryTranslator.getMemoryTranslator().writeInstructionRegister();
+                                :} 
+              | LDR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA LESS REGISTER:c CLOSEBRACKET
                                 {:
-                                    System.out.println("LDR "+a+",["+b+"], "+c);
+                                    PC += 4;
+                                    System.out.println("LDR "+a+",["+b+",-"+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
-                                    MemoryTranslator.getMemoryTranslator().setNegI("0");
-                                    MemoryTranslator.getMemoryTranslator().setP("0");
-                                    MemoryTranslator.getMemoryTranslator().setU("1");
+                                    MemoryTranslator.getMemoryTranslator().setNegI("1");
+                                    MemoryTranslator.getMemoryTranslator().setP("1");
+                                    MemoryTranslator.getMemoryTranslator().setU("0");
                                     MemoryTranslator.getMemoryTranslator().setB("0");
                                     MemoryTranslator.getMemoryTranslator().setW("0");
                                     MemoryTranslator.getMemoryTranslator().setL("1");
                                     MemoryTranslator.getMemoryTranslator().setRn(b.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
-                                    MemoryTranslator.getMemoryTranslator().setImm12(c.toString().split("#")[1]);
-                                    MemoryTranslator.getMemoryTranslator().writeInstructionImmediate();
-                                :}
+                                    MemoryTranslator.getMemoryTranslator().setShamt5("0");
+                                    MemoryTranslator.getMemoryTranslator().setSh("00");
+                                    MemoryTranslator.getMemoryTranslator().setRm(c.toString().split("r")[1]);
+                                    MemoryTranslator.getMemoryTranslator().writeInstructionRegister();
+                                :}  
  
 
 /*********************STR INSTRUCTION************************/
 
               | STR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA ADDRESS:c CLOSEBRACKET
                                 {:
+                                    PC += 4;
                                     System.out.println("STR "+a+",["+b+","+c+"]");
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
@@ -622,6 +684,7 @@ Instruction::=
                                 :}   
               | STR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA NUMBER:c CLOSEBRACKET
                                 {:
+                                    PC += 4;
                                     System.out.println("STR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -638,46 +701,53 @@ Instruction::=
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setImm12(c.toString().split("#")[1]);
                                     MemoryTranslator.getMemoryTranslator().writeInstructionImmediate();
-                                :}    
-              | STR  REGISTER:a COMA OPENBRACKET REGISTER:b CLOSEBRACKET COMA ADDRESS:c 
+                                :}   
+              | STR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA REGISTER:c CLOSEBRACKET
                                 {:
-                                    System.out.println("STR "+a+",["+b+"], "+c);
+                                    PC += 4;
+                                    System.out.println("STR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
-                                    MemoryTranslator.getMemoryTranslator().setNegI("0");
-                                    MemoryTranslator.getMemoryTranslator().setP("0");
+                                    MemoryTranslator.getMemoryTranslator().setNegI("1");
+                                    MemoryTranslator.getMemoryTranslator().setP("1");
                                     MemoryTranslator.getMemoryTranslator().setU("1");
                                     MemoryTranslator.getMemoryTranslator().setB("0");
                                     MemoryTranslator.getMemoryTranslator().setW("0");
                                     MemoryTranslator.getMemoryTranslator().setL("0");
                                     MemoryTranslator.getMemoryTranslator().setRn(b.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
-                                    MemoryTranslator.getMemoryTranslator().setImm12(
-                                                Integer.toString(NumberTranslator.hexToInteger( 
-                                                c.toString().split("#0x")[1])  )  );
-                                    MemoryTranslator.getMemoryTranslator().writeInstructionImmediate();
-                                :}
-              | STR  REGISTER:a COMA OPENBRACKET REGISTER:b CLOSEBRACKET COMA NUMBER:c 
+                                    MemoryTranslator.getMemoryTranslator().setShamt5("0");
+                                    MemoryTranslator.getMemoryTranslator().setSh("00");
+                                    MemoryTranslator.getMemoryTranslator().setRm(c.toString().split("r")[1]);
+                                    MemoryTranslator.getMemoryTranslator().writeInstructionRegister();
+                                :} 
+              | STR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA LESS REGISTER:c CLOSEBRACKET
                                 {:
-                                    System.out.println("STR "+a+",["+b+"], "+c);
+                                    PC += 4;
+                                    System.out.println("STR "+a+",["+b+",-"+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
-                                    MemoryTranslator.getMemoryTranslator().setNegI("0");
-                                    MemoryTranslator.getMemoryTranslator().setP("0");
-                                    MemoryTranslator.getMemoryTranslator().setU("1");
+                                    MemoryTranslator.getMemoryTranslator().setNegI("1");
+                                    MemoryTranslator.getMemoryTranslator().setP("1");
+                                    MemoryTranslator.getMemoryTranslator().setU("0");
                                     MemoryTranslator.getMemoryTranslator().setB("0");
                                     MemoryTranslator.getMemoryTranslator().setW("0");
                                     MemoryTranslator.getMemoryTranslator().setL("0");
                                     MemoryTranslator.getMemoryTranslator().setRn(b.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
-                                    MemoryTranslator.getMemoryTranslator().setImm12(c.toString().split("#")[1]);
-                                    MemoryTranslator.getMemoryTranslator().writeInstructionImmediate();
-                                :}
-  
+                                    MemoryTranslator.getMemoryTranslator().setShamt5("0");
+                                    MemoryTranslator.getMemoryTranslator().setSh("00");
+                                    MemoryTranslator.getMemoryTranslator().setRm(c.toString().split("r")[1]);
+                                    MemoryTranslator.getMemoryTranslator().writeInstructionRegister();
+                                :}  
+
+
+
 /*********************LDRB INSTRUCTION************************/
 
               | LDRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA ADDRESS:c CLOSEBRACKET
                                 {:
+                                    PC += 4;
                                     System.out.println("LDRB "+a+",["+b+","+c+"]");
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
@@ -700,6 +770,7 @@ Instruction::=
                                 :}  
               | LDRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA NUMBER:c CLOSEBRACKET
                                 {:
+                                    PC += 4;
                                     System.out.println("LDRB "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -717,45 +788,50 @@ Instruction::=
                                     MemoryTranslator.getMemoryTranslator().setImm12(c.toString().split("#")[1]);
                                     MemoryTranslator.getMemoryTranslator().writeInstructionImmediate();
                                 :}   
-              | LDRB  REGISTER:a COMA OPENBRACKET REGISTER:b CLOSEBRACKET COMA ADDRESS:c 
+              | LDRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA REGISTER:c CLOSEBRACKET
                                 {:
-                                    System.out.println("LDRB "+a+",["+b+"], "+c);
+                                    PC += 4;
+                                    System.out.println("LDRB "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
-                                    MemoryTranslator.getMemoryTranslator().setNegI("0");
-                                    MemoryTranslator.getMemoryTranslator().setP("0");
+                                    MemoryTranslator.getMemoryTranslator().setNegI("1");
+                                    MemoryTranslator.getMemoryTranslator().setP("1");
                                     MemoryTranslator.getMemoryTranslator().setU("1");
                                     MemoryTranslator.getMemoryTranslator().setB("1");
                                     MemoryTranslator.getMemoryTranslator().setW("0");
                                     MemoryTranslator.getMemoryTranslator().setL("1");
                                     MemoryTranslator.getMemoryTranslator().setRn(b.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
-                                    MemoryTranslator.getMemoryTranslator().setImm12(
-                                                Integer.toString(NumberTranslator.hexToInteger( 
-                                                c.toString().split("#0x")[1])  )  );
-                                    MemoryTranslator.getMemoryTranslator().writeInstructionImmediate();
-                                :}
-              | LDRB  REGISTER:a COMA OPENBRACKET REGISTER:b CLOSEBRACKET COMA NUMBER:c 
+                                    MemoryTranslator.getMemoryTranslator().setShamt5("0");
+                                    MemoryTranslator.getMemoryTranslator().setSh("00");
+                                    MemoryTranslator.getMemoryTranslator().setRm(c.toString().split("r")[1]);
+                                    MemoryTranslator.getMemoryTranslator().writeInstructionRegister();
+                                :} 
+              | LDRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA LESS REGISTER:c CLOSEBRACKET
                                 {:
-                                    System.out.println("LDRB "+a+",["+b+"], "+c);
+                                    PC += 4;
+                                    System.out.println("LDRB "+a+",["+b+",-"+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
-                                    MemoryTranslator.getMemoryTranslator().setNegI("0");
-                                    MemoryTranslator.getMemoryTranslator().setP("0");
-                                    MemoryTranslator.getMemoryTranslator().setU("1");
+                                    MemoryTranslator.getMemoryTranslator().setNegI("1");
+                                    MemoryTranslator.getMemoryTranslator().setP("1");
+                                    MemoryTranslator.getMemoryTranslator().setU("0");
                                     MemoryTranslator.getMemoryTranslator().setB("1");
                                     MemoryTranslator.getMemoryTranslator().setW("0");
                                     MemoryTranslator.getMemoryTranslator().setL("1");
                                     MemoryTranslator.getMemoryTranslator().setRn(b.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
-                                    MemoryTranslator.getMemoryTranslator().setImm12(c.toString().split("#")[1]);
-                                    MemoryTranslator.getMemoryTranslator().writeInstructionImmediate();
-                                :}
+                                    MemoryTranslator.getMemoryTranslator().setShamt5("0");
+                                    MemoryTranslator.getMemoryTranslator().setSh("00");
+                                    MemoryTranslator.getMemoryTranslator().setRm(c.toString().split("r")[1]);
+                                    MemoryTranslator.getMemoryTranslator().writeInstructionRegister();
+                                :}  
 
 /*********************STRB INSTRUCTION************************/
 
               | STRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA ADDRESS:c CLOSEBRACKET
                                 {:
+                                    PC += 4;
                                     System.out.println("STRB "+a+",["+b+","+c+"]");
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
@@ -778,6 +854,7 @@ Instruction::=
                                 :}   
               | STRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA NUMBER:c CLOSEBRACKET
                                 {:
+                                    PC += 4;
                                     System.out.println("STRB "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -795,54 +872,61 @@ Instruction::=
                                     MemoryTranslator.getMemoryTranslator().setImm12(c.toString().split("#")[1]);
                                     MemoryTranslator.getMemoryTranslator().writeInstructionImmediate();
                                 :} 
-              | STRB  REGISTER:a COMA OPENBRACKET REGISTER:b CLOSEBRACKET COMA ADDRESS:c 
+              | STRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA REGISTER:c CLOSEBRACKET
                                 {:
-                                    System.out.println("STRB "+a+",["+b+"], "+c);
+                                    PC += 4;
+                                    System.out.println("STRB "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
-                                    MemoryTranslator.getMemoryTranslator().setNegI("0");
-                                    MemoryTranslator.getMemoryTranslator().setP("0");
+                                    MemoryTranslator.getMemoryTranslator().setNegI("1");
+                                    MemoryTranslator.getMemoryTranslator().setP("1");
                                     MemoryTranslator.getMemoryTranslator().setU("1");
                                     MemoryTranslator.getMemoryTranslator().setB("1");
                                     MemoryTranslator.getMemoryTranslator().setW("0");
                                     MemoryTranslator.getMemoryTranslator().setL("0");
                                     MemoryTranslator.getMemoryTranslator().setRn(b.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
-                                    MemoryTranslator.getMemoryTranslator().setImm12(
-                                                Integer.toString(NumberTranslator.hexToInteger( 
-                                                c.toString().split("#0x")[1])  )  );
-                                    MemoryTranslator.getMemoryTranslator().writeInstructionImmediate();
-                                :}
-              | STRB  REGISTER:a COMA OPENBRACKET REGISTER:b CLOSEBRACKET COMA NUMBER:c 
+                                    MemoryTranslator.getMemoryTranslator().setShamt5("0");
+                                    MemoryTranslator.getMemoryTranslator().setSh("00");
+                                    MemoryTranslator.getMemoryTranslator().setRm(c.toString().split("r")[1]);
+                                    MemoryTranslator.getMemoryTranslator().writeInstructionRegister();
+                                :} 
+              | STRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA LESS REGISTER:c CLOSEBRACKET
                                 {:
-                                    System.out.println("STRB "+a+",["+b+"], "+c); 
+                                    PC += 4;
+                                    System.out.println("STRB "+a+",["+b+",-"+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
-                                    MemoryTranslator.getMemoryTranslator().setNegI("0");
-                                    MemoryTranslator.getMemoryTranslator().setP("0");
-                                    MemoryTranslator.getMemoryTranslator().setU("1");
+                                    MemoryTranslator.getMemoryTranslator().setNegI("1");
+                                    MemoryTranslator.getMemoryTranslator().setP("1");
+                                    MemoryTranslator.getMemoryTranslator().setU("0");
                                     MemoryTranslator.getMemoryTranslator().setB("1");
                                     MemoryTranslator.getMemoryTranslator().setW("0");
                                     MemoryTranslator.getMemoryTranslator().setL("0");
                                     MemoryTranslator.getMemoryTranslator().setRn(b.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
-                                    MemoryTranslator.getMemoryTranslator().setImm12(c.toString().split("#")[1]);
-                                    MemoryTranslator.getMemoryTranslator().writeInstructionImmediate();
-                                :}
+                                    MemoryTranslator.getMemoryTranslator().setShamt5("0");
+                                    MemoryTranslator.getMemoryTranslator().setSh("00");
+                                    MemoryTranslator.getMemoryTranslator().setRm(c.toString().split("r")[1]);
+                                    MemoryTranslator.getMemoryTranslator().writeInstructionRegister();
+                                :}  
 
 
 /*********************RRX INSTRUCTION************************/
 
               | RRX  REGISTER:a COMA REGISTER:b 
                                 {:
+                                    PC += 4;
                                     System.out.println("RRX " + a + ", " + b);
                                 :} 
               | RRX  REGISTER:a COMA NUMBER:b 
                                 {:
+                                    PC += 4;
                                     System.out.println("RRX " + a + ", " + b);
                                 :} 
               | RRX  REGISTER:a COMA ADDRESS:b 
                                 {:
+                                    PC += 4;
                                     System.out.println("RRX " + a + ", " + b);
                                 :} 
 
@@ -850,6 +934,7 @@ Instruction::=
 
               | SBC  REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("SBC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -865,6 +950,7 @@ Instruction::=
                                 :}   
               | SBC  REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("SBC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -881,6 +967,7 @@ Instruction::=
                                 :}   
               | SBC  REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("SBC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -899,6 +986,7 @@ Instruction::=
 
               | ADC REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("ADC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -914,6 +1002,7 @@ Instruction::=
                                 :}  
               | ADC REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("ADC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -930,6 +1019,7 @@ Instruction::=
                                 :} 
               | ADC REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("ADC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -948,6 +1038,7 @@ Instruction::=
 
               | RSB REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("RSB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -963,6 +1054,7 @@ Instruction::=
                                 :}
               | RSB REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("RSB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -979,6 +1071,7 @@ Instruction::=
                                 :}
               | RSB REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("RSB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -996,6 +1089,7 @@ Instruction::=
 
               | RSC REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("RSC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1011,6 +1105,7 @@ Instruction::=
                                 :}
               | RSC REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("RSC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1027,6 +1122,7 @@ Instruction::=
                                 :}
               | RSC REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
+                                    PC += 4;
                                     System.out.println("RSC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1044,27 +1140,75 @@ Instruction::=
 
               | B TEXT:a 
                                 {:
+                                    PC += 4;
+                                    int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
+                                    int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("B " + a);
+                                    BranchTranslator.getBranchTranslator().setCond("1110");
+                                    BranchTranslator.getBranchTranslator().setOp("10");
+                                    BranchTranslator.getBranchTranslator().setL1("10");
+                                    BranchTranslator.getBranchTranslator().setImm24(Integer.toString(imm24));
+                                    BranchTranslator.getBranchTranslator().writeInstruction();
                                 :}
               | BL TEXT:a 
                                 {:
+                                    PC += 4;
+                                    int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
+                                    int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("BL " + a);
+                                    BranchTranslator.getBranchTranslator().setCond("1110");
+                                    BranchTranslator.getBranchTranslator().setOp("10");
+                                    BranchTranslator.getBranchTranslator().setL1("11");
+                                    BranchTranslator.getBranchTranslator().setImm24(Integer.toString(imm24));
+                                    BranchTranslator.getBranchTranslator().writeInstruction();
                                 :}
               | BEQ TEXT:a 
                                 {:
+                                    PC += 4;
+                                    int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
+                                    int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("BEQ " + a);
+                                    BranchTranslator.getBranchTranslator().setCond("0000");
+                                    BranchTranslator.getBranchTranslator().setOp("10");
+                                    BranchTranslator.getBranchTranslator().setL1("10");
+                                    BranchTranslator.getBranchTranslator().setImm24(Integer.toString(imm24));
+                                    BranchTranslator.getBranchTranslator().writeInstruction();
                                 :}
               | BNE TEXT:a 
                                 {:
+                                    PC += 4;
+                                    int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
+                                    int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("BNE " + a);
+                                    BranchTranslator.getBranchTranslator().setCond("0001");
+                                    BranchTranslator.getBranchTranslator().setOp("10");
+                                    BranchTranslator.getBranchTranslator().setL1("10");
+                                    BranchTranslator.getBranchTranslator().setImm24(Integer.toString(imm24));
+                                    BranchTranslator.getBranchTranslator().writeInstruction();
                                 :}
               | BGT TEXT:a 
                                 {:
+                                    PC += 4;
+                                    int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
+                                    int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("BGT " + a);
+                                    BranchTranslator.getBranchTranslator().setCond("1100");
+                                    BranchTranslator.getBranchTranslator().setOp("10");
+                                    BranchTranslator.getBranchTranslator().setL1("10");
+                                    BranchTranslator.getBranchTranslator().setImm24(Integer.toString(imm24));
+                                    BranchTranslator.getBranchTranslator().writeInstruction();
                                 :}
               | BLT TEXT:a 
                                 {:
+                                    PC += 4;
+                                    int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
+                                    int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("BLT " + a);
+                                    BranchTranslator.getBranchTranslator().setCond("1011");
+                                    BranchTranslator.getBranchTranslator().setOp("10");
+                                    BranchTranslator.getBranchTranslator().setL1("10");
+                                    BranchTranslator.getBranchTranslator().setImm24(Integer.toString(imm24));
+                                    BranchTranslator.getBranchTranslator().writeInstruction();
                                 :}
 
 /*************************EXTRA********************************/

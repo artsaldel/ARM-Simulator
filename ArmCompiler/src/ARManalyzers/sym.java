@@ -15,6 +15,7 @@ public class sym {
   public static final int MVN = 19;
   public static final int ORR = 12;
   public static final int REGISTER = 32;
+  public static final int LESS = 41;
   public static final int CMP = 10;
   public static final int CMN = 11;
   public static final int BGT = 30;
@@ -90,7 +91,8 @@ public class sym {
   "OPENBRACKET",
   "CLOSEBRACKET",
   "NUMBER",
-  "ADDRESS"
+  "ADDRESS",
+  "LESS"
   };
 }
 
