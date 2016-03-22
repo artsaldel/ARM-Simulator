@@ -21,7 +21,7 @@ public class Grammar {
         */
         parser instParser = new parser ();
         String [] archive = {"C:/Users/Arturo Salas/Desktop/Arquitectura de Computadores 1/Proyecto #1/ArmCompiler/src/ARManalyzers/entry.txt"}; 
-        parser.main(archive);
+        parser.main(archive, false);
         System.out.println("Ejecutado!");
         /*
         BranchTranslator.getBranchTranslator().insertLabel("Arturo1", 4);

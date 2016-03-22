@@ -679,6 +679,7 @@ public class parser extends java_cup.runtime.lr_parser {
 
 
     int PC = -4;
+    public static boolean isWrite = false;
 
     public void report_error(String message, Object info) {
         StringBuilder m = new StringBuilder("Error");
@@ -700,8 +701,9 @@ public class parser extends java_cup.runtime.lr_parser {
         System.exit(1);
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args, boolean isWri){
         try {
+            isWrite = isWri;
             parser asin = new parser(
                     new LexicalAnalyzer( new FileReader(args[0])));
             Object result = asin.parse().value;
@@ -718,7 +720,7 @@ public class parser extends java_cup.runtime.lr_parser {
 class CUP$parser$actions {
 
 
-    /*Hay que poner las instancias de las memorias*/
+    
 
   private final parser parser;
 
@@ -770,7 +772,13 @@ class CUP$parser$actions {
             {
               Object RESULT =null;
 		
-                    System.out.println("PC = " + PC);
+                    if (!isWrite){
+                        PC = -4;
+                        parser instParser = new parser ();
+                        String [] archive = {"C:/Users/Arturo Salas/Desktop/Arquitectura de Computadores 1/Proyecto #1/ArmCompiler/src/ARManalyzers/entry.txt"}; 
+                        parser.main(archive, true);
+                        System.out.println("PC = " + PC);
+                    }
                     
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instructions",2, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -781,6 +789,7 @@ class CUP$parser$actions {
             {
               Object RESULT =null;
 		
+                    
                     
               CUP$parser$result = parser.getSymbolFactory().newSymbol("InstructionsAux",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -804,9 +813,9 @@ class CUP$parser$actions {
 		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
-                        //PC += 4;
                         System.out.println("Label: " + a);
-                        BranchTranslator.getBranchTranslator().insertLabel(a.toString(), PC + 4);
+                        if (!isWrite)
+                            BranchTranslator.getBranchTranslator().insertLabel(a.toString(), PC + 4);
                     
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -827,6 +836,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("ADD " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -839,6 +849,7 @@ class CUP$parser$actions {
                                     DataTranslator.getDataTranslator().setSh("00");
                                     DataTranslator.getDataTranslator().setRm(c.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -859,6 +870,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("ADD " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -870,6 +882,7 @@ class CUP$parser$actions {
                                     //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
                                     DataTranslator.getDataTranslator().setImm8(c.toString().split("#")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -890,6 +903,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("ADD " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -903,6 +917,7 @@ class CUP$parser$actions {
                                                 Integer.toString(NumberTranslator.hexToInteger( 
                                                 c.toString().split("#0x")[1])  )  );
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -923,6 +938,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("SUB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -935,6 +951,7 @@ class CUP$parser$actions {
                                     DataTranslator.getDataTranslator().setSh("00");
                                     DataTranslator.getDataTranslator().setRm(c.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -955,6 +972,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("SUB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -966,6 +984,7 @@ class CUP$parser$actions {
                                     //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
                                     DataTranslator.getDataTranslator().setImm8(c.toString().split("#")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -986,6 +1005,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("SUB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -999,6 +1019,7 @@ class CUP$parser$actions {
                                                 Integer.toString(NumberTranslator.hexToInteger( 
                                                 c.toString().split("#0x")[1])  )  );
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1019,6 +1040,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("AND " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1031,6 +1053,7 @@ class CUP$parser$actions {
                                     DataTranslator.getDataTranslator().setSh("00");
                                     DataTranslator.getDataTranslator().setRm(c.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1051,6 +1074,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("AND " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1064,6 +1088,7 @@ class CUP$parser$actions {
                                                 Integer.toString(NumberTranslator.hexToInteger( 
                                                 c.toString().split("#0x")[1])  )  );
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1084,6 +1109,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("AND " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1095,6 +1121,7 @@ class CUP$parser$actions {
                                     //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
                                     DataTranslator.getDataTranslator().setImm8(c.toString().split("#")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1115,6 +1142,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("ORR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1127,6 +1155,7 @@ class CUP$parser$actions {
                                     DataTranslator.getDataTranslator().setSh("00");
                                     DataTranslator.getDataTranslator().setRm(c.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1147,6 +1176,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("ORR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1160,6 +1190,7 @@ class CUP$parser$actions {
                                                 Integer.toString(NumberTranslator.hexToInteger( 
                                                 c.toString().split("#0x")[1])  )  );
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1180,6 +1211,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("ORR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1191,6 +1223,7 @@ class CUP$parser$actions {
                                     //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
                                     DataTranslator.getDataTranslator().setImm8(c.toString().split("#")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1211,6 +1244,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("EOR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1223,6 +1257,7 @@ class CUP$parser$actions {
                                     DataTranslator.getDataTranslator().setSh("00");
                                     DataTranslator.getDataTranslator().setRm(c.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1243,6 +1278,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("EOR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1256,6 +1292,7 @@ class CUP$parser$actions {
                                                 Integer.toString(NumberTranslator.hexToInteger( 
                                                 c.toString().split("#0x")[1])  )  );
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1276,6 +1313,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("EOR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1287,6 +1325,7 @@ class CUP$parser$actions {
                                     //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
                                     DataTranslator.getDataTranslator().setImm8(c.toString().split("#")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1307,6 +1346,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("BIC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1319,6 +1359,7 @@ class CUP$parser$actions {
                                     DataTranslator.getDataTranslator().setSh("00");
                                     DataTranslator.getDataTranslator().setRm(c.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1339,6 +1380,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("BIC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1352,6 +1394,7 @@ class CUP$parser$actions {
                                                 Integer.toString(NumberTranslator.hexToInteger( 
                                                 c.toString().split("#0x")[1])  )  );
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1372,6 +1415,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("BIC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1383,6 +1427,7 @@ class CUP$parser$actions {
                                     //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
                                     DataTranslator.getDataTranslator().setImm8(c.toString().split("#")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1403,6 +1448,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("MUL " + a + ", " + b + ", " + c);
                                     MultiplyTranslator.getMultiplyTranslator().setCond("1110");
                                     MultiplyTranslator.getMultiplyTranslator().setOp("00");
@@ -1413,6 +1459,7 @@ class CUP$parser$actions {
                                     MultiplyTranslator.getMultiplyTranslator().setRm(c.toString().split("r")[1]);
                                     MultiplyTranslator.getMultiplyTranslator().setRn(b.toString().split("r")[1]);
                                     MultiplyTranslator.getMultiplyTranslator().writeInstruction();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1436,6 +1483,7 @@ class CUP$parser$actions {
 		Object d = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("MLA " + a + ", " + b + ", " + c + ", " + d);
                                     MultiplyTranslator.getMultiplyTranslator().setCond("1110");
                                     MultiplyTranslator.getMultiplyTranslator().setOp("00");
@@ -1446,6 +1494,7 @@ class CUP$parser$actions {
                                     MultiplyTranslator.getMultiplyTranslator().setRm(c.toString().split("r")[1]);
                                     MultiplyTranslator.getMultiplyTranslator().setRn(b.toString().split("r")[1]);
                                     MultiplyTranslator.getMultiplyTranslator().writeInstruction();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1466,6 +1515,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("LSL "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1478,6 +1528,7 @@ class CUP$parser$actions {
                                     DataTranslator.getDataTranslator().setSh("00");
                                     DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1498,7 +1549,9 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("ASR "+a+","+b+","+c);
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1519,6 +1572,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("ASR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1531,6 +1585,7 @@ class CUP$parser$actions {
                                     DataTranslator.getDataTranslator().setSh("10");
                                     DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionRegisterShifted();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1551,6 +1606,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("ROR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1563,6 +1619,7 @@ class CUP$parser$actions {
                                     DataTranslator.getDataTranslator().setSh("11");
                                     DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1580,7 +1637,9 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("MOV "+a+", "+b);
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1598,7 +1657,9 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("MOV "+a+", "+b);
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1616,7 +1677,9 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("MVN "+a+", "+b);
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1634,7 +1697,9 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("CMP " + a + ", " + b);
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1652,7 +1717,9 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("CMP " + a + ", " + b);
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1670,7 +1737,9 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("CMP " + a + ", " + b);
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1688,7 +1757,9 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("CMN " + a + ", " + b);
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1706,7 +1777,9 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("CMN " + a + ", " + b);
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1724,7 +1797,9 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("CMN " + a + ", " + b);
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1745,6 +1820,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -1763,6 +1839,7 @@ class CUP$parser$actions {
                                                 Integer.toString(NumberTranslator.hexToInteger( 
                                                 c.toString().split("#0x")[1])  )  );
                                     MemoryTranslator.getMemoryTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1783,6 +1860,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -1799,6 +1877,7 @@ class CUP$parser$actions {
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setImm12(c.toString().split("#")[1]);
                                     MemoryTranslator.getMemoryTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1819,6 +1898,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -1834,6 +1914,7 @@ class CUP$parser$actions {
                                     MemoryTranslator.getMemoryTranslator().setSh("00");
                                     MemoryTranslator.getMemoryTranslator().setRm(c.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().writeInstructionRegister();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1854,6 +1935,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("LDR "+a+",["+b+",-"+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -1869,6 +1951,7 @@ class CUP$parser$actions {
                                     MemoryTranslator.getMemoryTranslator().setSh("00");
                                     MemoryTranslator.getMemoryTranslator().setRm(c.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().writeInstructionRegister();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1889,6 +1972,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("STR "+a+",["+b+","+c+"]");
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
@@ -1908,6 +1992,7 @@ class CUP$parser$actions {
                                                 Integer.toString(NumberTranslator.hexToInteger( 
                                                 c.toString().split("#0x")[1])  )  );
                                     MemoryTranslator.getMemoryTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1928,6 +2013,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("STR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -1944,6 +2030,7 @@ class CUP$parser$actions {
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setImm12(c.toString().split("#")[1]);
                                     MemoryTranslator.getMemoryTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1964,6 +2051,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("STR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -1979,6 +2067,7 @@ class CUP$parser$actions {
                                     MemoryTranslator.getMemoryTranslator().setSh("00");
                                     MemoryTranslator.getMemoryTranslator().setRm(c.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().writeInstructionRegister();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1999,6 +2088,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("STR "+a+",["+b+",-"+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -2014,6 +2104,7 @@ class CUP$parser$actions {
                                     MemoryTranslator.getMemoryTranslator().setSh("00");
                                     MemoryTranslator.getMemoryTranslator().setRm(c.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().writeInstructionRegister();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2034,6 +2125,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("LDRB "+a+",["+b+","+c+"]");
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
@@ -2053,6 +2145,7 @@ class CUP$parser$actions {
                                                 Integer.toString(NumberTranslator.hexToInteger( 
                                                 c.toString().split("#0x")[1])  )  );
                                     MemoryTranslator.getMemoryTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2073,6 +2166,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("LDRB "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -2089,6 +2183,7 @@ class CUP$parser$actions {
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setImm12(c.toString().split("#")[1]);
                                     MemoryTranslator.getMemoryTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2109,6 +2204,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("LDRB "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -2124,6 +2220,7 @@ class CUP$parser$actions {
                                     MemoryTranslator.getMemoryTranslator().setSh("00");
                                     MemoryTranslator.getMemoryTranslator().setRm(c.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().writeInstructionRegister();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2144,6 +2241,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("LDRB "+a+",["+b+",-"+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -2159,6 +2257,7 @@ class CUP$parser$actions {
                                     MemoryTranslator.getMemoryTranslator().setSh("00");
                                     MemoryTranslator.getMemoryTranslator().setRm(c.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().writeInstructionRegister();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2179,6 +2278,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("STRB "+a+",["+b+","+c+"]");
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
@@ -2198,6 +2298,7 @@ class CUP$parser$actions {
                                                 Integer.toString(NumberTranslator.hexToInteger( 
                                                 c.toString().split("#0x")[1])  )  );
                                     MemoryTranslator.getMemoryTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2218,6 +2319,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("STRB "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -2234,6 +2336,7 @@ class CUP$parser$actions {
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setImm12(c.toString().split("#")[1]);
                                     MemoryTranslator.getMemoryTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2254,6 +2357,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("STRB "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -2269,6 +2373,7 @@ class CUP$parser$actions {
                                     MemoryTranslator.getMemoryTranslator().setSh("00");
                                     MemoryTranslator.getMemoryTranslator().setRm(c.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().writeInstructionRegister();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2289,6 +2394,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("STRB "+a+",["+b+",-"+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -2304,6 +2410,7 @@ class CUP$parser$actions {
                                     MemoryTranslator.getMemoryTranslator().setSh("00");
                                     MemoryTranslator.getMemoryTranslator().setRm(c.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().writeInstructionRegister();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2321,7 +2428,9 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("RRX " + a + ", " + b);
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2339,7 +2448,9 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("RRX " + a + ", " + b);
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2357,7 +2468,9 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("RRX " + a + ", " + b);
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2378,6 +2491,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("SBC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2390,6 +2504,7 @@ class CUP$parser$actions {
                                     DataTranslator.getDataTranslator().setSh("00");
                                     DataTranslator.getDataTranslator().setRm(c.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2410,6 +2525,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("SBC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2423,6 +2539,7 @@ class CUP$parser$actions {
                                                 Integer.toString(NumberTranslator.hexToInteger( 
                                                 c.toString().split("#0x")[1])  )  );
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2443,6 +2560,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("SBC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2454,6 +2572,7 @@ class CUP$parser$actions {
                                     //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
                                     DataTranslator.getDataTranslator().setImm8(c.toString().split("#")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2474,6 +2593,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("ADC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2486,6 +2606,7 @@ class CUP$parser$actions {
                                     DataTranslator.getDataTranslator().setSh("00");
                                     DataTranslator.getDataTranslator().setRm(c.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2506,6 +2627,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("ADC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2519,6 +2641,7 @@ class CUP$parser$actions {
                                                 Integer.toString(NumberTranslator.hexToInteger( 
                                                 c.toString().split("#0x")[1])  )  );
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2539,6 +2662,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("ADC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2550,6 +2674,7 @@ class CUP$parser$actions {
                                     //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
                                     DataTranslator.getDataTranslator().setImm8(c.toString().split("#")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2570,6 +2695,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("RSB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2582,6 +2708,7 @@ class CUP$parser$actions {
                                     DataTranslator.getDataTranslator().setSh("00");
                                     DataTranslator.getDataTranslator().setRm(c.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2602,6 +2729,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("RSB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2615,6 +2743,7 @@ class CUP$parser$actions {
                                                 Integer.toString(NumberTranslator.hexToInteger( 
                                                 c.toString().split("#0x")[1])  )  );
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2635,6 +2764,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("RSB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2646,6 +2776,7 @@ class CUP$parser$actions {
                                     //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
                                     DataTranslator.getDataTranslator().setImm8(c.toString().split("#")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2666,6 +2797,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("RSC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2678,6 +2810,7 @@ class CUP$parser$actions {
                                     DataTranslator.getDataTranslator().setSh("00");
                                     DataTranslator.getDataTranslator().setRm(c.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2698,6 +2831,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("RSC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2711,6 +2845,7 @@ class CUP$parser$actions {
                                                 Integer.toString(NumberTranslator.hexToInteger( 
                                                 c.toString().split("#0x")[1])  )  );
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2731,6 +2866,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     System.out.println("RSC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2742,6 +2878,7 @@ class CUP$parser$actions {
                                     //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
                                     DataTranslator.getDataTranslator().setImm8(c.toString().split("#")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2756,6 +2893,7 @@ class CUP$parser$actions {
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("B " + a);
@@ -2764,6 +2902,7 @@ class CUP$parser$actions {
                                     BranchTranslator.getBranchTranslator().setL1("10");
                                     BranchTranslator.getBranchTranslator().setImm24(Integer.toString(imm24));
                                     BranchTranslator.getBranchTranslator().writeInstruction();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2778,6 +2917,7 @@ class CUP$parser$actions {
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("BL " + a);
@@ -2786,6 +2926,7 @@ class CUP$parser$actions {
                                     BranchTranslator.getBranchTranslator().setL1("11");
                                     BranchTranslator.getBranchTranslator().setImm24(Integer.toString(imm24));
                                     BranchTranslator.getBranchTranslator().writeInstruction();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2800,6 +2941,7 @@ class CUP$parser$actions {
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("BEQ " + a);
@@ -2808,6 +2950,7 @@ class CUP$parser$actions {
                                     BranchTranslator.getBranchTranslator().setL1("10");
                                     BranchTranslator.getBranchTranslator().setImm24(Integer.toString(imm24));
                                     BranchTranslator.getBranchTranslator().writeInstruction();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2822,6 +2965,7 @@ class CUP$parser$actions {
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("BNE " + a);
@@ -2830,6 +2974,7 @@ class CUP$parser$actions {
                                     BranchTranslator.getBranchTranslator().setL1("10");
                                     BranchTranslator.getBranchTranslator().setImm24(Integer.toString(imm24));
                                     BranchTranslator.getBranchTranslator().writeInstruction();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2844,6 +2989,7 @@ class CUP$parser$actions {
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("BGT " + a);
@@ -2852,6 +2998,7 @@ class CUP$parser$actions {
                                     BranchTranslator.getBranchTranslator().setL1("10");
                                     BranchTranslator.getBranchTranslator().setImm24(Integer.toString(imm24));
                                     BranchTranslator.getBranchTranslator().writeInstruction();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2866,6 +3013,7 @@ class CUP$parser$actions {
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
+                                    if (isWrite){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("BLT " + a);
@@ -2874,6 +3022,7 @@ class CUP$parser$actions {
                                     BranchTranslator.getBranchTranslator().setL1("10");
                                     BranchTranslator.getBranchTranslator().setImm24(Integer.toString(imm24));
                                     BranchTranslator.getBranchTranslator().writeInstruction();
+                                    }
                                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Instruction",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }

@@ -34,21 +34,19 @@ LDR r1,[r3,r5]
 LDR r1,[r2,-r4]
 STR r1,[r3,r5]
 STR r1,[r2,-r4]
-LDRB r1,[r3,r5]
+LABEL ADD r1,r2,r3
 LDRB r1,[r2,-r4]
 STRB r1,[r3,r5]
 STRB r1,[r2,-r4]
 MUL r1,r2,r3
 MLA r1,r2,r3,r4
-
-
 B LABEL
 LDR r1,[r2,-r4]
 STR r1,[r3,r5]
 STR r1,[r2,-r4]
 LDRB r1,[r3,r5]
+LDRB r1,[r3,r5]
 
-LABEL ADD r1,r2,r3
 
 
 
