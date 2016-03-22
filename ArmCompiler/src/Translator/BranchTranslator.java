@@ -118,7 +118,7 @@ public class BranchTranslator {
         }
         make24bitsImm24();
         String instruction = getCond() + getOp() + getL1() + getImm24();
-        //instruction = NumberTranslator.binaryToHex(instruction);
+        instruction = NumberTranslator.binaryToHex(instruction);
         BinaryOutput.writeLine(instruction);
     }
 }
