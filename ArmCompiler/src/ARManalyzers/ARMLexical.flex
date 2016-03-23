@@ -84,6 +84,36 @@ NUMBER = "#""-"?[0-9]+
     "BGT"              {  return symbol(sym.BGT);   }
     "BLT"              {  return symbol(sym.BLT);   }
 
+    "ADDEQ"            {  return symbol(sym.ADDEQ); }
+    "ADDLT"            {  return symbol(sym.ADDLT); }
+    "ADDGT"            {  return symbol(sym.ADDGT); }
+    "ADDNE"            {  return symbol(sym.ADDNE); }
+
+    "ORREQ"            {  return symbol(sym.ORREQ); }
+    "ORRLT"            {  return symbol(sym.ORRLT); }
+    "ORRGT"            {  return symbol(sym.ORRGT); }
+    "ORRNE"            {  return symbol(sym.ORRNE); }
+
+    "ANDEQ"            {  return symbol(sym.ANDEQ); }
+    "ANDLT"            {  return symbol(sym.ANDLT); }
+    "ANDGT"            {  return symbol(sym.ANDGT); }
+    "ANDNE"            {  return symbol(sym.ANDNE); }
+
+    "SUBEQ"            {  return symbol(sym.SUBEQ); }
+    "SUBLT"            {  return symbol(sym.SUBLT); }
+    "SUBGT"            {  return symbol(sym.SUBGT); }
+    "SUBNE"            {  return symbol(sym.SUBNE); }
+
+    "EOREQ"            {  return symbol(sym.EOREQ); }
+    "EORLT"            {  return symbol(sym.EORLT); }
+    "EORGT"            {  return symbol(sym.EORGT); }
+    "EORNE"            {  return symbol(sym.EORNE); }
+
+    "ROREQ"            {  return symbol(sym.ROREQ); }
+    "RORLT"            {  return symbol(sym.RORLT); }
+    "RORGT"            {  return symbol(sym.RORGT); }
+    "RORNE"            {  return symbol(sym.RORNE); }
+
     {JUMP}             {  return symbol(sym.NEWLINE);        }
     {SPACE}            {  /* do nothing */                   }
 
