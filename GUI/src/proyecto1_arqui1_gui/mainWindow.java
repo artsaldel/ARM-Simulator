@@ -17,11 +17,13 @@ import javax.swing.KeyStroke;
  */
 public class mainWindow extends javax.swing.JFrame {
     private String _actualPath; //indica el path del archivo que actualmente está trabajando
+    DataTables dt;
     /**
      * Creates new form mainWindow
      */
     public mainWindow() {
         this._actualPath = "";
+        dt = new DataTables();
         initComponents();
     }
     
@@ -104,11 +106,11 @@ public class mainWindow extends javax.swing.JFrame {
         LBL_editor = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        GUI_tablaRegistros = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        GUI_tablaDatos = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        GUI_tablaInstrucciones = new javax.swing.JTable();
         jScrollPane5 = new javax.swing.JScrollPane();
         editorTextPane = new javax.swing.JTextPane();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -155,24 +157,24 @@ public class mainWindow extends javax.swing.JFrame {
 
         jTabbedPane1.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        GUI_tablaRegistros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"R0", null},
-                {"R1", null},
-                {"R2", null},
-                {"R3", null},
-                {"R4", null},
-                {"R5", null},
-                {"R6", null},
-                {"R7", null},
-                {"R8", null},
-                {"R9", null},
-                {"R10", null},
-                {"R11", null},
-                {"R12", null},
-                {"R13 (SP)", null},
-                {"R14 (LR)", null},
-                {"R15 (PC)", null}
+                {"R0", "0x00000000"},
+                {"R1", "0x00000000"},
+                {"R2", "0x00000000"},
+                {"R3", "0x00000000"},
+                {"R4", "0x00000000"},
+                {"R5", "0x00000000"},
+                {"R6", "0x00000000"},
+                {"R7", "0x00000000"},
+                {"R8", "0x00000000"},
+                {"R9", "0x00000000"},
+                {"R10", "0x00000000"},
+                {"R11", "0x00000000"},
+                {"R12", "0x00000000"},
+                {"R13 (SP)", "0x00000000"},
+                {"R14 (LR)", "0x00000000"},
+                {"R15 (PC)", "0x00000000"}
             },
             new String [] {
                 "Register", "Value"
@@ -187,58 +189,24 @@ public class mainWindow extends javax.swing.JFrame {
             }
 
             public boolean isCellEditable(int row, int col) {
-                if ( col == 1) {
+                if (col == 0 && col == 1) {
                     return true;
                 } else {
                     return false;
                 }
             }
         });
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(jTable1);
+        GUI_tablaRegistros.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(GUI_tablaRegistros);
 
         jTabbedPane1.addTab("Registers", jScrollPane2);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"0x00", null},
-                {"0x04", null},
-                {"0x08", null},
-                {"0x0C", null},
-                {"0x10", null},
-                {"0x14", null},
-                {"0x18", null},
-                {"0x1C", null},
-                {"0x20", null},
-                {"0x24", null},
-                {"0x28", null},
-                {"0x2C", null},
-                {"0x30", null},
-                {"0x34", null},
-                {"0x38", null},
-                {"0x3C", null},
-                {"0x40", null},
-                {"0x44", null},
-                {"0x48", null},
-                {"0x4C", null},
-                {"0x50", null},
-                {"0x54", null},
-                {"0x58", null},
-                {"0x5C", null},
-                {"0x60", null},
-                {"0x64", null},
-                {"0x68", null},
-                {"0x6C", null},
-                {"0x70", null},
-                {"0x74", null},
-                {"0x78", null}
-            },
+        GUI_tablaDatos.setModel(new javax.swing.table.DefaultTableModel(
+            dt.initDataTable(),
             new String [] {
-                "Data", "Value"
+                "Address", "Value"
             }
-        )
-
-        {
+        )    {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class
             };
@@ -255,45 +223,13 @@ public class mainWindow extends javax.swing.JFrame {
                 }
             }
         });
-        jTable2.getTableHeader().setReorderingAllowed(false);
-        jScrollPane3.setViewportView(jTable2);
+        GUI_tablaDatos.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(GUI_tablaDatos);
 
         jTabbedPane1.addTab("Data", jScrollPane3);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"0x00", null},
-                {"0x04", null},
-                {"0x08", null},
-                {"0x0C", null},
-                {"0x10", null},
-                {"0x14", null},
-                {"0x18", null},
-                {"0x1C", null},
-                {"0x20", null},
-                {"0x24", null},
-                {"0x28", null},
-                {"0x2C", null},
-                {"0x30", null},
-                {"0x34", null},
-                {"0x38", null},
-                {"0x3C", null},
-                {"0x40", null},
-                {"0x44", null},
-                {"0x48", null},
-                {"0x4C", null},
-                {"0x50", null},
-                {"0x54", null},
-                {"0x58", null},
-                {"0x5C", null},
-                {"0x60", null},
-                {"0x64", null},
-                {"0x68", null},
-                {"0x6C", null},
-                {"0x70", null},
-                {"0x74", null},
-                {"0x78", null}
-            },
+        GUI_tablaInstrucciones.setModel(new javax.swing.table.DefaultTableModel(
+            dt.initInstructionTable(),
             new String [] {
                 "Address", "Instruction"
             }
@@ -307,15 +243,15 @@ public class mainWindow extends javax.swing.JFrame {
             }
 
             public boolean isCellEditable(int row, int col) {
-                if ( col == 1) {
+                if ( col == 1 && col == 0) {
                     return true;
                 } else {
                     return false;
                 }
             }
         });
-        jTable3.getTableHeader().setReorderingAllowed(false);
-        jScrollPane4.setViewportView(jTable3);
+        GUI_tablaInstrucciones.getTableHeader().setReorderingAllowed(false);
+        jScrollPane4.setViewportView(GUI_tablaInstrucciones);
 
         jTabbedPane1.addTab("Instructions", jScrollPane4);
 
@@ -337,7 +273,7 @@ public class mainWindow extends javax.swing.JFrame {
         LBL_fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto1_arqui1_gui/fondo2.jpg"))); // NOI18N
 
         jMenu2.setMnemonic(KeyEvent.VK_N);
-        jMenu2.setText("Archivo");
+        jMenu2.setText("File");
         jMenu2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenu2ActionPerformed(evt);
@@ -345,6 +281,7 @@ public class mainWindow extends javax.swing.JFrame {
         });
 
         jMenuItem1.setText("Nuevo");
+        jMenuItem1.setText("New");
         jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMenuItem1MouseClicked(evt);
@@ -361,7 +298,7 @@ public class mainWindow extends javax.swing.JFrame {
         jMenu2.add(jSeparator3);
 
         jMenuItem3.setMnemonic(KeyEvent.VK_O);
-        jMenuItem3.setText("Abrir...");
+        jMenuItem3.setText("Open");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -372,7 +309,7 @@ public class mainWindow extends javax.swing.JFrame {
         jMenuItem3.setAccelerator(ctrlOKeyStroke);
         jMenu2.add(jSeparator5);
 
-        jMenuItem2.setText("Guardar como...");
+        jMenuItem2.setText("Save As ...");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -383,7 +320,7 @@ public class mainWindow extends javax.swing.JFrame {
         jMenuItem2.setAccelerator(ctrlAltSKeyStroke);
 
         jMenuItem8.setMnemonic(KeyEvent.VK_S);
-        jMenuItem8.setText("Guardar");
+        jMenuItem8.setText("Save");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem8ActionPerformed(evt);
@@ -395,7 +332,7 @@ public class mainWindow extends javax.swing.JFrame {
         jMenu2.add(jSeparator4);
         jMenu2.add(jSeparator1);
 
-        jMenuItem10.setText("Cerrar");
+        jMenuItem10.setText("Close");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem10ActionPerformed(evt);
@@ -406,7 +343,7 @@ public class mainWindow extends javax.swing.JFrame {
         jMenuItem10.setAccelerator(ctrlAltQKeyStroke);
 
         jMenuItem4.setMnemonic(KeyEvent.VK_Q);
-        jMenuItem4.setText("Salir");
+        jMenuItem4.setText("Quit");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -548,6 +485,9 @@ public class mainWindow extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here: Run < Go
+        String aa = GUI_tablaDatos.getValueAt(0,1).toString();
+        System.out.println("VALOR: " + aa);
+                    
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     
@@ -662,6 +602,9 @@ public class mainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable GUI_tablaDatos;
+    private javax.swing.JTable GUI_tablaInstrucciones;
+    private javax.swing.JTable GUI_tablaRegistros;
     private javax.swing.JLabel LBL_editor;
     private javax.swing.JLabel LBL_fondo;
     private javax.swing.JLabel LBL_virtualMemory;
@@ -693,9 +636,6 @@ public class mainWindow extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
     }

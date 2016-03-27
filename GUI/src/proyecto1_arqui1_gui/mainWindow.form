@@ -23,13 +23,16 @@
             <Property name="mnemonic" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="KeyEvent.VK_N" type="code"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Archivo"/>
+            <Property name="text" type="java.lang.String" value="File"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenu2ActionPerformed"/>
           </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="New"/>
+              </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenuItem1MouseClicked"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
@@ -47,9 +50,7 @@
                 <Property name="mnemonic" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="KeyEvent.VK_O" type="code"/>
                 </Property>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="&quot;Abrir...&quot;" type="code"/>
-                </Property>
+                <Property name="text" type="java.lang.String" value="Open"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem3ActionPerformed"/>
@@ -62,9 +63,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
               <Properties>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="&quot;Guardar como...&quot;" type="code"/>
-                </Property>
+                <Property name="text" type="java.lang.String" value="Save As ..."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
@@ -78,9 +77,7 @@
                 <Property name="mnemonic" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="KeyEvent.VK_S" type="code"/>
                 </Property>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="&quot;Guardar&quot;" type="code"/>
-                </Property>
+                <Property name="text" type="java.lang.String" value="Save"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem8ActionPerformed"/>
@@ -95,9 +92,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem10">
               <Properties>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="&quot;Cerrar&quot;" type="code"/>
-                </Property>
+                <Property name="text" type="java.lang.String" value="Close"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem10ActionPerformed"/>
@@ -111,9 +106,7 @@
                 <Property name="mnemonic" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="KeyEvent.VK_Q" type="code"/>
                 </Property>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="&quot;Salir&quot;" type="code"/>
-                </Property>
+                <Property name="text" type="java.lang.String" value="Quit"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem4ActionPerformed"/>
@@ -131,9 +124,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
               <Properties>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="&quot;Go&quot;" type="code"/>
-                </Property>
+                <Property name="text" type="java.lang.String" value="Go"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem5ActionPerformed"/>
@@ -144,9 +135,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem7">
               <Properties>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="&quot;Stop&quot;" type="code"/>
-                </Property>
+                <Property name="text" type="java.lang.String" value="Stop"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem7ActionPerformed"/>
@@ -157,9 +146,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
               <Properties>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="&quot;Assembly&quot;" type="code"/>
-                </Property>
+                <Property name="text" type="java.lang.String" value="Assembly"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem6ActionPerformed"/>
@@ -318,10 +305,10 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable1">
+            <Component class="javax.swing.JTable" name="GUI_tablaRegistros">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;        {&quot;R0&quot;, null},&#xa;        {&quot;R1&quot;, null},&#xa;        {&quot;R2&quot;, null},&#xa;        {&quot;R3&quot;, null},&#xa;        {&quot;R4&quot;, null},&#xa;        {&quot;R5&quot;, null},&#xa;        {&quot;R6&quot;, null},&#xa;        {&quot;R7&quot;, null},&#xa;        {&quot;R8&quot;, null},&#xa;        {&quot;R9&quot;, null},&#xa;        {&quot;R10&quot;, null},&#xa;        {&quot;R11&quot;, null},&#xa;        {&quot;R12&quot;, null},&#xa;        {&quot;R13 (SP)&quot;, null},&#xa;        {&quot;R14 (LR)&quot;, null},&#xa;        {&quot;R15 (PC)&quot;, null}&#xa;    },&#xa;    new String [] {&#xa;        &quot;Register&quot;, &quot;Value&quot;&#xa;    }&#xa;) {&#xa;    Class[] types = new Class [] {&#xa;        java.lang.String.class, java.lang.String.class&#xa;    };&#xa;&#xa;    public Class getColumnClass(int columnIndex) {&#xa;        return types [columnIndex];&#xa;    }&#xa;&#xa;    public boolean isCellEditable(int row, int col) {&#xa;        if ( col == 1) {&#xa;            return true;&#xa;        } else {&#xa;            return false;&#xa;        }&#xa;    }&#xa;}" type="code"/>
+                  <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;        {&quot;R0&quot;, &quot;0x00000000&quot;},&#xa;        {&quot;R1&quot;, &quot;0x00000000&quot;},&#xa;        {&quot;R2&quot;, &quot;0x00000000&quot;},&#xa;        {&quot;R3&quot;, &quot;0x00000000&quot;},&#xa;        {&quot;R4&quot;, &quot;0x00000000&quot;},&#xa;        {&quot;R5&quot;, &quot;0x00000000&quot;},&#xa;        {&quot;R6&quot;, &quot;0x00000000&quot;},&#xa;        {&quot;R7&quot;, &quot;0x00000000&quot;},&#xa;        {&quot;R8&quot;, &quot;0x00000000&quot;},&#xa;        {&quot;R9&quot;, &quot;0x00000000&quot;},&#xa;        {&quot;R10&quot;, &quot;0x00000000&quot;},&#xa;        {&quot;R11&quot;, &quot;0x00000000&quot;},&#xa;        {&quot;R12&quot;, &quot;0x00000000&quot;},&#xa;        {&quot;R13 (SP)&quot;, &quot;0x00000000&quot;},&#xa;        {&quot;R14 (LR)&quot;, &quot;0x00000000&quot;},&#xa;        {&quot;R15 (PC)&quot;, &quot;0x00000000&quot;}&#xa;    },&#xa;    new String [] {&#xa;        &quot;Register&quot;, &quot;Value&quot;&#xa;    }&#xa;) {&#xa;    Class[] types = new Class [] {&#xa;        java.lang.String.class, java.lang.String.class&#xa;    };&#xa;&#xa;    public Class getColumnClass(int columnIndex) {&#xa;        return types [columnIndex];&#xa;    }&#xa;&#xa;    public boolean isCellEditable(int row, int col) {&#xa;        if (col == 0 &amp;&amp; col == 1) {&#xa;            return true;&#xa;        } else {&#xa;            return false;&#xa;        }&#xa;    }&#xa;}" type="code"/>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0"/>
@@ -347,10 +334,10 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable2">
+            <Component class="javax.swing.JTable" name="GUI_tablaDatos">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;        {&quot;0x00&quot;, null},&#xa;        {&quot;0x04&quot;, null},&#xa;        {&quot;0x08&quot;, null},&#xa;        {&quot;0x0C&quot;, null},&#xa;        {&quot;0x10&quot;, null},&#xa;        {&quot;0x14&quot;, null},&#xa;        {&quot;0x18&quot;, null},&#xa;        {&quot;0x1C&quot;, null},&#xa;        {&quot;0x20&quot;, null},&#xa;        {&quot;0x24&quot;, null},&#xa;        {&quot;0x28&quot;, null},&#xa;        {&quot;0x2C&quot;, null},&#xa;        {&quot;0x30&quot;, null},&#xa;        {&quot;0x34&quot;, null},&#xa;        {&quot;0x38&quot;, null},&#xa;        {&quot;0x3C&quot;, null},&#xa;        {&quot;0x40&quot;, null},&#xa;        {&quot;0x44&quot;, null},&#xa;        {&quot;0x48&quot;, null},&#xa;        {&quot;0x4C&quot;, null},&#xa;        {&quot;0x50&quot;, null},&#xa;        {&quot;0x54&quot;, null},&#xa;        {&quot;0x58&quot;, null},&#xa;        {&quot;0x5C&quot;, null},&#xa;        {&quot;0x60&quot;, null},&#xa;        {&quot;0x64&quot;, null},&#xa;        {&quot;0x68&quot;, null},&#xa;        {&quot;0x6C&quot;, null},&#xa;        {&quot;0x70&quot;, null},&#xa;        {&quot;0x74&quot;, null},&#xa;        {&quot;0x78&quot;, null}&#xa;    },&#xa;    new String [] {&#xa;        &quot;Data&quot;, &quot;Value&quot;&#xa;    }&#xa;)&#xa;&#xa;{&#xa;    Class[] types = new Class [] {&#xa;        java.lang.String.class, java.lang.String.class&#xa;    };&#xa;&#xa;    public Class getColumnClass(int columnIndex) {&#xa;        return types [columnIndex];&#xa;    }&#xa;&#xa;    public boolean isCellEditable(int row, int col) {&#xa;        if ( col == 1) {&#xa;            return true;&#xa;        } else {&#xa;            return false;&#xa;        }&#xa;    }&#xa;}" type="code"/>
+                  <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    dt.initDataTable(),&#xa;    new String [] {&#xa;        &quot;Address&quot;, &quot;Value&quot;&#xa;    }&#xa;)    {&#xa;    Class[] types = new Class [] {&#xa;        java.lang.String.class, java.lang.String.class&#xa;    };&#xa;&#xa;    public Class getColumnClass(int columnIndex) {&#xa;        return types [columnIndex];&#xa;    }&#xa;&#xa;    public boolean isCellEditable(int row, int col) {&#xa;        if ( col == 1) {&#xa;            return true;&#xa;        } else {&#xa;            return false;&#xa;        }&#xa;    }&#xa;}" type="code"/>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0"/>
@@ -376,10 +363,10 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable3">
+            <Component class="javax.swing.JTable" name="GUI_tablaInstrucciones">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;        {&quot;0x00&quot;, null},&#xa;        {&quot;0x04&quot;, null},&#xa;        {&quot;0x08&quot;, null},&#xa;        {&quot;0x0C&quot;, null},&#xa;        {&quot;0x10&quot;, null},&#xa;        {&quot;0x14&quot;, null},&#xa;        {&quot;0x18&quot;, null},&#xa;        {&quot;0x1C&quot;, null},&#xa;        {&quot;0x20&quot;, null},&#xa;        {&quot;0x24&quot;, null},&#xa;        {&quot;0x28&quot;, null},&#xa;        {&quot;0x2C&quot;, null},&#xa;        {&quot;0x30&quot;, null},&#xa;        {&quot;0x34&quot;, null},&#xa;        {&quot;0x38&quot;, null},&#xa;        {&quot;0x3C&quot;, null},&#xa;        {&quot;0x40&quot;, null},&#xa;        {&quot;0x44&quot;, null},&#xa;        {&quot;0x48&quot;, null},&#xa;        {&quot;0x4C&quot;, null},&#xa;        {&quot;0x50&quot;, null},&#xa;        {&quot;0x54&quot;, null},&#xa;        {&quot;0x58&quot;, null},&#xa;        {&quot;0x5C&quot;, null},&#xa;        {&quot;0x60&quot;, null},&#xa;        {&quot;0x64&quot;, null},&#xa;        {&quot;0x68&quot;, null},&#xa;        {&quot;0x6C&quot;, null},&#xa;        {&quot;0x70&quot;, null},&#xa;        {&quot;0x74&quot;, null},&#xa;        {&quot;0x78&quot;, null}&#xa;    },&#xa;    new String [] {&#xa;        &quot;Address&quot;, &quot;Instruction&quot;&#xa;    }&#xa;) {&#xa;    Class[] types = new Class [] {&#xa;        java.lang.String.class, java.lang.String.class&#xa;    };&#xa;&#xa;    public Class getColumnClass(int columnIndex) {&#xa;        return types [columnIndex];&#xa;    }&#xa;&#xa;    public boolean isCellEditable(int row, int col) {&#xa;        if ( col == 1) {&#xa;            return true;&#xa;        } else {&#xa;            return false;&#xa;        }&#xa;    }&#xa;}" type="code"/>
+                  <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    dt.initInstructionTable(),&#xa;    new String [] {&#xa;        &quot;Address&quot;, &quot;Instruction&quot;&#xa;    }&#xa;) {&#xa;    Class[] types = new Class [] {&#xa;        java.lang.String.class, java.lang.String.class&#xa;    };&#xa;&#xa;    public Class getColumnClass(int columnIndex) {&#xa;        return types [columnIndex];&#xa;    }&#xa;&#xa;    public boolean isCellEditable(int row, int col) {&#xa;        if ( col == 1 &amp;&amp; col == 0) {&#xa;            return true;&#xa;        } else {&#xa;            return false;&#xa;        }&#xa;    }&#xa;}" type="code"/>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0"/>

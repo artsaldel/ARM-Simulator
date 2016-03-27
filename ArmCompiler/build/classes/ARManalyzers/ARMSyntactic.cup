@@ -4,6 +4,7 @@ import java_cup.runtime.*;
 import java.io.FileReader;
 import javax.swing.JOptionPane;
 import Translator.*;
+import ARManalyzers.ModuloError;
 
 /**************************************************************************
 ****************************CODIGO DE ACCION*******************************
@@ -16,6 +17,8 @@ action code {:
 parser code {:
     int PC = -4;
     public static boolean isWrite = false;
+    public static boolean isError = false;
+    public static String entryPath = "";
 
     public void report_error(String message, Object info) {
         StringBuilder m = new StringBuilder("Error");
@@ -28,12 +31,14 @@ parser code {:
             }
         }
         m.append(" : "+message);
-        System.err.println(m);
+        ModuloError.insertError(m.toString());
+        //System.err.println(m);
         JOptionPane.showMessageDialog(null,m);
     }
 
     public void report_fatal_error(String message, Object info) {
         report_error(message, info);
+        ModuloError.insertError("Mensaje: " + message + "\n Info: " + info);
         System.exit(1);
     }
 
@@ -43,11 +48,13 @@ parser code {:
             parser asin = new parser(
                     new LexicalAnalyzer( new FileReader(args[0])));
             Object result = asin.parse().value;
-            if (isWrite)
-                System.out.println("\n*** FINAL RESULTS ***");
+            if (isWri){
+                ModuloError.insertError("*** EJECUCIÓN FINALIZADA ***");
+            }
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            ModuloError.insertError(ex.toString());
+            //ex.printStackTrace();
         }
     }
 :};
@@ -93,7 +100,7 @@ Instructions::= Instruction InstructionsAux
                     if (!isWrite){
                         PC = -4;
                         parser instParser = new parser ();
-                        String [] archive = {"C:/Users/Arturo Salas/Desktop/Arquitectura de Computadores 1/Proyecto #1/ArmCompiler/src/ARManalyzers/entry.txt"}; 
+                        String [] archive = {entryPath}; 
                         parser.main(archive, true);
                     }
                     :}
@@ -124,7 +131,7 @@ Instruction::=
               | ADD REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADD " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -142,7 +149,7 @@ Instruction::=
               | ADD REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADD " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -159,7 +166,7 @@ Instruction::=
               | ADD REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADD " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -181,7 +188,7 @@ Instruction::=
               | ADDEQ REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -199,7 +206,7 @@ Instruction::=
               | ADDEQ REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -216,7 +223,7 @@ Instruction::=
               | ADDEQ REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -239,7 +246,7 @@ Instruction::=
               | ADDLT REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -257,7 +264,7 @@ Instruction::=
               | ADDLT REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -274,7 +281,7 @@ Instruction::=
               | ADDLT REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -296,7 +303,7 @@ Instruction::=
               | ADDGT REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -314,7 +321,7 @@ Instruction::=
               | ADDGT REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -331,7 +338,7 @@ Instruction::=
               | ADDGT REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -353,7 +360,7 @@ Instruction::=
               | ADDNE REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -371,7 +378,7 @@ Instruction::=
               | ADDNE REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -388,7 +395,7 @@ Instruction::=
               | ADDNE REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -411,7 +418,7 @@ Instruction::=
               | SUB REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -429,7 +436,7 @@ Instruction::=
               | SUB REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -446,7 +453,7 @@ Instruction::=
               | SUB REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -468,7 +475,7 @@ Instruction::=
               | SUBEQ REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -486,7 +493,7 @@ Instruction::=
               | SUBEQ REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -503,7 +510,7 @@ Instruction::=
               | SUBEQ REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -525,7 +532,7 @@ Instruction::=
               | SUBLT REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -543,7 +550,7 @@ Instruction::=
               | SUBLT REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -560,7 +567,7 @@ Instruction::=
               | SUBLT REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -582,7 +589,7 @@ Instruction::=
               | SUBGT REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -600,7 +607,7 @@ Instruction::=
               | SUBGT REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -617,7 +624,7 @@ Instruction::=
               | SUBGT REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -639,7 +646,7 @@ Instruction::=
               | SUBNE REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -657,7 +664,7 @@ Instruction::=
               | SUBNE REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -674,7 +681,7 @@ Instruction::=
               | SUBNE REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -696,7 +703,7 @@ Instruction::=
               | AND REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("AND " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -714,7 +721,7 @@ Instruction::=
               | AND REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("AND " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -733,7 +740,7 @@ Instruction::=
               | AND REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("AND " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -754,7 +761,7 @@ Instruction::=
               | ANDEQ REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -772,7 +779,7 @@ Instruction::=
               | ANDEQ REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -791,7 +798,7 @@ Instruction::=
               | ANDEQ REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -811,7 +818,7 @@ Instruction::=
               | ANDLT REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -829,7 +836,7 @@ Instruction::=
               | ANDLT REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -848,7 +855,7 @@ Instruction::=
               | ANDLT REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -868,7 +875,7 @@ Instruction::=
               | ANDGT REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -886,7 +893,7 @@ Instruction::=
               | ANDGT REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -905,7 +912,7 @@ Instruction::=
               | ANDGT REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -925,7 +932,7 @@ Instruction::=
               | ANDNE REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -943,7 +950,7 @@ Instruction::=
               | ANDNE REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -962,7 +969,7 @@ Instruction::=
               | ANDNE REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -982,7 +989,7 @@ Instruction::=
               | ORR REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1000,7 +1007,7 @@ Instruction::=
               | ORR REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1019,7 +1026,7 @@ Instruction::=
               | ORR REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1040,7 +1047,7 @@ Instruction::=
               | ORREQ REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORREQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1058,7 +1065,7 @@ Instruction::=
               | ORREQ REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORREQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1077,7 +1084,7 @@ Instruction::=
               | ORREQ REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORREQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1097,7 +1104,7 @@ Instruction::=
               | ORRLT REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORRLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1115,7 +1122,7 @@ Instruction::=
               | ORRLT REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORRLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1134,7 +1141,7 @@ Instruction::=
               | ORRLT REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORRLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1154,7 +1161,7 @@ Instruction::=
               | ORRGT REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORRGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1172,7 +1179,7 @@ Instruction::=
               | ORRGT REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORRGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1191,7 +1198,7 @@ Instruction::=
               | ORRGT REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORRGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1212,7 +1219,7 @@ Instruction::=
               | ORRNE REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORRNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1230,7 +1237,7 @@ Instruction::=
               | ORRNE REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORRNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1249,7 +1256,7 @@ Instruction::=
               | ORRNE REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORRNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1270,7 +1277,7 @@ Instruction::=
               | EOR REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EOR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1288,7 +1295,7 @@ Instruction::=
               | EOR REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EOR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1307,7 +1314,7 @@ Instruction::=
               | EOR REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EOR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1328,7 +1335,7 @@ Instruction::=
               | EOREQ REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EOREQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1346,7 +1353,7 @@ Instruction::=
               | EOREQ REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EOREQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1365,7 +1372,7 @@ Instruction::=
               | EOREQ REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EOREQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1385,7 +1392,7 @@ Instruction::=
               | EORLT REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EORLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1403,7 +1410,7 @@ Instruction::=
               | EORLT REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EORLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1422,7 +1429,7 @@ Instruction::=
               | EORLT REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EORLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1442,7 +1449,7 @@ Instruction::=
               | EORGT REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EORGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1460,7 +1467,7 @@ Instruction::=
               | EORGT REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EORGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1479,7 +1486,7 @@ Instruction::=
               | EORGT REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EORGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1500,7 +1507,7 @@ Instruction::=
               | EORNE REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EORNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1518,7 +1525,7 @@ Instruction::=
               | EORNE REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EORNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1537,7 +1544,7 @@ Instruction::=
               | EORNE REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EORNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1558,7 +1565,7 @@ Instruction::=
               | BIC REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("BIC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1576,7 +1583,7 @@ Instruction::=
               | BIC REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("BIC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1595,7 +1602,7 @@ Instruction::=
               | BIC REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("BIC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1616,7 +1623,7 @@ Instruction::=
               | MUL REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("MUL " + a + ", " + b + ", " + c);
                                     MultiplyTranslator.getMultiplyTranslator().setCond("1110");
                                     MultiplyTranslator.getMultiplyTranslator().setOp("00");
@@ -1635,7 +1642,7 @@ Instruction::=
               | MLA REGISTER:a COMA REGISTER:b COMA REGISTER:c COMA REGISTER:d
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("MLA " + a + ", " + b + ", " + c + ", " + d);
                                     MultiplyTranslator.getMultiplyTranslator().setCond("1110");
                                     MultiplyTranslator.getMultiplyTranslator().setOp("00");
@@ -1654,7 +1661,7 @@ Instruction::=
               | LSL REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LSL "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1672,7 +1679,7 @@ Instruction::=
               | LSL REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LSL "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1690,7 +1697,7 @@ Instruction::=
               | LSL REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LSL "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1714,7 +1721,7 @@ Instruction::=
               | ASR REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ASR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1732,7 +1739,7 @@ Instruction::=
               | ASR REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ASR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1750,7 +1757,7 @@ Instruction::=
               | ASR REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ASR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1775,7 +1782,7 @@ Instruction::=
               | ROR REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ROR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1793,7 +1800,7 @@ Instruction::=
               | ROR REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ROR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1811,7 +1818,7 @@ Instruction::=
               | ROR REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ROR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1835,7 +1842,7 @@ Instruction::=
               | ROREQ REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ROREQ "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1853,7 +1860,7 @@ Instruction::=
               | ROREQ REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ROREQ "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1871,7 +1878,7 @@ Instruction::=
               | ROREQ REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ROREQ "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1894,7 +1901,7 @@ Instruction::=
               | RORLT REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RORLT "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1912,7 +1919,7 @@ Instruction::=
               | RORLT REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RORLT "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1930,7 +1937,7 @@ Instruction::=
               | RORLT REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RORLT "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1953,7 +1960,7 @@ Instruction::=
               | RORGT REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RORGT "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1971,7 +1978,7 @@ Instruction::=
               | RORGT REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RORGT "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -1989,7 +1996,7 @@ Instruction::=
               | RORGT REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RORGT "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2013,7 +2020,7 @@ Instruction::=
               | RORNE REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RORNE "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2031,7 +2038,7 @@ Instruction::=
               | RORNE REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RORNE "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2049,7 +2056,7 @@ Instruction::=
               | RORNE REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RORNE "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2076,7 +2083,7 @@ Instruction::=
               | MOV  REGISTER:a COMA REGISTER:b 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("MOV "+a+", "+b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2094,7 +2101,7 @@ Instruction::=
               | MOV  REGISTER:a COMA NUMBER:b 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("MOV "+a+", "+b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2111,7 +2118,7 @@ Instruction::=
               | MOV  REGISTER:a COMA ADDRESS:b 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("MOV "+a+", "+b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2134,7 +2141,7 @@ Instruction::=
               | MVN  REGISTER:a COMA REGISTER:b COMA REGISTER:c
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("MVN "+a+", "+b+", " +c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2152,7 +2159,7 @@ Instruction::=
               | MVN  REGISTER:a COMA REGISTER:b COMA NUMBER:c
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("MVN "+a+", "+b+", " +c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2169,7 +2176,7 @@ Instruction::=
               | MVN  REGISTER:a COMA REGISTER:b COMA ADDRESS:c
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("MVN "+a+", "+b+", " +c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2192,7 +2199,7 @@ Instruction::=
               | CMP  REGISTER:a COMA REGISTER:b 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("CMP " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2210,7 +2217,7 @@ Instruction::=
               | CMP  REGISTER:a COMA NUMBER:b 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("CMP " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2227,7 +2234,7 @@ Instruction::=
               | CMP  REGISTER:a COMA ADDRESS:b 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("CMP " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2249,7 +2256,7 @@ Instruction::=
               | CMN  REGISTER:a COMA REGISTER:b 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("CMN " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2267,7 +2274,7 @@ Instruction::=
               | CMN  REGISTER:a COMA NUMBER:b 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("CMN " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2284,7 +2291,7 @@ Instruction::=
               | CMN  REGISTER:a COMA ADDRESS:b 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("CMN " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2307,7 +2314,7 @@ Instruction::=
               | LDR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA ADDRESS:c CLOSEBRACKET
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -2331,7 +2338,7 @@ Instruction::=
               | LDR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA NUMBER:c CLOSEBRACKET
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -2353,7 +2360,7 @@ Instruction::=
               | LDR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA REGISTER:c CLOSEBRACKET
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -2374,7 +2381,7 @@ Instruction::=
               | LDR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA LESS REGISTER:c CLOSEBRACKET
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LDR "+a+",["+b+",-"+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -2399,7 +2406,7 @@ Instruction::=
               | STR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA ADDRESS:c CLOSEBRACKET
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("STR "+a+",["+b+","+c+"]");
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
@@ -2424,7 +2431,7 @@ Instruction::=
               | STR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA NUMBER:c CLOSEBRACKET
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("STR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -2446,7 +2453,7 @@ Instruction::=
               | STR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA REGISTER:c CLOSEBRACKET
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("STR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -2467,7 +2474,7 @@ Instruction::=
               | STR  REGISTER:a COMA OPENBRACKET REGISTER:b COMA LESS REGISTER:c CLOSEBRACKET
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("STR "+a+",["+b+",-"+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -2493,7 +2500,7 @@ Instruction::=
               | LDRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA ADDRESS:c CLOSEBRACKET
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LDRB "+a+",["+b+","+c+"]");
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
@@ -2518,7 +2525,7 @@ Instruction::=
               | LDRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA NUMBER:c CLOSEBRACKET
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LDRB "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -2540,7 +2547,7 @@ Instruction::=
               | LDRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA REGISTER:c CLOSEBRACKET
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LDRB "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -2561,7 +2568,7 @@ Instruction::=
               | LDRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA LESS REGISTER:c CLOSEBRACKET
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LDRB "+a+",["+b+",-"+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -2585,7 +2592,7 @@ Instruction::=
               | STRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA ADDRESS:c CLOSEBRACKET
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("STRB "+a+",["+b+","+c+"]");
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
@@ -2610,7 +2617,7 @@ Instruction::=
               | STRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA NUMBER:c CLOSEBRACKET
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("STRB "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -2632,7 +2639,7 @@ Instruction::=
               | STRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA REGISTER:c CLOSEBRACKET
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("STRB "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -2653,7 +2660,7 @@ Instruction::=
               | STRB  REGISTER:a COMA OPENBRACKET REGISTER:b COMA LESS REGISTER:c CLOSEBRACKET
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("STRB "+a+",["+b+",-"+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -2678,7 +2685,7 @@ Instruction::=
               | RRX  REGISTER:a COMA REGISTER:b COMA REGISTER:c
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RRX " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2699,7 +2706,7 @@ Instruction::=
               | SBC  REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SBC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2717,7 +2724,7 @@ Instruction::=
               | SBC  REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SBC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2736,7 +2743,7 @@ Instruction::=
               | SBC  REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SBC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2757,7 +2764,7 @@ Instruction::=
               | ADC REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2775,7 +2782,7 @@ Instruction::=
               | ADC REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2794,7 +2801,7 @@ Instruction::=
               | ADC REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2815,7 +2822,7 @@ Instruction::=
               | RSB REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RSB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2833,7 +2840,7 @@ Instruction::=
               | RSB REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RSB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2852,7 +2859,7 @@ Instruction::=
               | RSB REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RSB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2872,7 +2879,7 @@ Instruction::=
               | RSC REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RSC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2890,7 +2897,7 @@ Instruction::=
               | RSC REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RSC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2909,7 +2916,7 @@ Instruction::=
               | RSC REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RSC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2929,7 +2936,7 @@ Instruction::=
               | B TEXT:a 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("B " + a);
@@ -2943,7 +2950,7 @@ Instruction::=
               | BL TEXT:a 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("BL " + a);
@@ -2957,7 +2964,7 @@ Instruction::=
               | BEQ TEXT:a 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("BEQ " + a);
@@ -2971,7 +2978,7 @@ Instruction::=
               | BNE TEXT:a 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("BNE " + a);
@@ -2985,7 +2992,7 @@ Instruction::=
               | BGT TEXT:a 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("BGT " + a);
@@ -2999,7 +3006,7 @@ Instruction::=
               | BLT TEXT:a 
                                 {:
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("BLT " + a);

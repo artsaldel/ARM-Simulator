@@ -5,6 +5,7 @@
  */
 package Translator;
 
+import ARManalyzers.ModuloError;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,19 +107,24 @@ public class BranchTranslator {
     }
     
     public void writeInstruction (){
-        if (Integer.parseInt(imm24) < 0){
-            imm24 = NumberTranslator.integerToBinary(Integer.parseInt(getImm24()));
-            if (imm24.length()<24)
-                while (imm24.length() != 24) { imm24 = "1" + imm24;} 
+        try{
+            if (Integer.parseInt(imm24) < 0){
+                imm24 = NumberTranslator.integerToBinary(Integer.parseInt(getImm24()));
+                if (imm24.length()<24)
+                    while (imm24.length() != 24) { imm24 = "1" + imm24;} 
+            }
+            else if (Integer.parseInt(imm24) >= 0){
+                imm24 = NumberTranslator.integerToBinary(Integer.parseInt(getImm24()));
+                if (imm24.length()<24)
+                    while (imm24.length() != 24) { imm24 = "0" + imm24;} 
+            }
+            make24bitsImm24();
+            String instruction = getCond() + getOp() + getL1() + getImm24();
+            instruction = NumberTranslator.binaryToHex(instruction);
+            BinaryOutput.writeLine(instruction);
         }
-        else if (Integer.parseInt(imm24) >= 0){
-            imm24 = NumberTranslator.integerToBinary(Integer.parseInt(getImm24()));
-            if (imm24.length()<24)
-                while (imm24.length() != 24) { imm24 = "0" + imm24;} 
+        catch(Exception e){
+            ModuloError.insertError("Error semántico, por favor verificar código.");
         }
-        make24bitsImm24();
-        String instruction = getCond() + getOp() + getL1() + getImm24();
-        instruction = NumberTranslator.binaryToHex(instruction);
-        BinaryOutput.writeLine(instruction);
     }
 }

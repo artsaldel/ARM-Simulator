@@ -5,6 +5,8 @@
  */
 package Translator;
 
+import ARManalyzers.ModuloError;
+
 /**
  *
  * @author Arturo Salas
@@ -91,19 +93,24 @@ public class MultiplyTranslator {
     }
     
     public void writeInstruction (){
-        Rd = NumberTranslator.integerToBinary(Integer.parseInt(getRd()));
-        Ra = NumberTranslator.integerToBinary(Integer.parseInt(getRa()));
-        Rm = NumberTranslator.integerToBinary(Integer.parseInt(getRm()));
-        Rn = NumberTranslator.integerToBinary(Integer.parseInt(getRn()));
-        
-        while (Rd.length() != 4){Rd = "0" + Rd;}
-        while (Ra.length() != 4){Ra = "0" + Ra;}
-        while (Rm.length() != 4){Rm = "0" + Rm;}
-        while (Rn.length() != 4){Rn = "0" + Rn;}
-        
-        String instruction = getCond() + getOp() + "00" + getCmd() + getS() + 
-                             getRd() + getRa() + getRm() + "1001" + getRn();
-        instruction = NumberTranslator.binaryToHex(instruction);
-        BinaryOutput.writeLine(instruction);
+        try{
+            Rd = NumberTranslator.integerToBinary(Integer.parseInt(getRd()));
+            Ra = NumberTranslator.integerToBinary(Integer.parseInt(getRa()));
+            Rm = NumberTranslator.integerToBinary(Integer.parseInt(getRm()));
+            Rn = NumberTranslator.integerToBinary(Integer.parseInt(getRn()));
+
+            while (Rd.length() != 4){Rd = "0" + Rd;}
+            while (Ra.length() != 4){Ra = "0" + Ra;}
+            while (Rm.length() != 4){Rm = "0" + Rm;}
+            while (Rn.length() != 4){Rn = "0" + Rn;}
+
+            String instruction = getCond() + getOp() + "00" + getCmd() + getS() + 
+                                 getRd() + getRa() + getRm() + "1001" + getRn();
+            instruction = NumberTranslator.binaryToHex(instruction);
+            BinaryOutput.writeLine(instruction);
+        }
+        catch(Exception e){
+            ModuloError.insertError("Error semántico, por favor verificar código.");
+        }
     }    
 }

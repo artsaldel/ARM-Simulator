@@ -5,6 +5,8 @@
  */
 package Translator;
 
+import ARManalyzers.ModuloError;
+import ARManalyzers.parser;
 import java.util.Arrays;
 
 /**
@@ -175,51 +177,69 @@ public class DataTranslator {
     }  
     
     public void writeInstructionImmediate(){
-        Rn = NumberTranslator.integerToBinary(Integer.parseInt(getRn()));
-        Rd = NumberTranslator.integerToBinary(Integer.parseInt(getRd()));
-        imm8 = NumberTranslator.integerToBinary(Integer.parseInt(getImm8()));
-        while (Rn.length() != 4){Rn = "0" + Rn;}
-        while (Rd.length() != 4){Rd = "0" + Rd;}
-        //Primero se crea el rot, luego se edita el imm8, respetar ese orden
-        createRot ();
-        String instruction = getCond() + getOp() + getI() + getCmd() + getS() +
-                             Rn + Rd + getRot() + imm8; 
-        instruction = NumberTranslator.binaryToHex(instruction);
-        BinaryOutput.writeLine(instruction);
+        try{
+            Rn = NumberTranslator.integerToBinary(Integer.parseInt(getRn()));
+            Rd = NumberTranslator.integerToBinary(Integer.parseInt(getRd()));
+            imm8 = NumberTranslator.integerToBinary(Integer.parseInt(getImm8()));
+            while (Rn.length() != 4){Rn = "0" + Rn;}
+            while (Rd.length() != 4){Rd = "0" + Rd;}
+            //Primero se crea el rot, luego se edita el imm8, respetar ese orden
+            createRot ();
+            String instruction = getCond() + getOp() + getI() + getCmd() + getS() +
+                                 Rn + Rd + getRot() + imm8; 
+            instruction = NumberTranslator.binaryToHex(instruction);
+            BinaryOutput.writeLine(instruction);
+        }
+        catch(Exception e){
+            ModuloError.insertError("Error semántico, por favor verificar código.");
+        }
     }
     
     public void writeInstructionRegister (){
-        Rn = NumberTranslator.integerToBinary(Integer.parseInt(getRn()));
-        Rd = NumberTranslator.integerToBinary(Integer.parseInt(getRd()));
-        Rm = NumberTranslator.integerToBinary(Integer.parseInt(getRm()));
-        shamt5 = NumberTranslator.integerToBinary(Integer.parseInt(getShamt5()));
-        if (shamt5.length() > 5)
-                System.out.println("Error: shamt5 no permitido");
-        while (Rn.length() != 4){Rn = "0" + Rn;}
-        while (Rd.length() != 4){Rd = "0" + Rd;}
-        while (Rm.length() != 4){Rm = "0" + Rm;}
-        while (shamt5.length() != 5){shamt5 = "0" + shamt5;}
-        
-        String instruction = getCond() + getOp() + getI() + getCmd() + getS() +
-                             getRn() + getRd() + getShamt5() + getSh() + "0" + getRm(); 
-        instruction = NumberTranslator.binaryToHex(instruction);
-        BinaryOutput.writeLine(instruction);
+        try{
+            Exception e = new Exception("Este es mi propio error.");
+            Rn = NumberTranslator.integerToBinary(Integer.parseInt(getRn()));
+            Rd = NumberTranslator.integerToBinary(Integer.parseInt(getRd()));
+            Rm = NumberTranslator.integerToBinary(Integer.parseInt(getRm()));
+            shamt5 = NumberTranslator.integerToBinary(Integer.parseInt(getShamt5()));
+            if (shamt5.length() > 5){
+                ModuloError.insertError("Error: No funciona un shamt5 ingresado.");
+                parser.isError = true;
+                throw e;
+            }
+            while (Rn.length() != 4){Rn = "0" + Rn;}
+            while (Rd.length() != 4){Rd = "0" + Rd;}
+            while (Rm.length() != 4){Rm = "0" + Rm;}
+            while (shamt5.length() < 5){ shamt5 = "0" + shamt5;}
+            String instruction = getCond() + getOp() + getI() + getCmd() + getS() +
+                                 getRn() + getRd() + getShamt5() + getSh() + "0" + getRm(); 
+            instruction = NumberTranslator.binaryToHex(instruction);
+            BinaryOutput.writeLine(instruction);
+        }
+        catch(Exception e){
+            ModuloError.insertError("Error semántico, por favor verificar código.");
+        }
     }
     
     public void writeInstructionRegisterShifted(){
-        Rn = NumberTranslator.integerToBinary(Integer.parseInt(getRn()));
-        Rd = NumberTranslator.integerToBinary(Integer.parseInt(getRd()));
-        Rm = NumberTranslator.integerToBinary(Integer.parseInt(getRm()));
-        Rs = NumberTranslator.integerToBinary(Integer.parseInt(getRs()));
-        
-        while (Rn.length() != 4){Rn = "0" + Rn;}
-        while (Rd.length() != 4){Rd = "0" + Rd;}
-        while (Rm.length() != 4){Rm = "0" + Rm;}
-        while (Rs.length() != 4){Rs = "0" + Rs;}
-        
-        String instruction = getCond() + getOp() + getI() + getCmd() + getS() +
-                             getRn() + getRd() + getRs() + "0" + getSh() + "1" + getRm(); 
-        instruction = NumberTranslator.binaryToHex(instruction);
-        BinaryOutput.writeLine(instruction);
+        try{
+            Rn = NumberTranslator.integerToBinary(Integer.parseInt(getRn()));
+            Rd = NumberTranslator.integerToBinary(Integer.parseInt(getRd()));
+            Rm = NumberTranslator.integerToBinary(Integer.parseInt(getRm()));
+            Rs = NumberTranslator.integerToBinary(Integer.parseInt(getRs()));
+
+            while (Rn.length() != 4){Rn = "0" + Rn;}
+            while (Rd.length() != 4){Rd = "0" + Rd;}
+            while (Rm.length() != 4){Rm = "0" + Rm;}
+            while (Rs.length() != 4){Rs = "0" + Rs;}
+
+            String instruction = getCond() + getOp() + getI() + getCmd() + getS() +
+                                 getRn() + getRd() + getRs() + "0" + getSh() + "1" + getRm(); 
+            instruction = NumberTranslator.binaryToHex(instruction);
+            BinaryOutput.writeLine(instruction);
+        }
+        catch(Exception e){
+            ModuloError.insertError("Error semántico, por favor verificar código.");
+        }
     }
 }

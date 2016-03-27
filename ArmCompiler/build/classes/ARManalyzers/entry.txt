@@ -1,4 +1,8 @@
-RRX r1,r3,r2
+LABEL ADD r1,r2,r3
+ASR r1,r4,#0x1
+ASR r1,r4,#0x2
+BEQ LABEL
+CMP r1,r5
 
 
 

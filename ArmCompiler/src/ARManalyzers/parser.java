@@ -9,6 +9,7 @@ import java_cup.runtime.*;
 import java.io.FileReader;
 import javax.swing.JOptionPane;
 import Translator.*;
+import ARManalyzers.ModuloError;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20150930 (SVN rev 66) generated parser.
@@ -1832,6 +1833,8 @@ public class parser extends java_cup.runtime.lr_parser {
 
     int PC = -4;
     public static boolean isWrite = false;
+    public static boolean isError = false;
+    public static String entryPath = "";
 
     public void report_error(String message, Object info) {
         StringBuilder m = new StringBuilder("Error");
@@ -1844,12 +1847,14 @@ public class parser extends java_cup.runtime.lr_parser {
             }
         }
         m.append(" : "+message);
-        System.err.println(m);
+        ModuloError.insertError(m.toString());
+        //System.err.println(m);
         JOptionPane.showMessageDialog(null,m);
     }
 
     public void report_fatal_error(String message, Object info) {
         report_error(message, info);
+        ModuloError.insertError("Mensaje: " + message + "\n Info: " + info);
         System.exit(1);
     }
 
@@ -1859,11 +1864,13 @@ public class parser extends java_cup.runtime.lr_parser {
             parser asin = new parser(
                     new LexicalAnalyzer( new FileReader(args[0])));
             Object result = asin.parse().value;
-            if (isWrite)
-                System.out.println("\n*** FINAL RESULTS ***");
+            if (isWri){
+                ModuloError.insertError("*** EJECUCIÓN FINALIZADA ***");
+            }
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            ModuloError.insertError(ex.toString());
+            //ex.printStackTrace();
         }
     }
 
@@ -1928,7 +1935,7 @@ class CUP$parser$actions {
                     if (!isWrite){
                         PC = -4;
                         parser instParser = new parser ();
-                        String [] archive = {"C:/Users/Arturo Salas/Desktop/Arquitectura de Computadores 1/Proyecto #1/ArmCompiler/src/ARManalyzers/entry.txt"}; 
+                        String [] archive = {entryPath}; 
                         parser.main(archive, true);
                     }
                     
@@ -1988,7 +1995,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADD " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2022,7 +2029,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADD " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2055,7 +2062,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADD " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2090,7 +2097,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2124,7 +2131,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2157,7 +2164,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2192,7 +2199,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2226,7 +2233,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2259,7 +2266,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2294,7 +2301,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2328,7 +2335,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2361,7 +2368,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2396,7 +2403,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2430,7 +2437,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2463,7 +2470,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADDNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2498,7 +2505,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2532,7 +2539,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2565,7 +2572,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2600,7 +2607,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2634,7 +2641,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2667,7 +2674,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2702,7 +2709,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2736,7 +2743,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2769,7 +2776,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2804,7 +2811,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2838,7 +2845,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2871,7 +2878,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2906,7 +2913,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2940,7 +2947,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -2973,7 +2980,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SUBNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3008,7 +3015,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("AND " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3042,7 +3049,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("AND " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3077,7 +3084,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("AND " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3110,7 +3117,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3144,7 +3151,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3179,7 +3186,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3212,7 +3219,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3246,7 +3253,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3281,7 +3288,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3314,7 +3321,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3348,7 +3355,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3383,7 +3390,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3416,7 +3423,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3450,7 +3457,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3485,7 +3492,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ANDNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3518,7 +3525,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3552,7 +3559,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3587,7 +3594,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3620,7 +3627,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORREQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3654,7 +3661,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORREQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3689,7 +3696,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORREQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3722,7 +3729,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORRLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3756,7 +3763,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORRLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3791,7 +3798,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORRLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3824,7 +3831,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORRGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3858,7 +3865,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORRGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3893,7 +3900,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORRGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3926,7 +3933,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORRNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3960,7 +3967,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORRNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -3995,7 +4002,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ORRNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4028,7 +4035,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EOR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4062,7 +4069,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EOR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4097,7 +4104,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EOR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4130,7 +4137,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EOREQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4164,7 +4171,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EOREQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4199,7 +4206,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EOREQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4232,7 +4239,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EORLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4266,7 +4273,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EORLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4301,7 +4308,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EORLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4334,7 +4341,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EORGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4368,7 +4375,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EORGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4403,7 +4410,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EORGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4436,7 +4443,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EORNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4470,7 +4477,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EORNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4505,7 +4512,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("EORNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4538,7 +4545,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("BIC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4572,7 +4579,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("BIC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4607,7 +4614,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("BIC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4640,7 +4647,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("MUL " + a + ", " + b + ", " + c);
                                     MultiplyTranslator.getMultiplyTranslator().setCond("1110");
                                     MultiplyTranslator.getMultiplyTranslator().setOp("00");
@@ -4675,7 +4682,7 @@ class CUP$parser$actions {
 		Object d = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("MLA " + a + ", " + b + ", " + c + ", " + d);
                                     MultiplyTranslator.getMultiplyTranslator().setCond("1110");
                                     MultiplyTranslator.getMultiplyTranslator().setOp("00");
@@ -4707,7 +4714,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LSL "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4741,7 +4748,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LSL "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4775,7 +4782,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LSL "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4811,7 +4818,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ASR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4845,7 +4852,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ASR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4879,7 +4886,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ASR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4915,7 +4922,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ROR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4949,7 +4956,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ROR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -4983,7 +4990,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ROR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5019,7 +5026,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ROREQ "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5053,7 +5060,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ROREQ "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5087,7 +5094,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ROREQ "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5123,7 +5130,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RORLT "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5157,7 +5164,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RORLT "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5191,7 +5198,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RORLT "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5227,7 +5234,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RORGT "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5261,7 +5268,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RORGT "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5295,7 +5302,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RORGT "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5331,7 +5338,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RORNE "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5365,7 +5372,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RORNE "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5399,7 +5406,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RORNE "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5432,7 +5439,7 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("MOV "+a+", "+b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5463,7 +5470,7 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("MOV "+a+", "+b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5493,7 +5500,7 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("MOV "+a+", "+b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5528,7 +5535,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("MVN "+a+", "+b+", " +c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5562,7 +5569,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("MVN "+a+", "+b+", " +c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5595,7 +5602,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("MVN "+a+", "+b+", " +c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5627,7 +5634,7 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("CMP " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5658,7 +5665,7 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("CMP " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5688,7 +5695,7 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("CMP " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5720,7 +5727,7 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("CMN " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5751,7 +5758,7 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("CMN " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5781,7 +5788,7 @@ class CUP$parser$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("CMN " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -5816,7 +5823,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -5856,7 +5863,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -5894,7 +5901,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -5931,7 +5938,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LDR "+a+",["+b+",-"+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -5968,7 +5975,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("STR "+a+",["+b+","+c+"]");
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
@@ -6009,7 +6016,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("STR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -6047,7 +6054,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("STR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -6084,7 +6091,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("STR "+a+",["+b+",-"+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -6121,7 +6128,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LDRB "+a+",["+b+","+c+"]");
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
@@ -6162,7 +6169,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LDRB "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -6200,7 +6207,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LDRB "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -6237,7 +6244,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("LDRB "+a+",["+b+",-"+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -6274,7 +6281,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("STRB "+a+",["+b+","+c+"]");
                                     System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
@@ -6315,7 +6322,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("STRB "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -6353,7 +6360,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("STRB "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -6390,7 +6397,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("STRB "+a+",["+b+",-"+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
@@ -6427,7 +6434,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RRX " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -6461,7 +6468,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SBC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -6495,7 +6502,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SBC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -6530,7 +6537,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("SBC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -6563,7 +6570,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -6597,7 +6604,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -6632,7 +6639,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("ADC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -6665,7 +6672,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RSB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -6699,7 +6706,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RSB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -6734,7 +6741,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RSB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -6767,7 +6774,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RSC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -6801,7 +6808,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RSC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -6836,7 +6843,7 @@ class CUP$parser$actions {
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     System.out.println("RSC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
@@ -6863,7 +6870,7 @@ class CUP$parser$actions {
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("B " + a);
@@ -6887,7 +6894,7 @@ class CUP$parser$actions {
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("BL " + a);
@@ -6911,7 +6918,7 @@ class CUP$parser$actions {
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("BEQ " + a);
@@ -6935,7 +6942,7 @@ class CUP$parser$actions {
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("BNE " + a);
@@ -6959,7 +6966,7 @@ class CUP$parser$actions {
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("BGT " + a);
@@ -6983,7 +6990,7 @@ class CUP$parser$actions {
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                     PC += 4;
-                                    if (isWrite){
+                                    if (isWrite && !isError){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
                                     System.out.println("BLT " + a);
