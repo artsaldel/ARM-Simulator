@@ -1849,7 +1849,7 @@ public class parser extends java_cup.runtime.lr_parser {
         m.append(" : "+message);
         ModuloError.insertError(m.toString());
         //System.err.println(m);
-        JOptionPane.showMessageDialog(null,m);
+        //JOptionPane.showMessageDialog(null,m);
     }
 
     public void report_fatal_error(String message, Object info) {
@@ -1865,7 +1865,7 @@ public class parser extends java_cup.runtime.lr_parser {
                     new LexicalAnalyzer( new FileReader(args[0])));
             Object result = asin.parse().value;
             if (isWri){
-                ModuloError.insertError("*** EJECUCIÓN FINALIZADA ***");
+                ModuloError.insertError("*** ENSAMBLAJE FINALIZADO ***");
             }
 
         } catch (Exception ex) {

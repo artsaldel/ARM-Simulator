@@ -2,6 +2,7 @@ package ARManalyzers;
 
 import java_cup.runtime.*;
 import java.io.Reader;
+import ARManalyzers.ModuloError;
       
 %% 
 
@@ -122,6 +123,9 @@ NUMBER = "#""-"?[0-9]+
     {TEXT}             {  return symbol(sym.TEXT,    new String(yytext()));   }
 }
 
-[^]                    { throw new Error("Caracter ilegal <"+yytext()+">");  }
+[^]                    { 
+                        ModuloError.insertError("Caracter ilegal <"+yytext()+">");
+                        throw new Error("Caracter ilegal <"+yytext()+">");
+                       }
 
 

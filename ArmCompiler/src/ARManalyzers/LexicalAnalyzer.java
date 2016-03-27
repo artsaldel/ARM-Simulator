@@ -4,6 +4,7 @@ package ARManalyzers;
 
 import java_cup.runtime.*;
 import java.io.Reader;
+import ARManalyzers.ModuloError;
       
 
 /**
@@ -748,7 +749,8 @@ class LexicalAnalyzer implements java_cup.runtime.Scanner {
             }
           case 67: break;
           case 2: 
-            { throw new Error("Caracter ilegal <"+yytext()+">");
+            { ModuloError.insertError("Caracter ilegal <"+yytext()+">");
+                        //throw new Error("Caracter ilegal <"+yytext()+">");
             }
           case 68: break;
           case 3: 

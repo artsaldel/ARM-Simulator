@@ -6,6 +6,7 @@
 package ARManalyzers;
 
 import Translator.*;
+import proyecto1_arqui1_gui.mainWindow;
 
 /**
  *
@@ -14,8 +15,9 @@ import Translator.*;
 public class Grammar {
     
     public static void main (String [] args) throws Exception {
-        String path = "C:/Users/Arturo Salas/Desktop/Arquitectura de Computadores 1/Proyecto #1/ArmCompiler/src/ARManalyzers/entry.txt";
-        ExecuteGrammar(path);
+        //String path = "C:/Users/Arturo Salas/Desktop/Arquitectura de Computadores 1/Proyecto #1/ArmCompiler/src/ARManalyzers/entry.txt";
+        //ExecuteGrammar(path);
+        new mainWindow().setVisible(true);
     }
     
     public static void ExecuteGrammar(String path) throws Exception {

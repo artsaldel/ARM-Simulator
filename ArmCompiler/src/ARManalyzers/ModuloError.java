@@ -18,7 +18,7 @@ public class ModuloError {
     }
 
     public static void insertError(String error) {
-        ModuloError.error += "\n\n" + error;
+        ModuloError.error += "\n" + error ;
     }
     
     public static void resetError() {
