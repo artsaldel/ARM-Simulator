@@ -11,6 +11,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 import ARManalyzers.*;
+import Simulator.*;
 
 /**
  *
@@ -19,12 +20,14 @@ import ARManalyzers.*;
 public class mainWindow extends javax.swing.JFrame {
     private String _actualPath; //indica el path del archivo que actualmente está trabajando
     DataTables dt;
+    Simulacion sim;
     /**
      * Creates new form mainWindow
      */
     public mainWindow() {
         this._actualPath = "";
         dt = new DataTables();
+        sim = new Simulacion();
         initComponents();
     }
     
@@ -281,7 +284,7 @@ public class mainWindow extends javax.swing.JFrame {
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jTextArea1.setRows(5);
-        jTextArea1.setText(MessageInterpreter.mensaje());
+        jTextArea1.setText(MessageInterpreter.initMensaje(""));
         jScrollPane1.setViewportView(jTextArea1);
 
         LBL_fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto1_arqui1_gui/fondo2.jpg"))); // NOI18N
@@ -498,9 +501,24 @@ public class mainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here: Run < Go
-        String aa = GUI_tablaDatos.getValueAt(0,1).toString();
-        System.out.println("VALOR: " + aa);
+        try {
+            // TODO add your handling code here: Run < Go
+            //String aa = GUI_tablaDatos.getValueAt(0,1).toString();
+            //System.out.println("VALOR: " + aa);
+
+            String[][] tmp =  dt.getTablaDatosSTR(dt.getTablaDatos());
+            String mensaje = sim.start(tmp);
+            String salida1 = MessageInterpreter.mensaje(mensaje);
+            if (mensaje.equals("El programa ha sido simulado con éxito")){
+                salida1 += MessageInterpreter.mensajeExecution("El tiempo de ejecución fue de " 
+                        + sim.getTime() + " ns.");
+                //sim.getMem().get(mensaje);
+                // TO DO: ACTUALIZAR TABLAS GUI
+            }
+            jTextArea1.setText(salida1);
+        } catch (IOException ex) {
+            Logger.getLogger(mainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
                     
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 

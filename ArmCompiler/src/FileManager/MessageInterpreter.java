@@ -11,17 +11,23 @@ public class MessageInterpreter {
         // TO DO: instanciar la clase de MAU
     }
     
-    public static String mensaje()
+    public static String mensaje( String descripcionMensaje )
     {
-        String descripcionMensaje = "Ejecución Exitosa";
         String tipoMensaje = "";
         // TO DO: modificar mensajes
         switch ( descripcionMensaje ) {
-            case "Ejecución Exitosa": tipoMensaje = "Ejecución";
+            case "El programa ha sido simulado con éxito": tipoMensaje = "Execution";
                 break;
-            case "-": tipoMensaje = "H";
+            case "Direccionamiento resulta en desalineamiento": tipoMensaje = "Error";
                 break;
-            default: tipoMensaje = "ERROR";
+            case "Dirección prohibida": tipoMensaje = "Error";
+                break;
+            case "Intrucción no soportada": tipoMensaje = "Error";
+                break;
+            case "El archivo que se desea simular es muy grande para la memoria disponible"
+                    + " o existe una instrucción que viola el formato establecido": tipoMensaje = "Error";
+                break;
+            default: tipoMensaje = "Error";
                 break;
       }
         return "ARMv4@" + tipoMensaje + ":-~$" + " " + descripcionMensaje + "\n";
@@ -30,6 +36,16 @@ public class MessageInterpreter {
     public static String mensajeAssembly(String message)
     {
         return "ARMv4@" + "Assembly" + ":-~$" + " " + message + "\n";
+    }
+    
+    public static String mensajeExecution(String message)
+    {
+        return "ARMv4@" + "Execution" + ":-~$" + " " + message + "\n";
+    }
+    
+    public static String initMensaje(String msj)
+    {
+        return "ARMv4@" + "Info" + ":-~$" + " " + msj+ "\n";
     }
     
     public static String aboutMessage()

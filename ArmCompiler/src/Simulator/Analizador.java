@@ -31,7 +31,6 @@ public class Analizador {
                 index += 1;
             }
             else{
-                System.out.println ("El largo de las instrucciones es incorrecto");
                 programa = null;
                 break;
             }

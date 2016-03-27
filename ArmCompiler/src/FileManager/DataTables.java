@@ -25,6 +25,16 @@ public class DataTables {
     public Object[][] getTablaDatos() {
         return tablaDatos;
     }
+    
+    public String[][] getTablaDatosSTR(Object[][] obj)
+    {
+        String [][] tmp = new String[256][2];
+        for (int i = 0; i < 256; i++)
+            for (int j = 0; j < 2; j++){
+                tmp[i][j] = split0x(obj[i][j].toString());
+            }
+        return tmp;
+    }
 
     public Object[][] initDataTable()
     {

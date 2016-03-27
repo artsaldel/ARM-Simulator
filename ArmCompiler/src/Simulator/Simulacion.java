@@ -11,8 +11,8 @@ public class Simulacion {
     private Memoria memoria;
     private Memoria registros;
     private Memoria programa;
-    private Calculador calculador;
-    private Analizador analizador;
+    private final Calculador calculador;
+    private final Analizador analizador;
     private String error;
     private String pc;
     private int total;
@@ -349,7 +349,7 @@ public class Simulacion {
         {
             if (instruccion.substring(9, 10).equals("0")){
                 if ((int)Long.parseLong(dirAbs, 16)%4 != 0){
-                    msj = "Error: direccionamiento resulta en desalineamiento";
+                    msj = "Direccionamiento resulta en desalineamiento";
                 }
                 else{
                     if(instruccion.substring(11, 12).equals("0")){
@@ -392,7 +392,7 @@ public class Simulacion {
     public String start(String [][] datos) throws IOException{
         
         stop = false;
-               
+               System.out.println(System.getProperty("user.dir") + "\\out.txt");
         programa = new Memoria(256, analizador.analizeText(System.getProperty("user.dir") + "/out.txt", new String[256][2]));
         
         if (programa != null){
@@ -451,7 +451,7 @@ public class Simulacion {
                                     String newPc = tipoBranch(numBinario);
                                     if (newPc == null)
                                     {
-                                        error = "Dirección inválida";
+                                        error = "Dirección prohibida";
                                         break;
                                     }
                                     else
@@ -462,7 +462,7 @@ public class Simulacion {
                                 }
                             else
                                 {
-                                    error = "Instrucción Inválida";
+                                    error = "Intrucción no soportada";
                                     break;
                                 }
                         }
@@ -476,7 +476,7 @@ public class Simulacion {
                         }
                         case -1:
                         {
-                            error = "Condición inválida";
+                            error = "Intrucción no soportada";
                             break;
                         }
                     }
@@ -497,7 +497,6 @@ public class Simulacion {
             registros.get("1101") + ", " +
             registros.get("1110") + ", " +
             registros.get("1111"));
-            System.out.println(error);
         }
         else{
             //Si el texto es inválido, se muestra mensaje de error
