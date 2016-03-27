@@ -193,7 +193,8 @@ public class DataTranslator {
         Rd = NumberTranslator.integerToBinary(Integer.parseInt(getRd()));
         Rm = NumberTranslator.integerToBinary(Integer.parseInt(getRm()));
         shamt5 = NumberTranslator.integerToBinary(Integer.parseInt(getShamt5()));
-        
+        if (shamt5.length() > 5)
+                System.out.println("Error: shamt5 no permitido");
         while (Rn.length() != 4){Rn = "0" + Rn;}
         while (Rd.length() != 4){Rd = "0" + Rd;}
         while (Rm.length() != 4){Rm = "0" + Rm;}

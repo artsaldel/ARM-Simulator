@@ -43,7 +43,8 @@ parser code {:
             parser asin = new parser(
                     new LexicalAnalyzer( new FileReader(args[0])));
             Object result = asin.parse().value;
-            System.out.println("\n*** FINAL RESULTS ***");
+            if (isWrite)
+                System.out.println("\n*** FINAL RESULTS ***");
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -94,7 +95,6 @@ Instructions::= Instruction InstructionsAux
                         parser instParser = new parser ();
                         String [] archive = {"C:/Users/Arturo Salas/Desktop/Arquitectura de Computadores 1/Proyecto #1/ArmCompiler/src/ARManalyzers/entry.txt"}; 
                         parser.main(archive, true);
-                        System.out.println("PC = " + PC);
                     }
                     :}
                     ;
@@ -1651,6 +1651,24 @@ Instruction::=
 
 /*********************LSL INSTRUCTION************************/
 
+              | LSL REGISTER:a COMA REGISTER:b COMA REGISTER:c 
+                                {:
+                                    PC += 4;
+                                    if (isWrite){
+                                    System.out.println("LSL "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRs(c.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setSh("00");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegisterShifted();
+                                    }
+                                :} 
               | LSL REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
@@ -1661,9 +1679,29 @@ Instruction::=
                                     DataTranslator.getDataTranslator().setI("0");
                                     DataTranslator.getDataTranslator().setCmd("1101");
                                     DataTranslator.getDataTranslator().setS("0");
-                                    DataTranslator.getDataTranslator().setRn("0000");
+                                    DataTranslator.getDataTranslator().setRn("0");
                                     DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().setShamt5(c.toString().split("#")[1]);
+                                    DataTranslator.getDataTranslator().setSh("00");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
+                                :} 
+              | LSL REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
+                                {:
+                                    PC += 4;
+                                    if (isWrite){
+                                    System.out.println("LSL "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5(
+                                                Integer.toString(NumberTranslator.hexToInteger( 
+                                                c.toString().split("#0x")[1])  )  );
                                     DataTranslator.getDataTranslator().setSh("00");
                                     DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionRegister();
@@ -1673,14 +1711,7 @@ Instruction::=
 
 /*********************ASR INSTRUCTION************************/
 
-              | ASR  REGISTER:a COMA REGISTER:b COMA NUMBER:c 
-                                {:
-                                    PC += 4;
-                                    if (isWrite){
-                                    System.out.println("ASR "+a+","+b+","+c);
-                                    }
-                                :}  
-              | ASR  REGISTER:a COMA REGISTER:b COMA REGISTER:c 
+              | ASR REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
                                     if (isWrite){
@@ -1690,40 +1721,354 @@ Instruction::=
                                     DataTranslator.getDataTranslator().setI("0");
                                     DataTranslator.getDataTranslator().setCmd("1101");
                                     DataTranslator.getDataTranslator().setS("0");
-                                    DataTranslator.getDataTranslator().setRn("0000");
+                                    DataTranslator.getDataTranslator().setRn("0");
                                     DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().setRs(c.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().setSh("10");
                                     DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionRegisterShifted();
                                     }
-                                :}  
+                                :} 
+              | ASR REGISTER:a COMA REGISTER:b COMA NUMBER:c 
+                                {:
+                                    PC += 4;
+                                    if (isWrite){
+                                    System.out.println("ASR "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5(c.toString().split("#")[1]);
+                                    DataTranslator.getDataTranslator().setSh("10");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
+                                :} 
+              | ASR REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
+                                {:
+                                    PC += 4;
+                                    if (isWrite){
+                                    System.out.println("ASR "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5(
+                                                Integer.toString(NumberTranslator.hexToInteger( 
+                                                c.toString().split("#0x")[1])  )  );
+                                    DataTranslator.getDataTranslator().setSh("10");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
+                                :} 
 
 
 
 /*********************ROR INSTRUCTION************************/
 
-              | ROR  REGISTER:a COMA REGISTER:b COMA REGISTER:c 
+              | ROR REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
                                     PC += 4;
                                     if (isWrite){
-                                    
+                                    System.out.println("ROR "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRs(c.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setSh("11");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegisterShifted();
                                     }
                                 :} 
-              | ROR  REGISTER:a COMA REGISTER:b COMA NUMBER:c 
+              | ROR REGISTER:a COMA REGISTER:b COMA NUMBER:c 
                                 {:
                                     PC += 4;
                                     if (isWrite){
-                                    
+                                    System.out.println("ROR "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5(c.toString().split("#")[1]);
+                                    DataTranslator.getDataTranslator().setSh("11");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
                                     }
                                 :} 
-              | ROR  REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
+              | ROR REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
                                 {:
                                     PC += 4;
                                     if (isWrite){
-                                    
+                                    System.out.println("ROR "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5(
+                                                Integer.toString(NumberTranslator.hexToInteger( 
+                                                c.toString().split("#0x")[1])  )  );
+                                    DataTranslator.getDataTranslator().setSh("11");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
                                     }
-                                :}                               
+                                :}   
+
+
+/*********************ROREQ INSTRUCTION************************/
+
+              | ROREQ REGISTER:a COMA REGISTER:b COMA REGISTER:c 
+                                {:
+                                    PC += 4;
+                                    if (isWrite){
+                                    System.out.println("ROREQ "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("0000");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRs(c.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setSh("11");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegisterShifted();
+                                    }
+                                :} 
+              | ROREQ REGISTER:a COMA REGISTER:b COMA NUMBER:c 
+                                {:
+                                    PC += 4;
+                                    if (isWrite){
+                                    System.out.println("ROREQ "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("0000");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5(c.toString().split("#")[1]);
+                                    DataTranslator.getDataTranslator().setSh("11");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
+                                :} 
+              | ROREQ REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
+                                {:
+                                    PC += 4;
+                                    if (isWrite){
+                                    System.out.println("ROREQ "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("0000");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5(
+                                                Integer.toString(NumberTranslator.hexToInteger( 
+                                                c.toString().split("#0x")[1])  )  );
+                                    DataTranslator.getDataTranslator().setSh("11");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
+                                :} 
+
+/*********************RORLT INSTRUCTION************************/
+
+              | RORLT REGISTER:a COMA REGISTER:b COMA REGISTER:c 
+                                {:
+                                    PC += 4;
+                                    if (isWrite){
+                                    System.out.println("RORLT "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("1011");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRs(c.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setSh("11");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegisterShifted();
+                                    }
+                                :} 
+              | RORLT REGISTER:a COMA REGISTER:b COMA NUMBER:c 
+                                {:
+                                    PC += 4;
+                                    if (isWrite){
+                                    System.out.println("RORLT "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("1011");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5(c.toString().split("#")[1]);
+                                    DataTranslator.getDataTranslator().setSh("11");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
+                                :} 
+              | RORLT REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
+                                {:
+                                    PC += 4;
+                                    if (isWrite){
+                                    System.out.println("RORLT "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("1011");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5(
+                                                Integer.toString(NumberTranslator.hexToInteger( 
+                                                c.toString().split("#0x")[1])  )  );
+                                    DataTranslator.getDataTranslator().setSh("11");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
+                                :} 
+
+/*********************RORGT INSTRUCTION************************/
+
+              | RORGT REGISTER:a COMA REGISTER:b COMA REGISTER:c 
+                                {:
+                                    PC += 4;
+                                    if (isWrite){
+                                    System.out.println("RORGT "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("1100");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRs(c.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setSh("11");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegisterShifted();
+                                    }
+                                :} 
+              | RORGT REGISTER:a COMA REGISTER:b COMA NUMBER:c 
+                                {:
+                                    PC += 4;
+                                    if (isWrite){
+                                    System.out.println("RORGT "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("1100");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5(c.toString().split("#")[1]);
+                                    DataTranslator.getDataTranslator().setSh("11");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
+                                :} 
+              | RORGT REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
+                                {:
+                                    PC += 4;
+                                    if (isWrite){
+                                    System.out.println("RORGT "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("1100");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5(
+                                                Integer.toString(NumberTranslator.hexToInteger( 
+                                                c.toString().split("#0x")[1])  )  );
+                                    DataTranslator.getDataTranslator().setSh("11");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
+                                :}     
+
+
+/*********************RORNE INSTRUCTION************************/
+
+              | RORNE REGISTER:a COMA REGISTER:b COMA REGISTER:c 
+                                {:
+                                    PC += 4;
+                                    if (isWrite){
+                                    System.out.println("RORNE "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("0001");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRs(c.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setSh("11");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegisterShifted();
+                                    }
+                                :} 
+              | RORNE REGISTER:a COMA REGISTER:b COMA NUMBER:c 
+                                {:
+                                    PC += 4;
+                                    if (isWrite){
+                                    System.out.println("RORNE "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("0001");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5(c.toString().split("#")[1]);
+                                    DataTranslator.getDataTranslator().setSh("11");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
+                                :} 
+              | RORNE REGISTER:a COMA REGISTER:b COMA ADDRESS:c 
+                                {:
+                                    PC += 4;
+                                    if (isWrite){
+                                    System.out.println("RORNE "+a+","+b+","+c);
+                                    DataTranslator.getDataTranslator().setCond("0001");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5(
+                                                Integer.toString(NumberTranslator.hexToInteger( 
+                                                c.toString().split("#0x")[1])  )  );
+                                    DataTranslator.getDataTranslator().setSh("11");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
+                                :}   
+
+
+                          
 
 
 /*********************MOV INSTRUCTION************************/
@@ -1733,6 +2078,17 @@ Instruction::=
                                     PC += 4;
                                     if (isWrite){
                                     System.out.println("MOV "+a+", "+b);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5("0");
+                                    DataTranslator.getDataTranslator().setSh("00");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
                                     }
                                 :}
               | MOV  REGISTER:a COMA NUMBER:b 
@@ -1740,17 +2096,93 @@ Instruction::=
                                     PC += 4;
                                     if (isWrite){
                                     System.out.println("MOV "+a+", "+b);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("1");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
+                                    DataTranslator.getDataTranslator().setImm8(b.toString().split("#")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
+                                :} 
+              | MOV  REGISTER:a COMA ADDRESS:b 
+                                {:
+                                    PC += 4;
+                                    if (isWrite){
+                                    System.out.println("MOV "+a+", "+b);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("1");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("1");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
+                                    DataTranslator.getDataTranslator().setImm8(
+                                                Integer.toString(NumberTranslator.hexToInteger( 
+                                                b.toString().split("#0x")[1])  )  );
+                                    DataTranslator.getDataTranslator().writeInstructionImmediate();
                                     }
                                 :} 
 
 
 /*********************MVN INSTRUCTION************************/
 
-              | MVN  REGISTER:a COMA REGISTER:b 
+              | MVN  REGISTER:a COMA REGISTER:b COMA REGISTER:c
                                 {:
                                     PC += 4;
                                     if (isWrite){
-                                    System.out.println("MVN "+a+", "+b);
+                                    System.out.println("MVN "+a+", "+b+", " +c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1111");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5("0");
+                                    DataTranslator.getDataTranslator().setSh("00");
+                                    DataTranslator.getDataTranslator().setRm(c.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
+                                    }
+                                :}
+              | MVN  REGISTER:a COMA REGISTER:b COMA NUMBER:c
+                                {:
+                                    PC += 4;
+                                    if (isWrite){
+                                    System.out.println("MVN "+a+", "+b+", " +c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("1");
+                                    DataTranslator.getDataTranslator().setCmd("1111");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
+                                    DataTranslator.getDataTranslator().setImm8(c.toString().split("#")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionImmediate();
+                                    }
+                                :}
+              | MVN  REGISTER:a COMA REGISTER:b COMA ADDRESS:c
+                                {:
+                                    PC += 4;
+                                    if (isWrite){
+                                    System.out.println("MVN "+a+", "+b+", " +c);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("1");
+                                    DataTranslator.getDataTranslator().setCmd("1111");
+                                    DataTranslator.getDataTranslator().setS("1");
+                                    DataTranslator.getDataTranslator().setRn(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
+                                    DataTranslator.getDataTranslator().setImm8(
+                                                Integer.toString(NumberTranslator.hexToInteger( 
+                                                c.toString().split("#0x")[1])  )  );
+                                    DataTranslator.getDataTranslator().writeInstructionImmediate();
                                     }
                                 :}
 
@@ -1762,6 +2194,17 @@ Instruction::=
                                     PC += 4;
                                     if (isWrite){
                                     System.out.println("CMP " + a + ", " + b);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1010");
+                                    DataTranslator.getDataTranslator().setS("1");
+                                    DataTranslator.getDataTranslator().setRn(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRd("0");
+                                    DataTranslator.getDataTranslator().setShamt5("0");
+                                    DataTranslator.getDataTranslator().setSh("00");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
                                     }
                                 :} 
               | CMP  REGISTER:a COMA NUMBER:b 
@@ -1769,6 +2212,16 @@ Instruction::=
                                     PC += 4;
                                     if (isWrite){
                                     System.out.println("CMP " + a + ", " + b);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("1");
+                                    DataTranslator.getDataTranslator().setCmd("1010");
+                                    DataTranslator.getDataTranslator().setS("1");
+                                    DataTranslator.getDataTranslator().setRn(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRd("0");
+                                    //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
+                                    DataTranslator.getDataTranslator().setImm8(b.toString().split("#")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionImmediate();
                                     }
                                 :} 
               | CMP  REGISTER:a COMA ADDRESS:b 
@@ -1776,6 +2229,18 @@ Instruction::=
                                     PC += 4;
                                     if (isWrite){
                                     System.out.println("CMP " + a + ", " + b);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("1");
+                                    DataTranslator.getDataTranslator().setCmd("1010");
+                                    DataTranslator.getDataTranslator().setS("1");
+                                    DataTranslator.getDataTranslator().setRn(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRd("0");
+                                    //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
+                                    DataTranslator.getDataTranslator().setImm8(
+                                                Integer.toString(NumberTranslator.hexToInteger( 
+                                                b.toString().split("#0x")[1])  )  );
+                                    DataTranslator.getDataTranslator().writeInstructionImmediate();
                                     }
                                 :} 
 
@@ -1786,6 +2251,17 @@ Instruction::=
                                     PC += 4;
                                     if (isWrite){
                                     System.out.println("CMN " + a + ", " + b);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1011");
+                                    DataTranslator.getDataTranslator().setS("1");
+                                    DataTranslator.getDataTranslator().setRn(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRd("0");
+                                    DataTranslator.getDataTranslator().setShamt5("0");
+                                    DataTranslator.getDataTranslator().setSh("00");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
                                     }
                                 :} 
               | CMN  REGISTER:a COMA NUMBER:b 
@@ -1793,6 +2269,16 @@ Instruction::=
                                     PC += 4;
                                     if (isWrite){
                                     System.out.println("CMN " + a + ", " + b);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("1");
+                                    DataTranslator.getDataTranslator().setCmd("1011");
+                                    DataTranslator.getDataTranslator().setS("1");
+                                    DataTranslator.getDataTranslator().setRn(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRd("0");
+                                    //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
+                                    DataTranslator.getDataTranslator().setImm8(b.toString().split("#")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionImmediate();
                                     }
                                 :} 
               | CMN  REGISTER:a COMA ADDRESS:b 
@@ -1800,6 +2286,18 @@ Instruction::=
                                     PC += 4;
                                     if (isWrite){
                                     System.out.println("CMN " + a + ", " + b);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("1");
+                                    DataTranslator.getDataTranslator().setCmd("1011");
+                                    DataTranslator.getDataTranslator().setS("1");
+                                    DataTranslator.getDataTranslator().setRn(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRd("0");
+                                    //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
+                                    DataTranslator.getDataTranslator().setImm8(
+                                                Integer.toString(NumberTranslator.hexToInteger( 
+                                                b.toString().split("#0x")[1])  )  );
+                                    DataTranslator.getDataTranslator().writeInstructionImmediate();
                                     }
                                 :} 
 
@@ -2177,25 +2675,22 @@ Instruction::=
 
 /*********************RRX INSTRUCTION************************/
 
-              | RRX  REGISTER:a COMA REGISTER:b 
+              | RRX  REGISTER:a COMA REGISTER:b COMA REGISTER:c
                                 {:
                                     PC += 4;
                                     if (isWrite){
                                     System.out.println("RRX " + a + ", " + b);
-                                    }
-                                :} 
-              | RRX  REGISTER:a COMA NUMBER:b 
-                                {:
-                                    PC += 4;
-                                    if (isWrite){
-                                    System.out.println("RRX " + a + ", " + b);
-                                    }
-                                :} 
-              | RRX  REGISTER:a COMA ADDRESS:b 
-                                {:
-                                    PC += 4;
-                                    if (isWrite){
-                                    System.out.println("RRX " + a + ", " + b);
+                                    DataTranslator.getDataTranslator().setCond("1110");
+                                    DataTranslator.getDataTranslator().setOp("00");
+                                    DataTranslator.getDataTranslator().setI("0");
+                                    DataTranslator.getDataTranslator().setCmd("1101");
+                                    DataTranslator.getDataTranslator().setS("0");
+                                    DataTranslator.getDataTranslator().setRn("0");
+                                    DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setShamt5("0");
+                                    DataTranslator.getDataTranslator().setSh("11");
+                                    DataTranslator.getDataTranslator().setRm(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().writeInstructionRegister();
                                     }
                                 :} 
 

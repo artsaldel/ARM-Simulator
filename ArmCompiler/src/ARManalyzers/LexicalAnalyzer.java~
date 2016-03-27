@@ -944,19 +944,19 @@ class LexicalAnalyzer implements java_cup.runtime.Scanner {
             }
           case 116: break;
           case 51: 
-            { return symbol(sym.XORNE);
+            { return symbol(sym.EORNE);
             }
           case 117: break;
           case 52: 
-            { return symbol(sym.XOREQ);
+            { return symbol(sym.EOREQ);
             }
           case 118: break;
           case 53: 
-            { return symbol(sym.XORLT);
+            { return symbol(sym.EORLT);
             }
           case 119: break;
           case 54: 
-            { return symbol(sym.XORGT);
+            { return symbol(sym.EORGT);
             }
           case 120: break;
           case 55: 
