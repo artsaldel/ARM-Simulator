@@ -11,11 +11,13 @@ import javax.swing.table.*;
 public class DataTables {
     private Object[][] tablaInstrucciones;
     private Object[][] tablaDatos;
+    private Object[][] tablaRegistros;
             
     public DataTables()
     {
         this.tablaDatos = new Object[256][2];
         this.tablaInstrucciones = new Object[256][2];
+        this.tablaRegistros = new Object[16][2];
     }
 
     public Object[][] getTablaInstrucciones() {
@@ -26,17 +28,33 @@ public class DataTables {
         return tablaDatos;
     }
     
-    public String[][] getTablaDatosSTR(Object[][] obj)
+    public Object[][] getTablaRegistros() {
+        return tablaRegistros;
+    }
+    
+    public String[][] getTablaDatosSTR(Object[][] obj, int row)
     {
-        String [][] tmp = new String[256][2];
-        for (int i = 0; i < 256; i++)
+        String [][] tmp = new String[row][2];
+        for (int i = 0; i < row; i++)
             for (int j = 0; j < 2; j++){
                 tmp[i][j] = split0x(obj[i][j].toString());
             }
         return tmp;
     }
 
-    public Object[][] initDataTable()
+    public void setTablaInstrucciones(Object[][] tablaInstrucciones) {
+        this.tablaInstrucciones = tablaInstrucciones;
+    }
+
+    public void setTablaDatos(Object[][] tablaDatos) {
+        this.tablaDatos = tablaDatos;
+    }
+
+    public void setTablaRegistros(Object[][] tablaRegistros) {
+        this.tablaRegistros = tablaRegistros;
+    }
+
+    public void initDataTable()
     {
         int contador = 0;
         String intStr, strHex, hex = null;
@@ -52,8 +70,10 @@ public class DataTables {
             }
             contador += 4;
         }
-        return tablaDatos;
+        //return tablaDatos;
     }
+    
+    
     
     public Object[][] initInstructionTable()
     {
@@ -74,14 +94,34 @@ public class DataTables {
         return tablaInstrucciones;
     }
     
-    public void updateTableValues(JTable table, int row, int column)
+    public Object[][] initRegisterTable()
+    {
+        for (int i = 0; i < 16; i++){
+            for (int j = 0; j < 2; j++){
+                if (j == 0) {
+                    if (i == 13) {
+                        tablaRegistros[i][j] = "R" + i + "  (SP)"; 
+                    }else if (i == 14) {
+                        tablaRegistros[i][j] = "R" + i + "  (LR)"; 
+                    }else if (i == 15) {
+                        tablaRegistros[i][j] = "R" + i + "  (PC)"; 
+                    }else
+                        tablaRegistros[i][j] = "R" + i; 
+                }else
+                   tablaRegistros[i][j] = "0x00000000";
+            }
+        }
+        return tablaRegistros;
+    }
+    
+    public void updateTableValues(JTable table, int row, int column, Object[][] obj)
     {
     // instrucciones y datos row = 256; column = 2
     // registros row = 16; column = 2
         for (int i = 0; i < row; i++)
             for (int j = 0; j < column; j++)
-                if (j == 1) 
-                   tablaInstrucciones[i][j] = table.getValueAt(i, j).toString();
+                //obj[i][j] = table.getValueAt(i, j).toString();
+                table.setValueAt(obj[i][j], i, j);
     }
     
     public void verifySintaxis()

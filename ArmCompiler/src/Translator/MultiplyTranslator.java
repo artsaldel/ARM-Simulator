@@ -108,7 +108,7 @@ public class MultiplyTranslator {
             String instruction = getCond() + getOp() + "00" + getCmd() + getS() + 
                                  getRd() + getRa() + getRm() + "1001" + getRn();
             instruction = NumberTranslator.binaryToHex(instruction);
-            BinaryOutput.write("0x" + NumberTranslator.integerToHexBytes(parser.PC));
+            BinaryOutput.write(NumberTranslator.integerToHexBytes(parser.PC));
             BinaryOutput.writeLine(instruction);
         }
         catch(Exception e){

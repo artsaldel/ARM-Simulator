@@ -43,6 +43,11 @@ public class MessageInterpreter {
         return "ARMv4@" + "Execution" + ":-~$" + " " + message + "\n";
     }
     
+    public static String showActualPath(String msj)
+    {
+        return "ARMv4@" + "CurrentFile" + ":-~$" + " " + msj+ "\n";
+    }
+    
     public static String initMensaje(String msj)
     {
         return "ARMv4@" + "Info" + ":-~$" + " " + msj+ "\n";

@@ -21,12 +21,16 @@ public class mainWindow extends javax.swing.JFrame {
     private String _actualPath; //indica el path del archivo que actualmente está trabajando
     DataTables dt;
     Simulacion sim;
+    
     /**
      * Creates new form mainWindow
      */
     public mainWindow() {
         this._actualPath = "";
         dt = new DataTables();
+        dt.initDataTable();
+        dt.initInstructionTable();
+        dt.initRegisterTable();
         sim = new Simulacion();
         initComponents();
     }
@@ -175,24 +179,7 @@ public class mainWindow extends javax.swing.JFrame {
         jTabbedPane1.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
 
         GUI_tablaRegistros.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"R0", "0x00000000"},
-                {"R1", "0x00000000"},
-                {"R2", "0x00000000"},
-                {"R3", "0x00000000"},
-                {"R4", "0x00000000"},
-                {"R5", "0x00000000"},
-                {"R6", "0x00000000"},
-                {"R7", "0x00000000"},
-                {"R8", "0x00000000"},
-                {"R9", "0x00000000"},
-                {"R10", "0x00000000"},
-                {"R11", "0x00000000"},
-                {"R12", "0x00000000"},
-                {"R13 (SP)", "0x00000000"},
-                {"R14 (LR)", "0x00000000"},
-                {"R15 (PC)", "0x00000000"}
-            },
+            dt.getTablaRegistros(),
             new String [] {
                 "Register", "Value"
             }
@@ -219,7 +206,7 @@ public class mainWindow extends javax.swing.JFrame {
         jTabbedPane1.addTab("Registers", jScrollPane2);
 
         GUI_tablaDatos.setModel(new javax.swing.table.DefaultTableModel(
-            dt.initDataTable(),
+            dt.getTablaDatos(),
             new String [] {
                 "Address", "Value"
             }
@@ -246,7 +233,7 @@ public class mainWindow extends javax.swing.JFrame {
         jTabbedPane1.addTab("Data", jScrollPane3);
 
         GUI_tablaInstrucciones.setModel(new javax.swing.table.DefaultTableModel(
-            dt.initInstructionTable(),
+            dt.getTablaInstrucciones(),
             new String [] {
                 "Address", "Instruction"
             }
@@ -506,27 +493,113 @@ public class mainWindow extends javax.swing.JFrame {
             //String aa = GUI_tablaDatos.getValueAt(0,1).toString();
             //System.out.println("VALOR: " + aa);
 
-            String[][] tmp =  dt.getTablaDatosSTR(dt.getTablaDatos());
+            String[][] tmp =  dt.getTablaDatosSTR(dt.getTablaDatos(), 256);
             String mensaje = sim.start(tmp);
-            String salida1 = MessageInterpreter.mensaje(mensaje);
+            String salida = MessageInterpreter.mensaje(mensaje);
             if (mensaje.equals("El programa ha sido simulado con éxito")){
-                salida1 += MessageInterpreter.mensajeExecution("El tiempo de ejecución fue de " 
+                salida += MessageInterpreter.mensajeExecution("El tiempo de ejecución fue de " 
                         + sim.getTime() + " ns.");
                 //sim.getMem().get(mensaje);
+                
                 // TO DO: ACTUALIZAR TABLAS GUI
+                dt.setTablaDatos(fillDataGUI());
+                dt.setTablaInstrucciones(fillInstructionGUI());
+                dt.setTablaRegistros(fillRegisterGUI());
+                // ACTUALIZA GUI
+                dt.updateTableValues(GUI_tablaDatos, 256, 2, dt.getTablaDatos());
+                dt.updateTableValues(GUI_tablaInstrucciones, 256, 2, dt.getTablaInstrucciones());
+                dt.updateTableValues(GUI_tablaRegistros, 16, 2, dt.getTablaRegistros());
             }
-            jTextArea1.setText(salida1);
+            jTextArea1.setText(salida);
         } catch (IOException ex) {
             Logger.getLogger(mainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
                     
     }//GEN-LAST:event_jMenuItem5ActionPerformed
-
+    
+    private Object[][] fillDataGUI()
+    {
+        Object[][] tmpDatos = new Object[256][2];
+        int contador = 0;
+        String intStr, strHex, hex = null;
+        for (int i = 0; i < 256; i++){
+            for (int j = 0; j < 2; j++){
+                intStr = Integer.toString(contador);
+                strHex = Long.toHexString((i*4)+1024);
+                hex = String.format("%8s", strHex).replace(' ', '0');
+                if (j == 0) {
+                   tmpDatos[i][j] = "0x" + hex; 
+                }else{
+                    if (sim.getMem().get(hex) == null) 
+                        tmpDatos[i][j] =  "0x" + "00000000";
+                    else
+                        tmpDatos[i][j] =  "0x" + sim.getMem().get(hex);
+                }
+            }
+            contador += 4;
+        }
+        return tmpDatos;
+    }
+    
+    private Object[][] fillInstructionGUI()
+    {
+        Object[][] tmp = new Object[256][2];
+        int contador = 0;
+        String intStr, strHex, hex = null;
+        for (int i = 0; i < 256; i++){
+            for (int j = 0; j < 2; j++){
+                intStr = Integer.toString(contador);
+                strHex = Long.toHexString(i*4);
+                hex = String.format("%8s", strHex).replace(' ', '0');
+                if (j == 0) {
+                   tmp[i][j] = "0x" + hex; 
+                }else{
+                    if (sim.getProg().get(hex) == null) 
+                        tmp[i][j] =  "0x" + "00000000";
+                    else
+                        tmp[i][j] =  "0x" + sim.getProg().get(hex);
+                }
+            }
+            contador += 4;
+        }
+        return tmp;
+    }
+    
+    private Object[][] fillRegisterGUI()
+    {
+        Object[][] tmp = new Object[16][2];
+        String intStr, strBin, bin = null;
+        for (int i = 0; i < 16; i++){
+            for (int j = 0; j < 2; j++){
+                intStr = Integer.toString(i);
+                strBin = Long.toBinaryString(i);
+                bin = String.format("%4s", strBin).replace(' ', '0');
+                //System.out.println("BINARIOS: " + bin);
+                if (j == 0) {
+                    if (i == 13) {
+                        tmp[i][j] = "R" + i + "  (SP)"; 
+                    }else if (i == 14) {
+                        tmp[i][j] = "R" + i + "  (LR)"; 
+                    }else if (i == 15) {
+                        tmp[i][j] = "R" + i + "  (PC)"; 
+                    }else
+                        tmp[i][j] = "R" + i; 
+                }else{
+                    if (sim.getReg().get(bin) == null) 
+                        tmp[i][j] = "0x"+ "00000000";
+                    else
+                        tmp[i][j] = "0x"+ sim.getReg().get(bin);
+                }
+            }
+        }
+        return tmp;
+    }
     
     
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here: Archivo < Abrir
         cargarFileChooser();
+        MessageInterpreter.showActualPath(_actualPath);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
@@ -552,15 +625,14 @@ public class mainWindow extends javax.swing.JFrame {
                 guardarComoFileChooser(textoAGuardar);
                 this.editorTextPane.setText("");
             }
-        }else 
-        {
+        }else {
             textoAGuardar = editorTextPane.getText();
             guardarSinFileChooser(textoAGuardar);
             JOptionPane.showMessageDialog(this, "¡Archivo actualizado y"
                     + " guardado!", "Cerrar", JOptionPane.INFORMATION_MESSAGE);
             this.editorTextPane.setText("");
         }
-        
+        MessageInterpreter.showActualPath(_actualPath);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
@@ -583,6 +655,7 @@ public class mainWindow extends javax.swing.JFrame {
             textoAGuardar = editorTextPane.getText();
             guardarComoFileChooser(textoAGuardar);
         }
+        MessageInterpreter.showActualPath(_actualPath);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
@@ -617,6 +690,7 @@ public class mainWindow extends javax.swing.JFrame {
             jTextArea1.setText(msj);
             ModuloError.resetError();
         }
+        MessageInterpreter.showActualPath(_actualPath);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed

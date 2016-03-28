@@ -155,7 +155,7 @@ public class MemoryTranslator {
             String instruction = getCond() + getOp() + getNegI() + getP() + getU() + 
                                  getB() + getW() + getL() + getRn() + getRd() + getImm12();
             instruction = NumberTranslator.binaryToHex(instruction);
-            BinaryOutput.write("0x" + NumberTranslator.integerToHexBytes(parser.PC));
+            BinaryOutput.write(NumberTranslator.integerToHexBytes(parser.PC));
             BinaryOutput.writeLine(instruction);
         }
         catch(Exception e){
@@ -179,7 +179,7 @@ public class MemoryTranslator {
                                  getB() + getW() + getL() + getRn() + getRd() + 
                                  getShamt5() + getSh() + "1" + getRm();
             instruction = NumberTranslator.binaryToHex(instruction);
-            BinaryOutput.write("0x" + NumberTranslator.integerToHexBytes(parser.PC));
+            BinaryOutput.write(NumberTranslator.integerToHexBytes(parser.PC));
             BinaryOutput.writeLine(instruction);
         }
         catch(Exception e){

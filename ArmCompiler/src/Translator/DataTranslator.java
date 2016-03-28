@@ -188,7 +188,7 @@ public class DataTranslator {
             String instruction = getCond() + getOp() + getI() + getCmd() + getS() +
                                  Rn + Rd + getRot() + imm8; 
             instruction = NumberTranslator.binaryToHex(instruction);
-            BinaryOutput.write("0x" + NumberTranslator.integerToHexBytes(parser.PC));
+            BinaryOutput.write(NumberTranslator.integerToHexBytes(parser.PC));
             BinaryOutput.writeLine(instruction);
         }
         catch(Exception e){
@@ -215,7 +215,7 @@ public class DataTranslator {
             String instruction = getCond() + getOp() + getI() + getCmd() + getS() +
                                  getRn() + getRd() + getShamt5() + getSh() + "0" + getRm(); 
             instruction = NumberTranslator.binaryToHex(instruction);
-            BinaryOutput.write("0x" + NumberTranslator.integerToHexBytes(parser.PC));
+            BinaryOutput.write(NumberTranslator.integerToHexBytes(parser.PC));
             BinaryOutput.writeLine(instruction);
         }
         catch(Exception e){
@@ -238,7 +238,7 @@ public class DataTranslator {
             String instruction = getCond() + getOp() + getI() + getCmd() + getS() +
                                  getRn() + getRd() + getRs() + "0" + getSh() + "1" + getRm(); 
             instruction = NumberTranslator.binaryToHex(instruction);
-            BinaryOutput.write("0x" + NumberTranslator.integerToHexBytes(parser.PC));
+            BinaryOutput.write(NumberTranslator.integerToHexBytes(parser.PC));
             BinaryOutput.writeLine(instruction);
         }
         catch(Exception e){
