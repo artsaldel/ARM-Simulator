@@ -48,4 +48,10 @@ public class NumberTranslator {
         while (hex.length() != 8) { hex = "0" + hex; }
         return hex;
     }
+    
+    public static String integerToHexBytes (int number){
+        String result = Integer.toHexString(number);
+        while(result.length() < 8){result = "0" + result;}
+        return result;
+    }
 }

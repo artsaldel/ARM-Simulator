@@ -1831,7 +1831,7 @@ public class parser extends java_cup.runtime.lr_parser {
 
 
 
-    int PC = -4;
+    public static int PC = -4;
     public static boolean isWrite = false;
     public static boolean isError = false;
     public static String entryPath = "";
@@ -1994,7 +1994,7 @@ class CUP$parser$actions {
 		int cright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object c = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
-                                    PC += 4;
+                                    PC += 4; 
                                     if (isWrite && !isError){
                                     System.out.println("ADD " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");

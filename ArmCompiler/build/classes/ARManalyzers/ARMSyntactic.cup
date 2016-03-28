@@ -15,7 +15,7 @@ action code {:
 :}
 
 parser code {:
-    int PC = -4;
+    public static int PC = -4;
     public static boolean isWrite = false;
     public static boolean isError = false;
     public static String entryPath = "";
@@ -130,7 +130,7 @@ Instruction::=
 
               | ADD REGISTER:a COMA REGISTER:b COMA REGISTER:c 
                                 {:
-                                    PC += 4;
+                                    PC += 4; 
                                     if (isWrite && !isError){
                                     System.out.println("ADD " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");

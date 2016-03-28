@@ -36,6 +36,14 @@ public class BinaryOutput {
         catch (Exception e) {}
     }
     
+    public static void write (String line){
+        try(PrintWriter output = new PrintWriter(new FileWriter("out.txt",true))) 
+        {
+            output.printf("%s\t", line);
+        } 
+        catch (Exception e) {}
+    }
+    
     public static void clearOutputFile () throws IOException{
         try (FileWriter fwOb = new FileWriter("out.txt", false); 
              PrintWriter pwOb = new PrintWriter(fwOb, false)) {
