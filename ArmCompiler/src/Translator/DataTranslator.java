@@ -144,15 +144,45 @@ public class DataTranslator {
         else{
             String tempImm8 = "";
             String originalImm8 = imm8;
+            
             while (originalImm8.length() != 32){originalImm8 = "0" + originalImm8;}
             int bits8Ctdr = 0;
+            boolean flag = false;
+            String temp2Imm8 = originalImm8;
+            
+            for (int ctdr = 31; ctdr >= 0 && bits8Ctdr < 8; ctdr--){
+                if (temp2Imm8.charAt(ctdr) == '1' && !flag){
+                    tempImm8 = temp2Imm8.charAt(ctdr) + tempImm8;
+                    bits8Ctdr++;
+                    flag = true;
+                }
+                else if (temp2Imm8.charAt(ctdr) == '0' && temp2Imm8.charAt(ctdr-1) == '1' && !flag){
+                    tempImm8 = temp2Imm8.charAt(ctdr) + tempImm8;
+                    bits8Ctdr++;
+                    flag = true;
+                }
+                else if (flag){
+                    tempImm8 = temp2Imm8.charAt(ctdr) + tempImm8;
+                    bits8Ctdr++;
+                }
+                else
+                    ctdr--;
+            }
+            /*
             for (int ctdr = 0; ctdr < imm8.length() && bits8Ctdr < 8; ctdr++){
-                if (imm8.charAt(ctdr) == '1'){
+                if (imm8.charAt(ctdr) == '1' && !flag){
+                    tempImm8 = tempImm8 + imm8.charAt(ctdr);
+                    bits8Ctdr++;
+                    flag = true;
+                }
+                else if (imm8.charAt(ctdr) == '0' && flag){
                     tempImm8 = tempImm8 + imm8.charAt(ctdr);
                     bits8Ctdr++;
                 }
-            }
+            }*/
+            
             imm8 = tempImm8;
+            while (imm8.length() < 8 ){imm8 = "0" + imm8;}
             String bits32 = "000000000000000000000000" + imm8;
             String[] array1 = bits32.split("");
             String[] array2 = originalImm8.split("");

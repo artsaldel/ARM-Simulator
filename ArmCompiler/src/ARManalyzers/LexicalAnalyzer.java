@@ -750,7 +750,7 @@ class LexicalAnalyzer implements java_cup.runtime.Scanner {
           case 67: break;
           case 2: 
             { ModuloError.insertError("Caracter ilegal <"+yytext()+">");
-                        //throw new Error("Caracter ilegal <"+yytext()+">");
+                        throw new Error("Caracter ilegal <"+yytext()+">");
             }
           case 68: break;
           case 3: 

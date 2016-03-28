@@ -2124,7 +2124,7 @@ Instruction::=
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
                                     DataTranslator.getDataTranslator().setCmd("1101");
-                                    DataTranslator.getDataTranslator().setS("1");
+                                    DataTranslator.getDataTranslator().setS("0");
                                     DataTranslator.getDataTranslator().setRn("0");
                                     DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
                                     //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator

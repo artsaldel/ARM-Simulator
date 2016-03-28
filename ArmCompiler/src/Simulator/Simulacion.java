@@ -81,10 +81,11 @@ public class Simulacion {
             String src2 = "";
             if(instruccion.substring(6, 7).equals("1")){
                 String bit32 = String.format("%24s", "").replace(' ', instruccion.charAt(24));
-                src2 = calculador.rot(2*Integer.parseInt(instruccion.substring(20, 24), 2), bit32 + instruccion.substring(24, 32), 0, "0");
+                src2 = calculador.rot(2*Integer.parseInt(instruccion.substring(20, 24), 2), bit32 + instruccion.substring(24, 32), 1, "0");
             }
-            else if(instruccion.substring(27, 28).equals("0")){ 
-                src2 = String.format("%32s", instruccion.substring(20, 25)).replace(' ', '0');
+            else if((instruccion.substring(27, 28).equals("0") && !instruccion.substring(7, 11).equals("1101")) || (instruccion.substring(20, 28).equals("00000000") && instruccion.substring(7, 11).equals("1101"))){
+                String hex = registros.get(instruccion.substring(28, 32));
+                src2 = String.format("%32s", Integer.toBinaryString((int)Long.parseLong(hex, 16))).replace(' ', '0');
                 /*
                 switch(instruccion.substring(25, 27)){
                     case "00":
@@ -111,6 +112,10 @@ public class Simulacion {
                         break;
                     }                    
                 }*/
+            }
+            else if(instruccion.substring(27, 28).equals("0") && instruccion.substring(7, 11).equals("1101")){
+                String bin = instruccion.substring(20, 25);
+                src2 = String.format("%32s", Integer.toBinaryString((int)Long.parseLong(bin, 2))).replace(' ', '0');
             }
             else{
                 src2 = String.format("%32s", Integer.toBinaryString((int)Long.parseLong(registros.get(instruccion.substring(20, 24)), 16))).replace(' ', '0');
