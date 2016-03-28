@@ -32,8 +32,11 @@ public class TextWordsColor extends JFrame {
 
     public TextWordsColor (JTextPane txt) {
         
-        String mnemonic = "AND|EOR|SUB|RSB|ADD|ADC|SBC|RSC|CMP|CMN|ORR|MOV|LSL|"
-                + "ASR|RRX|ROR|BIC|MVN|MUL|MLA|STR|LDR|STRB|LDRB|B|BL";
+        String mnemonic = "AND|ANDEQ|ANDLT|ANDGT|ANDNE|ORR|ORREQ|ORRLT|ORRGT|"
+                + "ORRNE|EOR|CMP|CMN|ADD|ADDEQ|ADDLT|ADDGT|ADDNE|SUB|SUBEQ|SUBLTSUBGT|"
+                + "SUBNE|EOREQ|EORLT|EORGT|EORNE|MUL|MLA|LSL|MOV|ASR|MVN|STR|LDR|STRB|"
+                + "LDRB|BIC|ROR|ROREQ|RORLT|RORGT|RORNE|RRX|SBC|ADC|RSB|RSC|B|BL|BEQ|"
+                + "BNE|BGT|BLT";
         String registros = "r0|r1|r2|r3|r4|r5|r6|r7|r8|r9|r10|r11|r12|r13|r14|r15";
         String tokens = "#|;|0x";
         final StyleContext cont = StyleContext.getDefaultStyleContext();

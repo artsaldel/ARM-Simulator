@@ -11,8 +11,8 @@ public class Simulacion {
     private Memoria memoria;
     private Memoria registros;
     private Memoria programa;
-    private final Calculador calculador;
-    private final Analizador analizador;
+    private Calculador calculador;
+    private Analizador analizador;
     private String error;
     private String pc;
     private int total;
@@ -395,6 +395,12 @@ public class Simulacion {
                System.out.println(System.getProperty("user.dir") + "\\out.txt");
         programa = new Memoria(256, analizador.analizeText(System.getProperty("user.dir") + "/out.txt", new String[256][2]));
         
+        pc = "00000000";
+        total = 0;
+        analizador = new Analizador();
+        calculador = new Calculador();
+        
+        error = "El programa ha sido simulado con éxito";
         if (programa != null){
             
             //Si el texto es válido, se procede a guardar la memoria de datos
