@@ -34,7 +34,7 @@ public class TextWordsColor extends JFrame {
         
         String mnemonic = "AND|EOR|SUB|RSB|ADD|ADC|SBC|RSC|CMP|CMN|ORR|MOV|LSL|"
                 + "ASR|RRX|ROR|BIC|MVN|MUL|MLA|STR|LDR|STRB|LDRB|B|BL";
-        String registros = "r1|r2|r3|r4|r5|r6|r7|r8|r9|r10|r11|r12|r13|r14|r15";
+        String registros = "r0|r1|r2|r3|r4|r5|r6|r7|r8|r9|r10|r11|r12|r13|r14|r15";
         String tokens = "#|;|0x";
         final StyleContext cont = StyleContext.getDefaultStyleContext();
         // COLOREA DE ROJO LOS REGISTROS
