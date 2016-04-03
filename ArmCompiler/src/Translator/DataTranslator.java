@@ -168,19 +168,6 @@ public class DataTranslator {
                 else
                     ctdr--;
             }
-            /*
-            for (int ctdr = 0; ctdr < imm8.length() && bits8Ctdr < 8; ctdr++){
-                if (imm8.charAt(ctdr) == '1' && !flag){
-                    tempImm8 = tempImm8 + imm8.charAt(ctdr);
-                    bits8Ctdr++;
-                    flag = true;
-                }
-                else if (imm8.charAt(ctdr) == '0' && flag){
-                    tempImm8 = tempImm8 + imm8.charAt(ctdr);
-                    bits8Ctdr++;
-                }
-            }*/
-            
             imm8 = tempImm8;
             while (imm8.length() < 8 ){imm8 = "0" + imm8;}
             String bits32 = "000000000000000000000000" + imm8;

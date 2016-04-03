@@ -115,6 +115,68 @@ NUMBER = "#""-"?[0-9]+
     "RORGT"            {  return symbol(sym.RORGT); }
     "RORNE"            {  return symbol(sym.RORNE); }
 
+
+    "and"              {  return symbol(sym.AND);   }
+    "eor"              {  return symbol(sym.EOR);   }
+    "sub"              {  return symbol(sym.SUB);   } 
+    "rsb"              {  return symbol(sym.RSB);   }  
+    "add"              {  return symbol(sym.ADD);   }  
+    "adc"              {  return symbol(sym.ADC);   }  
+    "sbc"              {  return symbol(sym.SBC);   }  
+    "rsc"              {  return symbol(sym.RSC);   }  
+    "cmp"              {  return symbol(sym.CMP);   } 
+    "cmn"              {  return symbol(sym.CMN);   }  
+    "orr"              {  return symbol(sym.ORR);   }  
+    "mov"              {  return symbol(sym.MOV);   } 
+    "lsl"              {  return symbol(sym.LSL);   }  
+    "asr"              {  return symbol(sym.ASR);   }  
+    "rrx"              {  return symbol(sym.RRX);   }  
+    "ror"              {  return symbol(sym.ROR);   }  
+    "bic"              {  return symbol(sym.BIC);   }
+    "mvn"              {  return symbol(sym.MVN);   } 
+    "mul"              {  return symbol(sym.MUL);   } 
+    "mla"              {  return symbol(sym.MLA);   }
+    "str"              {  return symbol(sym.STR);   } 
+    "ldr"              {  return symbol(sym.LDR);   } 
+    "strb"             {  return symbol(sym.STRB);  }
+    "lsdrb"             {  return symbol(sym.LDRB);  }
+    "b"                {  return symbol(sym.B);     }
+    "bl"               {  return symbol(sym.BL);    }
+    "beq"              {  return symbol(sym.BEQ);   }
+    "bne"              {  return symbol(sym.BNE);   }
+    "bgt"              {  return symbol(sym.BGT);   }
+    "blt"              {  return symbol(sym.BLT);   }
+
+    "addeq"            {  return symbol(sym.ADDEQ); }
+    "addlt"            {  return symbol(sym.ADDLT); }
+    "addgt"            {  return symbol(sym.ADDGT); }
+    "addne"            {  return symbol(sym.ADDNE); }
+
+    "orreq"            {  return symbol(sym.ORREQ); }
+    "orrlt"            {  return symbol(sym.ORRLT); }
+    "orrgt"            {  return symbol(sym.ORRGT); }
+    "orrne"            {  return symbol(sym.ORRNE); }
+
+    "andeq"            {  return symbol(sym.ANDEQ); }
+    "andlt"            {  return symbol(sym.ANDLT); }
+    "andgt"            {  return symbol(sym.ANDGT); }
+    "andne"            {  return symbol(sym.ANDNE); }
+
+    "subeq"            {  return symbol(sym.SUBEQ); }
+    "sublt"            {  return symbol(sym.SUBLT); }
+    "subgt"            {  return symbol(sym.SUBGT); }
+    "subne"            {  return symbol(sym.SUBNE); }
+
+    "eoreq"            {  return symbol(sym.EOREQ); }
+    "eorlt"            {  return symbol(sym.EORLT); }
+    "eorgt"            {  return symbol(sym.EORGT); }
+    "eorne"            {  return symbol(sym.EORNE); }
+
+    "roreq"            {  return symbol(sym.ROREQ); }
+    "rorlt"            {  return symbol(sym.RORLT); }
+    "rorgt"            {  return symbol(sym.RORGT); }
+    "rorne"            {  return symbol(sym.RORNE); }
+
     {JUMP}             {  return symbol(sym.NEWLINE);        }
     {SPACE}            {  /* do nothing */                   }
 

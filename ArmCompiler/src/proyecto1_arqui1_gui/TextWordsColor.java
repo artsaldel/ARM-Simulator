@@ -33,15 +33,20 @@ public class TextWordsColor extends JFrame {
     public TextWordsColor (JTextPane txt) {
         
         String mnemonic = "AND|ANDEQ|ANDLT|ANDGT|ANDNE|ORR|ORREQ|ORRLT|ORRGT|"
-                + "ORRNE|EOR|CMP|CMN|ADD|ADDEQ|ADDLT|ADDGT|ADDNE|SUB|SUBEQ|SUBLTSUBGT|"
+                + "ORRNE|EOR|CMP|CMN|ADD|ADDEQ|ADDLT|ADDGT|ADDNE|SUB|SUBEQ|SUBLT|SUBGT|"
                 + "SUBNE|EOREQ|EORLT|EORGT|EORNE|MUL|MLA|LSL|MOV|ASR|MVN|STR|LDR|STRB|"
                 + "LDRB|BIC|ROR|ROREQ|RORLT|RORGT|RORNE|RRX|SBC|ADC|RSB|RSC|B|BL|BEQ|"
-                + "BNE|BGT|BLT";
+                + "BNE|BGT|BLT" + 
+                "and|andeq|andlt|andgt|andne|orr|orreq|orrlt|orrgt|"
+                + "orrne|eor|cmp|cmn|add|addeq|addlt|addgt|addne|sub|subeq|sublt|subgt|"
+                + "subne|eoeeq|eorlt|eorgt|eorne|mul|mla|lsl|mov|asr|mvn|str|ldr|strb|"
+                + "ldrb|bic|ror|roreq|rorlt|rorgt|rorne|rrx|sbc|adc|rsb|rsc|b|bl|beq|"
+                + "bne|bgt|blt";
         String registros = "r0|r1|r2|r3|r4|r5|r6|r7|r8|r9|r10|r11|r12|r13|r14|r15";
         String tokens = "#|;|0x";
         final StyleContext cont = StyleContext.getDefaultStyleContext();
         // COLOREA DE ROJO LOS REGISTROS
-        final AttributeSet attr = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.blue);
+        final AttributeSet attr = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLUE);
         // COLOREA DE VERDE LOS MNEMÓNICOS
         final AttributeSet attr1 = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.MAGENTA);
         final AttributeSet attr2 = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.ORANGE);

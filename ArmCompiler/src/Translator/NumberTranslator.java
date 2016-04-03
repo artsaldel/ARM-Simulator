@@ -5,6 +5,8 @@
  */
 package Translator;
 
+import java.math.BigInteger;
+
 /**
  *
  * @author Arturo Salas
@@ -15,10 +17,17 @@ public class NumberTranslator {
         return Integer.toBinaryString(integer);
     }
     
-    public static String hexToBinary (String hex){
+    public static String hexToBinary2 (String hex){
         hex = removeZerox(hex);
         int i = Integer.parseInt(hex, 16);
         String bin = Integer.toBinaryString(i);
+        return bin;
+    }
+    
+    public static String hexToBinary (String hex){
+        hex = removeZerox(hex);
+        BigInteger i = new BigInteger(hex, 16);
+        String bin = i.toString(2);
         return bin;
     }
     
@@ -36,7 +45,9 @@ public class NumberTranslator {
     }
     
     public static int hexToInteger (String number){
-        return Integer.parseInt(number, 16);  
+        return (int)Long.parseLong(number,16);
+        
+        //return Integer.parseInt(number, 16);  
     }
     
     public static int integerToHex (int number){
