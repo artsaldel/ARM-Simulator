@@ -1975,7 +1975,6 @@ class CUP$parser$actions {
 		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
-                        System.out.println("Label: " + a);
                         if (!isWrite)
                             BranchTranslator.getBranchTranslator().insertLabel(a.toString(), PC + 4);
                     
@@ -1999,7 +1998,6 @@ class CUP$parser$actions {
 		
                                     PC += 4; 
                                     if (isWrite && !isError){
-                                    System.out.println("ADD " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -2033,7 +2031,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ADD " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -2066,7 +2063,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ADD " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -2101,7 +2097,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ADDEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -2135,7 +2130,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ADDEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -2168,7 +2162,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ADDEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -2203,7 +2196,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ADDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -2237,7 +2229,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ADDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -2270,7 +2261,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ADDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -2305,7 +2295,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ADDGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -2339,7 +2328,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ADDGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -2372,7 +2360,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ADDGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -2407,7 +2394,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ADDNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -2441,7 +2427,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ADDNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -2474,7 +2459,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ADDNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -2509,7 +2493,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("SUB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -2543,7 +2526,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("SUB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -2576,7 +2558,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("SUB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -2611,7 +2592,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("SUBEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -2645,7 +2625,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("SUBEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -2678,7 +2657,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("SUBEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -2713,7 +2691,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("SUBLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -2747,7 +2724,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("SUBLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -2780,7 +2756,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("SUBLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -2815,7 +2790,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("SUBGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -2849,7 +2823,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("SUBGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -2882,7 +2855,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("SUBGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -2917,7 +2889,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("SUBNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -2951,7 +2922,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("SUBNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -2984,7 +2954,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("SUBNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -3019,7 +2988,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("AND " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -3053,7 +3021,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("AND " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -3088,7 +3055,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("AND " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -3121,7 +3087,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ANDEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -3155,7 +3120,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ANDEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -3190,7 +3154,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ANDEQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -3223,7 +3186,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ANDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -3257,7 +3219,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ANDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -3292,7 +3253,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ANDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -3325,7 +3285,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ANDGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -3359,7 +3318,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ANDGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -3394,7 +3352,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ANDLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -3427,7 +3384,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ANDNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -3461,7 +3417,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ANDNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -3496,7 +3451,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ANDNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -3529,7 +3483,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ORR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -3563,7 +3516,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ORR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -3598,7 +3550,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ORR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -3631,7 +3582,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ORREQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -3665,7 +3615,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ORREQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -3700,7 +3649,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ORREQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -3733,7 +3681,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ORRLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -3767,7 +3714,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ORRLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -3802,7 +3748,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ORRLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -3835,7 +3780,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ORRGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -3869,7 +3813,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ORRGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -3904,7 +3847,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ORRGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -3937,7 +3879,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ORRNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -3971,7 +3912,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ORRNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -4006,7 +3946,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ORRNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -4039,7 +3978,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("EOR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -4073,7 +4011,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("EOR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -4108,7 +4045,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("EOR " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -4141,7 +4077,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("EOREQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -4175,7 +4110,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("EOREQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -4210,7 +4144,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("EOREQ " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -4243,7 +4176,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("EORLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -4277,7 +4209,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("EORLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -4312,7 +4243,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("EORLT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -4345,7 +4275,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("EORGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -4379,7 +4308,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("EORGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -4414,7 +4342,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("EORGT " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -4447,7 +4374,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("EORNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -4481,7 +4407,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("EORNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -4516,7 +4441,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("EORNE " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -4549,7 +4473,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("BIC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -4583,7 +4506,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("BIC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -4618,7 +4540,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("BIC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -4651,7 +4572,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("MUL " + a + ", " + b + ", " + c);
                                     MultiplyTranslator.getMultiplyTranslator().setCond("1110");
                                     MultiplyTranslator.getMultiplyTranslator().setOp("00");
                                     MultiplyTranslator.getMultiplyTranslator().setCmd("000");
@@ -4686,7 +4606,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("MLA " + a + ", " + b + ", " + c + ", " + d);
                                     MultiplyTranslator.getMultiplyTranslator().setCond("1110");
                                     MultiplyTranslator.getMultiplyTranslator().setOp("00");
                                     MultiplyTranslator.getMultiplyTranslator().setCmd("001");
@@ -4718,7 +4637,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("LSL "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -4752,7 +4670,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("LSL "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -4786,7 +4703,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("LSL "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -4822,7 +4738,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ASR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -4856,7 +4771,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ASR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -4890,7 +4804,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ASR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -4926,7 +4839,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ROR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -4960,7 +4872,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ROR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -4994,7 +4905,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ROR "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -5030,7 +4940,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ROREQ "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -5064,7 +4973,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ROREQ "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -5098,7 +5006,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ROREQ "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("0000");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -5134,7 +5041,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("RORLT "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -5168,7 +5074,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("RORLT "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -5202,7 +5107,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("RORLT "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1011");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -5238,7 +5142,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("RORGT "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -5272,7 +5175,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("RORGT "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -5306,7 +5208,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("RORGT "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("1100");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -5342,7 +5243,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("RORNE "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -5376,7 +5276,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("RORNE "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -5410,7 +5309,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("RORNE "+a+","+b+","+c);
                                     DataTranslator.getDataTranslator().setCond("0001");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -5443,7 +5341,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("MOV "+a+", "+b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -5474,7 +5371,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("MOV "+a+", "+b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -5504,7 +5400,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("MOV "+a+", "+b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -5539,7 +5434,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("MVN "+a+", "+b+", " +c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -5573,7 +5467,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("MVN "+a+", "+b+", " +c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -5606,7 +5499,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("MVN "+a+", "+b+", " +c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -5638,7 +5530,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("CMP " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -5669,7 +5560,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("CMP " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -5699,7 +5589,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("CMP " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -5731,7 +5620,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("CMN " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -5762,7 +5650,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("CMN " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -5792,7 +5679,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("CMN " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -5827,7 +5713,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
                                     MemoryTranslator.getMemoryTranslator().setNegI("0");
@@ -5867,7 +5752,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
                                     MemoryTranslator.getMemoryTranslator().setNegI("0");
@@ -5905,7 +5789,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
                                     MemoryTranslator.getMemoryTranslator().setNegI("1");
@@ -5942,7 +5825,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("LDR "+a+",["+b+",-"+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
                                     MemoryTranslator.getMemoryTranslator().setNegI("1");
@@ -5979,8 +5861,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("STR "+a+",["+b+","+c+"]");
-                                    System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
                                     MemoryTranslator.getMemoryTranslator().setNegI("0");
@@ -6020,7 +5900,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("STR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
                                     MemoryTranslator.getMemoryTranslator().setNegI("0");
@@ -6058,7 +5937,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("STR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
                                     MemoryTranslator.getMemoryTranslator().setNegI("1");
@@ -6095,7 +5973,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("STR "+a+",["+b+",-"+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
                                     MemoryTranslator.getMemoryTranslator().setNegI("1");
@@ -6132,8 +6009,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("LDRB "+a+",["+b+","+c+"]");
-                                    System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
                                     MemoryTranslator.getMemoryTranslator().setNegI("0");
@@ -6173,7 +6048,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("LDRB "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
                                     MemoryTranslator.getMemoryTranslator().setNegI("0");
@@ -6211,7 +6085,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("LDRB "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
                                     MemoryTranslator.getMemoryTranslator().setNegI("1");
@@ -6248,7 +6121,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("LDRB "+a+",["+b+",-"+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
                                     MemoryTranslator.getMemoryTranslator().setNegI("1");
@@ -6285,8 +6157,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("STRB "+a+",["+b+","+c+"]");
-                                    System.out.println("LDR "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
                                     MemoryTranslator.getMemoryTranslator().setNegI("0");
@@ -6326,7 +6196,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("STRB "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
                                     MemoryTranslator.getMemoryTranslator().setNegI("0");
@@ -6364,7 +6233,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("STRB "+a+",["+b+","+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
                                     MemoryTranslator.getMemoryTranslator().setNegI("1");
@@ -6401,7 +6269,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("STRB "+a+",["+b+",-"+c+"]");
                                     MemoryTranslator.getMemoryTranslator().setCond("1110");
                                     MemoryTranslator.getMemoryTranslator().setOp("01");
                                     MemoryTranslator.getMemoryTranslator().setNegI("1");
@@ -6438,7 +6305,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("RRX " + a + ", " + b);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -6472,7 +6338,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("SBC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -6506,7 +6371,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("SBC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -6541,7 +6405,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("SBC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -6574,7 +6437,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ADC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -6608,7 +6470,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ADC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -6643,7 +6504,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("ADC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -6676,7 +6536,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("RSB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -6710,7 +6569,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("RSB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -6745,7 +6603,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("RSB " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -6778,7 +6635,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("RSC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("0");
@@ -6812,7 +6668,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("RSC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -6847,7 +6702,6 @@ class CUP$parser$actions {
 		
                                     PC += 4;
                                     if (isWrite && !isError){
-                                    System.out.println("RSC " + a + ", " + b + ", " + c);
                                     DataTranslator.getDataTranslator().setCond("1110");
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
@@ -6876,7 +6730,6 @@ class CUP$parser$actions {
                                     if (isWrite && !isError){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
-                                    System.out.println("B " + a);
                                     BranchTranslator.getBranchTranslator().setCond("1110");
                                     BranchTranslator.getBranchTranslator().setOp("10");
                                     BranchTranslator.getBranchTranslator().setL1("10");
@@ -6900,7 +6753,6 @@ class CUP$parser$actions {
                                     if (isWrite && !isError){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
-                                    System.out.println("BL " + a);
                                     BranchTranslator.getBranchTranslator().setCond("1110");
                                     BranchTranslator.getBranchTranslator().setOp("10");
                                     BranchTranslator.getBranchTranslator().setL1("11");
@@ -6924,7 +6776,6 @@ class CUP$parser$actions {
                                     if (isWrite && !isError){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
-                                    System.out.println("BEQ " + a);
                                     BranchTranslator.getBranchTranslator().setCond("0000");
                                     BranchTranslator.getBranchTranslator().setOp("10");
                                     BranchTranslator.getBranchTranslator().setL1("10");
@@ -6948,7 +6799,6 @@ class CUP$parser$actions {
                                     if (isWrite && !isError){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
-                                    System.out.println("BNE " + a);
                                     BranchTranslator.getBranchTranslator().setCond("0001");
                                     BranchTranslator.getBranchTranslator().setOp("10");
                                     BranchTranslator.getBranchTranslator().setL1("10");
@@ -6972,7 +6822,6 @@ class CUP$parser$actions {
                                     if (isWrite && !isError){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
-                                    System.out.println("BGT " + a);
                                     BranchTranslator.getBranchTranslator().setCond("1100");
                                     BranchTranslator.getBranchTranslator().setOp("10");
                                     BranchTranslator.getBranchTranslator().setL1("10");
@@ -6996,7 +6845,6 @@ class CUP$parser$actions {
                                     if (isWrite && !isError){
                                     int labelPC = BranchTranslator.getBranchTranslator().getLabelPC(a.toString());
                                     int imm24 = BranchTranslator.getBranchTranslator().createImm24(PC, labelPC);
-                                    System.out.println("BLT " + a);
                                     BranchTranslator.getBranchTranslator().setCond("1011");
                                     BranchTranslator.getBranchTranslator().setOp("10");
                                     BranchTranslator.getBranchTranslator().setL1("10");

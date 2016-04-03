@@ -135,7 +135,7 @@ public class DataTranslator {
         DataTranslator.Rs = Rs;
     }
     
-    private void createRot (){
+    public void createRot (){
         //el inmediato ingresa como un numero binario
         if (imm8.length() <= 8){
             while (imm8.length() != 8){imm8 = "0" + imm8;}

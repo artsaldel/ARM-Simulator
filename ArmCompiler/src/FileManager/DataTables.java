@@ -124,7 +124,7 @@ public class DataTables {
                 table.setValueAt(obj[i][j], i, j);
     }
     
-    public void verifySintaxis()
+    public boolean verifySintaxis()
     {
         String strHex, hex, strTmp = null;
         String valor;
@@ -132,72 +132,46 @@ public class DataTables {
         for (int i = 0; i < 256; i++){
             for (int j = 1; j < 2; j++){
                 valor = tablaInstrucciones[i][j].toString();
-                if (startsWith0x(valor.toString())
-                        && valor.toString().length() < 10
-                        && valor.toString().length() > 0
-                        && (verifyHex(split0x(valor.toString())) || verifyDec(split0x(valor.toString())))) {
-                    System.out.println("OK: Detecta 0x, menos de 10 caracteres");
-                    strTmp = split0x(valor.toString());
-                    completeData(strTmp);
-                    
-                } else if (!startsWith0x(valor.toString())
+                if (!startsWith0x(valor.toString())
                         && valor.toString().length() < 8
                         && valor.toString().length() > 0
                         && (verifyHex(valor) || verifyDec(valor))){
-                    System.out.println("OK: No Detecta 0x, hay SÓLO menos de 8 caracteres");
-                    completeData(valor);
+                    System.out.println("OK: hay menos de 8 caracteres");
+                    //completeData(valor);
+                    tablaInstrucciones[i][j] = completeData(valor);
                 
-                } else if (startsWith0x(valor.toString())
-                        && valor.toString().length() == 10
-                        && (verifyHex(split0x(valor.toString())) || verifyDec(split0x(valor.toString())))) {
-                    System.out.println("OK: Detecta 0x, más 8 caracteres");
-                    strTmp = split0x(valor.toString());
-                    
-                } else if (!startsWith0x(valor.toString())
+                }  else if (!startsWith0x(valor.toString())
                         && valor.toString().length() == 8
                         && (verifyHex(valor) || verifyDec(valor))){
-                    System.out.println("OK: No Detecta 0x, hay SÓLO 8 caracteres");
+                    System.out.println("OK: hay SÓLO 8 caracteres");
                 
                 } else {
                     System.out.println("ERROR");
+                    return false;
                 }
             }//fin for j
         }//fin del fors ij
-        //return tmp;
+        return true;
     }
     
     public void verifySintaxis(String valor)
     {
         String strTmp;
         String strHex, hex = null;
-                if (startsWith0x(valor.toString())
-                        && valor.toString().length() < 10
-                        && valor.toString().length() > 0
-                        && (verifyHex(split0x(valor.toString())) || verifyDec(split0x(valor.toString())))) {
-                    System.out.println("OK: Detecta 0x, menos de 10 caracteres");
-                    strTmp = split0x(valor.toString());
-                    completeData(strTmp);
-                    
-                }
-                else if (!startsWith0x(valor.toString())
+                if (!startsWith0x(valor.toString())
                         && valor.toString().length() < 8
                         && valor.toString().length() > 0
                         && (verifyHex(valor) || verifyDec(valor))){
-                    System.out.println("OK: No Detecta 0x, hay SÓLO menos de 8 caracteres");
+                    System.out.println("OK: hay menos de 8 caracteres");
                     completeData(valor);
                 }
-                else if (startsWith0x(valor.toString())
-                        && valor.toString().length() == 10
-                        && (verifyHex(split0x(valor.toString())) || verifyDec(split0x(valor.toString())))) {
-                    System.out.println("OK: Detecta 0x, más 8 caracteres");
-                    strTmp = split0x(valor.toString());
-                    
-                }
+                
                 else if (!startsWith0x(valor.toString())
                         && valor.toString().length() == 8
                         && (verifyHex(valor) || verifyDec(valor))){
-                    System.out.println("OK: No Detecta 0x, hay SÓLO 8 caracteres");
+                    System.out.println("OK: hay SÓLO 8 caracteres");
                 }
+                
                 else
                 {
                     System.out.println("ERROR");
