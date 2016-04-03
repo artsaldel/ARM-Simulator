@@ -44,6 +44,8 @@ parser code {:
 
     public static void main(String[] args, boolean isWri){
         try {
+            BinaryOutput.DestroyFile();
+            BinaryOutput.CreateFile();
             isWrite = isWri;
             parser asin = new parser(
                     new LexicalAnalyzer( new FileReader(args[0])));

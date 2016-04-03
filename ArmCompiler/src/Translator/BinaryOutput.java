@@ -18,8 +18,8 @@ import java.io.PrintWriter;
 public class BinaryOutput {
     
     private static File outputFile;
-    
-    public BinaryOutput (){;
+      
+    public static void CreateFile(){
         try{
             outputFile = new File("out.txt");
             outputFile.createNewFile();
@@ -44,10 +44,11 @@ public class BinaryOutput {
         catch (Exception e) {}
     }
     
-    public static void clearOutputFile () throws IOException{
-        try (FileWriter fwOb = new FileWriter("out.txt", false); 
-             PrintWriter pwOb = new PrintWriter(fwOb, false)) {
-            pwOb.flush();
+    public static void DestroyFile() throws IOException{
+        try{
+            outputFile = new File("out.txt");
+            outputFile.delete();
         }
+        catch (Exception e){}
     }
 }

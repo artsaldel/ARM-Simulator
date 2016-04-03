@@ -21,7 +21,6 @@ public class Grammar {
     }
     
     public static void ExecuteGrammar(String path) throws Exception {
-        BinaryOutput.clearOutputFile();
         String [] archive = {path}; 
         parser.entryPath = path;
         parser.main(archive, false);

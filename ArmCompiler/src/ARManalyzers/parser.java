@@ -1860,6 +1860,8 @@ public class parser extends java_cup.runtime.lr_parser {
 
     public static void main(String[] args, boolean isWri){
         try {
+            BinaryOutput.DestroyFile();
+            BinaryOutput.CreateFile();
             isWrite = isWri;
             parser asin = new parser(
                     new LexicalAnalyzer( new FileReader(args[0])));
@@ -5506,7 +5508,7 @@ class CUP$parser$actions {
                                     DataTranslator.getDataTranslator().setOp("00");
                                     DataTranslator.getDataTranslator().setI("1");
                                     DataTranslator.getDataTranslator().setCmd("1101");
-                                    DataTranslator.getDataTranslator().setS("1");
+                                    DataTranslator.getDataTranslator().setS("0");
                                     DataTranslator.getDataTranslator().setRn("0");
                                     DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
                                     //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
