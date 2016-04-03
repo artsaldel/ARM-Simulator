@@ -37,9 +37,26 @@ public class DataTables {
         String [][] tmp = new String[row][2];
         for (int i = 0; i < row; i++)
             for (int j = 0; j < 2; j++){
-                tmp[i][j] = split0x(obj[i][j].toString());
+                tmp[i][j] = obj[i][j].toString();
             }
         return tmp;
+    }
+    
+    public void updateDataFromGUITablaDatos(javax.swing.JTable tablaGUI)
+    {
+        for (int i = 0; i < 256; i++)
+            for (int j = 1; j < 2; j++){
+                tablaDatos[i][j] = tablaGUI.getValueAt(i,j).toString();
+                //System.out.println(tablaDatos[i][j].toString());
+            }
+    }
+    
+    public void printTablaDatos()
+    {
+        for (int i = 0; i < 256; i++)
+            for (int j = 1; j < 2; j++){
+                System.out.println(tablaDatos[i][j].toString());
+            }
     }
 
     public void setTablaInstrucciones(Object[][] tablaInstrucciones) {
@@ -66,14 +83,12 @@ public class DataTables {
                    hex = String.format("%8s", strHex).replace(' ', '0');
                    tablaDatos[i][j] = "0x" + hex; 
                 }else
-                   tablaDatos[i][j] = "0x00000000";
+                   tablaDatos[i][j] = "00000000";
             }
             contador += 4;
         }
         //return tablaDatos;
     }
-    
-    
     
     public Object[][] initInstructionTable()
     {
@@ -124,29 +139,30 @@ public class DataTables {
                 table.setValueAt(obj[i][j], i, j);
     }
     
-    public boolean verifySintaxis()
+    public boolean verifySintaxis(Object[][] obj)
     {
         String strHex, hex, strTmp = null;
         String valor;
         //Object[][] tmp = new Object[256][2];
         for (int i = 0; i < 256; i++){
             for (int j = 1; j < 2; j++){
-                valor = tablaInstrucciones[i][j].toString();
+                valor = obj[i][j].toString();
+                //System.out.println("VALOR: " + valor);
                 if (!startsWith0x(valor.toString())
                         && valor.toString().length() < 8
                         && valor.toString().length() > 0
                         && (verifyHex(valor) || verifyDec(valor))){
-                    System.out.println("OK: hay menos de 8 caracteres");
+                    //System.out.println("OK: hay menos de 8 caracteres");
                     //completeData(valor);
-                    tablaInstrucciones[i][j] = completeData(valor);
+                    obj[i][j] = completeData(valor);
                 
                 }  else if (!startsWith0x(valor.toString())
                         && valor.toString().length() == 8
                         && (verifyHex(valor) || verifyDec(valor))){
-                    System.out.println("OK: hay SÓLO 8 caracteres");
+                    //System.out.println("OK: hay SÓLO 8 caracteres");
                 
                 } else {
-                    System.out.println("ERROR");
+                    System.out.println("ERROR: " + obj[i][j].toString());
                     return false;
                 }
             }//fin for j

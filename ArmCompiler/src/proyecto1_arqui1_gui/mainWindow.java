@@ -100,6 +100,8 @@ public class mainWindow extends javax.swing.JFrame {
                     texto = File_TXT.readText(fileToLoad.getAbsolutePath());
                     this._actualPath = fileToLoad.getAbsolutePath();
                     editorTextPane.setText(texto);
+                    String path = MessageInterpreter.showActualPath(_actualPath);
+                    jTextArea1.setText(path);
                 }else{
                     JOptionPane.showMessageDialog(this, "¡Formato de archivo"
                   + " no es compatible!",
@@ -490,27 +492,39 @@ public class mainWindow extends javax.swing.JFrame {
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         try {
             // TODO add your handling code here: Run < Go
-            //String aa = GUI_tablaDatos.getValueAt(0,1).toString();
-            //System.out.println("VALOR: " + aa);
-
+            
+            dt.updateDataFromGUITablaDatos(GUI_tablaDatos);
             String[][] tmp =  dt.getTablaDatosSTR(dt.getTablaDatos(), 256);
-            String mensaje = sim.start(tmp);
-            String salida = MessageInterpreter.mensaje(mensaje);
-            if (mensaje.equals("El programa ha sido simulado con éxito")){
-                salida += MessageInterpreter.mensajeExecution("El tiempo de ejecución fue de " 
+            if (!dt.verifySintaxis(tmp)) {
+                //System.out.println("ERROR");
+                String salida = MessageInterpreter.mensajeExecution("Existen errores léxicos"
+                        + " en memoria de datos");
+                jTextArea1.setText(salida);
+                JOptionPane.showMessageDialog(this, "¡Revise la memoria de datos,"
+                  + " existen errores léxicos!",
+                "Error", JOptionPane.ERROR_MESSAGE);
+            }else{
+                
+                String mensaje = sim.start(tmp);    // inicia el run!!!
+                String salida = MessageInterpreter.mensaje(mensaje);
+                if (mensaje.equals("El programa ha sido simulado con éxito")){
+                    salida += MessageInterpreter.mensajeExecution("El tiempo de ejecución fue de " 
                         + sim.getTime() + " ns.");
                 //sim.getMem().get(mensaje);
                 
                 // TO DO: ACTUALIZAR TABLAS GUI
-                dt.setTablaDatos(fillDataGUI());
-                dt.setTablaInstrucciones(fillInstructionGUI());
-                dt.setTablaRegistros(fillRegisterGUI());
+                    dt.setTablaDatos(tmp);
+                    //dt.printTablaDatos();
+                    dt.setTablaInstrucciones(fillInstructionGUI());
+                    dt.setTablaRegistros(fillRegisterGUI());
                 // ACTUALIZA GUI
-                dt.updateTableValues(GUI_tablaDatos, 256, 2, dt.getTablaDatos());
-                dt.updateTableValues(GUI_tablaInstrucciones, 256, 2, dt.getTablaInstrucciones());
-                dt.updateTableValues(GUI_tablaRegistros, 16, 2, dt.getTablaRegistros());
-            }
+                    dt.updateTableValues(GUI_tablaDatos, 256, 2, dt.getTablaDatos());
+                    dt.updateTableValues(GUI_tablaInstrucciones, 256, 2, dt.getTablaInstrucciones());
+                    dt.updateTableValues(GUI_tablaRegistros, 16, 2, dt.getTablaRegistros());
+                }
             jTextArea1.setText(salida);
+            }
+            
         } catch (IOException ex) {
             Logger.getLogger(mainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -624,6 +638,8 @@ public class mainWindow extends javax.swing.JFrame {
                 textoAGuardar = editorTextPane.getText();
                 guardarComoFileChooser(textoAGuardar);
                 this.editorTextPane.setText("");
+                String path = MessageInterpreter.showActualPath("No current file");
+                jTextArea1.setText(path);
             }
         }else {
             textoAGuardar = editorTextPane.getText();
@@ -631,6 +647,8 @@ public class mainWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "¡Archivo actualizado y"
                     + " guardado!", "Cerrar", JOptionPane.INFORMATION_MESSAGE);
             this.editorTextPane.setText("");
+            String path = MessageInterpreter.showActualPath("No current file");
+            jTextArea1.setText(path);
         }
         MessageInterpreter.showActualPath(_actualPath);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
@@ -660,6 +678,9 @@ public class mainWindow extends javax.swing.JFrame {
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // TODO add your handling code here: Run < Stop
+        //String aa = GUI_tablaDatos.getValueAt(0,1).toString();
+        //System.out.println("VALOR tabla: " + aa);
+        //dt.updateDataFromGUITablaDatos(GUI_tablaDatos);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed

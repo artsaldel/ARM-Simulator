@@ -5722,7 +5722,7 @@ class CUP$parser$actions {
                                     else
                                         MemoryTranslator.getMemoryTranslator().setU("1");
                                     MemoryTranslator.getMemoryTranslator().setB("0");
-                                    MemoryTranslator.getMemoryTranslator().setW("1");
+                                    MemoryTranslator.getMemoryTranslator().setW("0");
                                     MemoryTranslator.getMemoryTranslator().setL("1");
                                     MemoryTranslator.getMemoryTranslator().setRn(b.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
@@ -5761,7 +5761,7 @@ class CUP$parser$actions {
                                     else
                                         MemoryTranslator.getMemoryTranslator().setU("1");
                                     MemoryTranslator.getMemoryTranslator().setB("0");
-                                    MemoryTranslator.getMemoryTranslator().setW("1");
+                                    MemoryTranslator.getMemoryTranslator().setW("0");
                                     MemoryTranslator.getMemoryTranslator().setL("1");
                                     MemoryTranslator.getMemoryTranslator().setRn(b.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
@@ -5870,7 +5870,7 @@ class CUP$parser$actions {
                                     else
                                         MemoryTranslator.getMemoryTranslator().setU("1");
                                     MemoryTranslator.getMemoryTranslator().setB("0");
-                                    MemoryTranslator.getMemoryTranslator().setW("1");
+                                    MemoryTranslator.getMemoryTranslator().setW("0");
                                     MemoryTranslator.getMemoryTranslator().setL("0");
                                     MemoryTranslator.getMemoryTranslator().setRn(b.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
@@ -5909,7 +5909,7 @@ class CUP$parser$actions {
                                     else
                                         MemoryTranslator.getMemoryTranslator().setU("1");
                                     MemoryTranslator.getMemoryTranslator().setB("0");
-                                    MemoryTranslator.getMemoryTranslator().setW("1");
+                                    MemoryTranslator.getMemoryTranslator().setW("0");
                                     MemoryTranslator.getMemoryTranslator().setL("0");
                                     MemoryTranslator.getMemoryTranslator().setRn(b.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
@@ -6018,7 +6018,7 @@ class CUP$parser$actions {
                                     else
                                         MemoryTranslator.getMemoryTranslator().setU("1");
                                     MemoryTranslator.getMemoryTranslator().setB("1");
-                                    MemoryTranslator.getMemoryTranslator().setW("1");
+                                    MemoryTranslator.getMemoryTranslator().setW("0");
                                     MemoryTranslator.getMemoryTranslator().setL("1");
                                     MemoryTranslator.getMemoryTranslator().setRn(b.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
@@ -6057,7 +6057,7 @@ class CUP$parser$actions {
                                     else
                                         MemoryTranslator.getMemoryTranslator().setU("1");
                                     MemoryTranslator.getMemoryTranslator().setB("1");
-                                    MemoryTranslator.getMemoryTranslator().setW("1");
+                                    MemoryTranslator.getMemoryTranslator().setW("0");
                                     MemoryTranslator.getMemoryTranslator().setL("1");
                                     MemoryTranslator.getMemoryTranslator().setRn(b.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
@@ -6166,7 +6166,7 @@ class CUP$parser$actions {
                                     else
                                         MemoryTranslator.getMemoryTranslator().setU("1");
                                     MemoryTranslator.getMemoryTranslator().setB("1");
-                                    MemoryTranslator.getMemoryTranslator().setW("1");
+                                    MemoryTranslator.getMemoryTranslator().setW("0");
                                     MemoryTranslator.getMemoryTranslator().setL("0");
                                     MemoryTranslator.getMemoryTranslator().setRn(b.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
@@ -6205,7 +6205,7 @@ class CUP$parser$actions {
                                     else
                                         MemoryTranslator.getMemoryTranslator().setU("1");
                                     MemoryTranslator.getMemoryTranslator().setB("1");
-                                    MemoryTranslator.getMemoryTranslator().setW("1");
+                                    MemoryTranslator.getMemoryTranslator().setW("0");
                                     MemoryTranslator.getMemoryTranslator().setL("0");
                                     MemoryTranslator.getMemoryTranslator().setRn(b.toString().split("r")[1]);
                                     MemoryTranslator.getMemoryTranslator().setRd(a.toString().split("r")[1]);
