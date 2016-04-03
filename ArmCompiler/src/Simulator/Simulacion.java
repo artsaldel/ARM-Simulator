@@ -3,27 +3,140 @@ package Simulator;
 import java.io.IOException;
 import java.math.BigInteger;
 
-/**
+/*
+ * Clase encargada de la simulación general del programa. Por medio de una llamada desde la interfaz,
+ * guarda la memoria de datos desde la misma y procede a analizar y guardar las instrucciones del archivo
+ * out.txt, para luego ejecutar dichas instrucciones. Se encarga de clasificación, ejecución y análisis
+ * de las diferentes instrucciones, así como de actualizar el PC y de medir el tiempo de ejecución
  * @author mario
  */
+
 public class Simulacion {
     
-    private Memoria memoria;
-    private Memoria registros;
-    private Memoria programa;
-    private Calculador calculador;
-    private Analizador analizador;
-    private String error;
-    private String pc;
-    private int total;
-    private boolean stop;
+    private Memoria memoria;        //Memoria de datos
+    private Memoria registros;      //Banco de Registros
+    private Memoria programa;       //Memoria del programa (ROM)
+    private Calculador calculador;  //Clase calculadora, se comporta como una ALU con operaciones específicas a la instrucción
+    private Analizador analizador;  //Clase analizadora, lee la memoria del programa desde out.txt
+    private String error;           //Mensaje de salida del simulador. Puede ser éxito o un error específico
+    private String pc;              //PC actual del programa
+    private int total;              //Cantidad de instrucciones ejecutadas
+    private boolean stop;           //Variable encargada de detener el programa
     
-    public Simulacion(){
-        pc = "00000000";
-        total = 0;
-        analizador = new Analizador();
-        calculador = new Calculador();
-        error = "El programa ha sido simulado con éxito";
+    public Simulacion(){        
+    }
+    
+    /*
+    Método encargado de la ejecución contínua del programa. Se encarga de clasificar cada instrucción
+    y de devolver un mensaje con respecto al estado de la simulación. Recibe como entrada la memoria de datos
+    proveniente de la interfaz gráfica
+    */
+    
+    public String start(String [][] datos) throws IOException{
+        
+        pc = "00000000";    //Valor inicial del PC
+        total = 0;          //Valor inicial de instrucciones ejecutadas
+        analizador = new Analizador();  //Instanciación del analizador
+        calculador = new Calculador();  //Instanciación del calculador
+        error = "El programa ha sido simulado con éxito";   //Mensaje de éxito de la simulación
+        stop = false;       //Variable encargada de detener la simulación, al inicio es falsa
+        String textFile = "";   //Archivo de texto correspondiente al path de out.txt
+        if (System.getProperty("os.name").equals("Linux")){
+            textFile = System.getProperty("user.dir") + "/out.txt"; //Linux
+        }
+        else{
+            textFile = System.getProperty("user.dir") + "\\out.txt"; //Windows
+        }
+        //Se analiza la validez del archivo out.txt
+        if (analizador.analizeText(textFile) != null){
+            programa = new Memoria(256, analizador.analizeText(textFile)); //Inicializa la memoria del programa
+            memoria = new Memoria(256, datos); //Inicializa la memoria de datos
+            String[][] reg = {{"0000", "00000000"},{"0001", "00000000"},{"0010", "00000000"},{"0011", "00000000"},
+                             {"0100", "00000000"},{"0101", "00000000"},{"0110", "00000000"},{"0111", "00000000"},
+                             {"1000", "00000000"},{"1001", "00000000"},{"1010", "00000000"},{"1011", "00000000"},
+                             {"1100", "00000000"},{"1101", "00000000"},{"1110", "00000000"},{"1111", "00000000"}};
+            registros = new Memoria(16, reg); //Inicializa el banco de registros
+            while (!stop && !pc.equals("00000400") && error.equals("El programa ha sido simulado con éxito") && (programa.get(pc, (int)(Long.parseLong(pc, 16)/4)) != null)){
+                total += 1;
+                String numBinario= String.format("%32s", (new BigInteger(programa.get(pc, (int)(Long.parseLong(pc, 16)/4)), 16).toString(2))).replace(' ', '0');
+                switch (calculador.condition(numBinario.substring(0, 4))){
+                        case 1:
+                        {
+                            if (numBinario.substring(4, 6).equals("00")){
+                                    error = tipoData(numBinario);                                    
+                                    long decimal = Long.parseLong(pc, 16);
+                                    decimal += 4;
+                                    String hexDecimal = Long.toHexString(decimal);
+                                    pc = String.format("%8s", hexDecimal).replace(' ', '0');
+                                    break;
+                                }
+                            else if (numBinario.substring(4, 6).equals("01"))
+                                {
+                                    error = tipoMem(numBinario);                                    
+                                    long decimal = Long.parseLong(pc, 16);
+                                    decimal += 4;
+                                    String hexDecimal = Long.toHexString(decimal);
+                                    pc = String.format("%8s", hexDecimal).replace(' ', '0');
+                                    break;
+                                }
+                            else if (numBinario.substring(4, 6).equals("10"))
+                                {
+                                    String newPc = tipoBranch(numBinario);
+                                    if (newPc == null)
+                                    {
+                                        error = "Dirección prohibida";
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        pc = newPc;
+                                        break;
+                                    }
+                                }
+                            else
+                                {
+                                    error = "Intrucción no soportada";
+                                    break;
+                                }
+                        }
+                        case 0:
+                        {
+                            long decimal = Long.parseLong(pc, 16);
+                            decimal += 4;
+                            String hexDecimal = Long.toHexString(decimal);
+                            pc = String.format("%8s", hexDecimal).replace(' ', '0');
+                            break;
+                        }
+                        case -1:
+                        {
+                            error = "Intrucción no soportada";
+                            break;
+                        }
+                    }
+            }
+            System.out.println(registros.get("0000") + "," +
+            registros.get("0001") + ", " +
+            registros.get("0010") + ", " +
+            registros.get("0011") + ", " +
+            registros.get("0100") + ", " +
+            registros.get("0101") + ", " +
+            registros.get("0110") + ", " +
+            registros.get("0111") + ", " +
+            registros.get("1000") + ", " +
+            registros.get("1001") + ", " +
+            registros.get("1010") + ", " +
+            registros.get("1011") + ", " +
+            registros.get("1100") + ", " +
+            registros.get("1101") + ", " +
+            registros.get("1110") + ", " +
+            registros.get("1111"));
+        }
+        else{
+            //Si el texto es inválido, se muestra mensaje de error
+            error = "El archivo que se desea simular es muy grande para la memoria disponible"
+                    + " o existe una instrucción que viola el formato establecido";
+        }
+        return error;
     }
     
     public Memoria getMem(){
@@ -392,129 +505,6 @@ public class Simulacion {
         }
         else
             return null;
-    }
-    
-    public String start(String [][] datos) throws IOException{
-        
-        stop = false;
-               System.out.println(System.getProperty("user.dir") + "\\out.txt");
-        programa = new Memoria(256, analizador.analizeText(System.getProperty("user.dir") + "/out.txt", new String[256][2]));
-        
-        pc = "00000000";
-        total = 0;
-        analizador = new Analizador();
-        calculador = new Calculador();
-        
-        error = "El programa ha sido simulado con éxito";
-        if (programa != null){
-            
-            //Si el texto es válido, se procede a guardar la memoria de datos
-            memoria = new Memoria(256, datos);
-            String[][] reg = {{"0000", "00000000"},{"0001", "00000000"},{"0010", "00000000"},{"0011", "00000000"},
-                             {"0100", "00000000"},{"0101", "00000000"},{"0110", "00000000"},{"0111", "00000000"},
-                             {"1000", "00000000"},{"1001", "00000000"},{"1010", "00000000"},{"1011", "00000000"},
-                             {"1100", "00000000"},{"1101", "00000000"},{"1110", "00000000"},{"1111", "00000000"}};
-            registros = new Memoria(16, reg);
-            
-            while (!stop && !pc.equals("00000400") && error.equals("El programa ha sido simulado con éxito") && (programa.get(pc, (int)(Long.parseLong(pc, 16)/4)) != null)){
-                total += 1;
-                System.out.println(registros.get("0000") + "," +
-                registros.get("0001") + ", " +
-                registros.get("0010") + ", " +
-                registros.get("0011") + ", " +
-                registros.get("0100") + ", " +
-                registros.get("0101") + ", " +
-                registros.get("0110") + ", " +
-                registros.get("0111") + ", " +
-                registros.get("1000") + ", " +
-                registros.get("1001") + ", " +
-                registros.get("1010") + ", " +
-                registros.get("1011") + ", " +
-                registros.get("1100") + ", " +
-                registros.get("1101") + ", " +
-                registros.get("1110") + ", " +
-                registros.get("1111"));
-                System.out.println(programa.get(pc));
-                String numBinario= String.format("%32s", (new BigInteger(programa.get(pc), 16).toString(2))).replace(' ', '0');
-                System.out.println(numBinario);
-                switch (calculador.condition(numBinario.substring(0, 4))){
-                        case 1:
-                        {
-                            if (numBinario.substring(4, 6).equals("00")){
-                                    error = tipoData(numBinario);                                    
-                                    long decimal = Long.parseLong(pc, 16);
-                                    decimal += 4;
-                                    String hexDecimal = Long.toHexString(decimal);
-                                    pc = String.format("%8s", hexDecimal).replace(' ', '0');
-                                    break;
-                                }
-                            else if (numBinario.substring(4, 6).equals("01"))
-                                {
-                                    error = tipoMem(numBinario);                                    
-                                    long decimal = Long.parseLong(pc, 16);
-                                    decimal += 4;
-                                    String hexDecimal = Long.toHexString(decimal);
-                                    pc = String.format("%8s", hexDecimal).replace(' ', '0');
-                                    break;
-                                }
-                            else if (numBinario.substring(4, 6).equals("10"))
-                                {
-                                    String newPc = tipoBranch(numBinario);
-                                    if (newPc == null)
-                                    {
-                                        error = "Dirección prohibida";
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        pc = newPc;
-                                        break;
-                                    }
-                                }
-                            else
-                                {
-                                    error = "Intrucción no soportada";
-                                    break;
-                                }
-                        }
-                        case 0:
-                        {
-                            long decimal = Long.parseLong(pc, 16);
-                            decimal += 4;
-                            String hexDecimal = Long.toHexString(decimal);
-                            pc = String.format("%8s", hexDecimal).replace(' ', '0');
-                            break;
-                        }
-                        case -1:
-                        {
-                            error = "Intrucción no soportada";
-                            break;
-                        }
-                    }
-            }
-            System.out.println(registros.get("0000") + "," +
-            registros.get("0001") + ", " +
-            registros.get("0010") + ", " +
-            registros.get("0011") + ", " +
-            registros.get("0100") + ", " +
-            registros.get("0101") + ", " +
-            registros.get("0110") + ", " +
-            registros.get("0111") + ", " +
-            registros.get("1000") + ", " +
-            registros.get("1001") + ", " +
-            registros.get("1010") + ", " +
-            registros.get("1011") + ", " +
-            registros.get("1100") + ", " +
-            registros.get("1101") + ", " +
-            registros.get("1110") + ", " +
-            registros.get("1111"));
-        }
-        else{
-            //Si el texto es inválido, se muestra mensaje de error
-            error = "El archivo que se desea simular es muy grande para la memoria disponible"
-                    + " o existe una instrucción que viola el formato establecido";
-        }
-        return error;
     }
     
 }

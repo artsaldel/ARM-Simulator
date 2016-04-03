@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Arturo%20Salas/Desktop/Arquitectura%20de%20Computadores%201/Proyecto%20%231/ArmCompiler/out.txt</file>
-            <file>file:/C:/Users/Arturo%20Salas/Desktop/Arquitectura%20de%20Computadores%201/Proyecto%20%231/ArmCompiler/src/Translator/DataTranslator.java</file>
-            <file>file:/C:/Users/Arturo%20Salas/Desktop/Arquitectura%20de%20Computadores%201/Proyecto%20%231/ArmCompiler/src/ARManalyzers/ARMLexical.flex</file>
-            <file>file:/C:/Users/Arturo%20Salas/Desktop/Arquitectura%20de%20Computadores%201/Proyecto%20%231/ArmCompiler/src/ARManalyzers/ARMSyntactic.cup</file>
+            <file>file:/C:/Users/artsa/Desktop/Arquitectura%20de%20Computadores%201/Proyecto%20%231/ArmCompiler/src/ARManalyzers/ARMSyntactic.cup</file>
+            <file>file:/C:/Users/artsa/Desktop/Arquitectura%20de%20Computadores%201/Proyecto%20%231/ArmCompiler/src/Translator/BinaryOutput.java</file>
+            <file>file:/C:/Users/artsa/Desktop/Arquitectura%20de%20Computadores%201/Proyecto%20%231/ArmCompiler/out.txt</file>
+            <file>file:/C:/Users/artsa/Desktop/Arquitectura%20de%20Computadores%201/Proyecto%20%231/ArmCompiler/src/Translator/DataTranslator.java</file>
+            <file>file:/C:/Users/artsa/Desktop/Arquitectura%20de%20Computadores%201/Proyecto%20%231/ArmCompiler/src/ARManalyzers/ARMLexical.flex</file>
         </group>
     </open-files>
 </project-private>

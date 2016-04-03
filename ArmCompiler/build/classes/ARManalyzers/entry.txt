@@ -3,9 +3,7 @@ ADD r1,r2,r3
 Label ADD r1,r2,r3
 ADD r1,r2,r3
 ADD r1,r2,r3
-
 SUB r1,r2,r3
-
 MOV r1,r3
 BEQ Label
 
