@@ -57,6 +57,12 @@ public class Simulacion {
                              {"1100", "00000000"},{"1101", "00000000"},{"1110", "00000000"},{"1111", "00000000"}};
             registros = new Memoria(16, reg); //Inicializa el banco de registros
             while (!stop && !pc.equals("00000400") && error.equals("El programa ha sido simulado con éxito") && (programa.get(pc, (int)(Long.parseLong(pc, 16)/4)) != null)){
+System.out.println(registros.get("0000") + "," +registros.get("0001") + ", " +registros.get("0010") + ", "
+        +registros.get("0011") + ", " +registros.get("0100") + ", " +registros.get("0101") + ", " +
+        registros.get("0110") + ", " +registros.get("0111") + ", " +registros.get("1000") + ", " +
+        registros.get("1001") + ", " +registros.get("1010") + ", " +registros.get("1011") + ", " +
+        registros.get("1100") + ", " +registros.get("1101") + ", " +registros.get("1110") + ", " +registros.get("1111"));
+        
                 total += 1;
                 String numBinario= String.format("%32s", (new BigInteger(programa.get(pc, (int)(Long.parseLong(pc, 16)/4)), 16).toString(2))).replace(' ', '0');
                 switch (calculador.condition(numBinario.substring(0, 4))){
@@ -368,7 +374,7 @@ public class Simulacion {
                             registros.set(rd, hex.substring(hex.length()-8, hex.length()));
                         }
                         else if (instruccion.substring(6, 7).equals("0") && instruccion.substring(25, 27).equals("10")){
-                            long result = calculador.asr((int)Long.parseLong(src2, 2), (int)Long.parseLong(registros.get(rm), 16), s);
+                            long result = calculador.asr((int)Long.parseLong(src2, 2), (int)Long.parseLong(rm, 2), s);
                             String hexDecimal = Long.toHexString(result);
                             String hex = String.format("%8s", hexDecimal).replace(' ', '0');
                             registros.set(rd, hex.substring(hex.length()-8, hex.length()));
@@ -405,6 +411,7 @@ public class Simulacion {
     }
     
     private String tipoMem(String instruccion){
+        System.out.println(instruccion);
         String msj = error;
         String rn = registros.get(instruccion.substring(12, 16));
         String rd = instruccion.substring(16, 20);

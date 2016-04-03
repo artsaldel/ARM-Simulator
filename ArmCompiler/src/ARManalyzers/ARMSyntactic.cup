@@ -2552,7 +2552,7 @@ Instruction::=
 
 /*********************RRX INSTRUCTION************************/
 
-              | RRX  REGISTER:a COMA REGISTER:b COMA REGISTER:c
+              | RRX  REGISTER:a COMA REGISTER:b
                                 {:
                                     PC += 4;
                                     if (isWrite && !isError){

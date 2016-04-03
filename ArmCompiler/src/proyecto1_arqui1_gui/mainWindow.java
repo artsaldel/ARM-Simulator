@@ -21,6 +21,7 @@ public class mainWindow extends javax.swing.JFrame {
     private String _actualPath; //indica el path del archivo que actualmente está trabajando
     DataTables dt;
     Simulacion sim;
+    private boolean _archivoCompilado;
     
     /**
      * Creates new form mainWindow
@@ -32,6 +33,7 @@ public class mainWindow extends javax.swing.JFrame {
         dt.initInstructionTable();
         dt.initRegisterTable();
         sim = new Simulacion();
+        this._archivoCompilado = false;
         initComponents();
     }
     
@@ -495,7 +497,13 @@ public class mainWindow extends javax.swing.JFrame {
             
             dt.updateDataFromGUITablaDatos(GUI_tablaDatos);
             String[][] tmp =  dt.getTablaDatosSTR(dt.getTablaDatos(), 256);
-            if (!dt.verifySintaxis(tmp)) {
+            
+            if (this._actualPath.isEmpty() || !this._archivoCompilado){
+                JOptionPane.showMessageDialog(this, "¡No se ha compilado el archivo!",
+                "Error", JOptionPane.ERROR_MESSAGE);
+                String msj = MessageInterpreter.mensajeExecution("No se ha compilado ningún archivo.");
+                jTextArea1.setText(msj);
+            } else if (!dt.verifySintaxis(tmp)) {
                 //System.out.println("ERROR");
                 String salida = MessageInterpreter.mensajeExecution("Existen errores léxicos"
                         + " en memoria de datos");
@@ -627,6 +635,7 @@ public class mainWindow extends javax.swing.JFrame {
         {
             // El texto está vacío y no se ha abierto ni guardado como...
             this.editorTextPane.setText("");
+            this._archivoCompilado = false;
         }else if(!this.editorTextPane.getText().isEmpty() && this._actualPath.isEmpty())
         {
            // El texto NO está vacío y se ha abierto o guardado como... 
@@ -640,6 +649,7 @@ public class mainWindow extends javax.swing.JFrame {
                 this.editorTextPane.setText("");
                 String path = MessageInterpreter.showActualPath("No current file");
                 jTextArea1.setText(path);
+                this._archivoCompilado = false;
             }
         }else {
             textoAGuardar = editorTextPane.getText();
@@ -649,6 +659,7 @@ public class mainWindow extends javax.swing.JFrame {
             this.editorTextPane.setText("");
             String path = MessageInterpreter.showActualPath("No current file");
             jTextArea1.setText(path);
+            this._archivoCompilado = false;
         }
         MessageInterpreter.showActualPath(_actualPath);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
@@ -690,7 +701,9 @@ public class mainWindow extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(this, "¡No se ha cargado ningún archivo"
                    + " .armv4!",
                 "Atención", JOptionPane.ERROR_MESSAGE);
-            
+            this._archivoCompilado = false;
+            String msj = MessageInterpreter.mensajeAssembly("No se ha cargado ningún archivo.");
+            jTextArea1.setText(msj);
         }else{
             try{
                 // El texto NO está vacío y se ha abierto o guardado como... 
@@ -702,6 +715,7 @@ public class mainWindow extends javax.swing.JFrame {
                 if (JOptionPane.YES_OPTION == respuesta){
                     textoAGuardar = editorTextPane.getText();
                     guardarSinFileChooser(textoAGuardar);
+                    this._archivoCompilado = true;
                     Grammar.ExecuteGrammar(this._actualPath);
                 }
             } catch(Exception e){
