@@ -1868,6 +1868,7 @@ public class parser extends java_cup.runtime.lr_parser {
             Object result = asin.parse().value;
             if (isWri){
                 ModuloError.insertError("*** ENSAMBLAJE FINALIZADO ***");
+                BranchTranslator.getBranchTranslator().ResetLabelList();
             }
 
         } catch (Exception ex) {

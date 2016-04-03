@@ -92,6 +92,10 @@ public class BranchTranslator {
         return 0;
     }
     
+    public void ResetLabelList(){
+        labelList.clear();
+    }
+    
     public int createImm24(int actualPc, int labelPc){
         int pcPlus8 = actualPc + 8;
         return (labelPc - pcPlus8)/4;
