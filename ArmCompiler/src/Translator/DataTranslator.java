@@ -137,9 +137,22 @@ public class DataTranslator {
     
     public void createRot (){
         //el inmediato ingresa como un numero binario
+        String newImm8 = String.format("%32s", imm8).replace(' ', '0');
         if (imm8.length() <= 8){
             while (imm8.length() != 8){imm8 = "0" + imm8;}
             rot = "0000";
+        }
+        else if (!newImm8.substring(0, 2).equals("00") && newImm8.substring(2, 26).equals("000000000000000000000000") && !newImm8.substring(26, 32).equals("000000")){
+            rot = "0001";
+            imm8 = newImm8.substring(26, 32) + newImm8.substring(0, 2);
+        }
+        else if (!newImm8.substring(0, 4).equals("00") && newImm8.substring(4, 28).equals("000000000000000000000000") && !newImm8.substring(28, 32).equals("0000")){
+            rot = "0010";
+            imm8 = newImm8.substring(28, 32) + newImm8.substring(0, 4);
+        }
+        else if (!newImm8.substring(0, 6).equals("00") && newImm8.substring(6, 30).equals("000000000000000000000000") && !newImm8.substring(30, 32).equals("00")){
+            rot = "0011";
+            imm8 = newImm8.substring(30, 32) + newImm8.substring(0, 6);
         }
         else{
             String tempImm8 = "";
@@ -151,19 +164,22 @@ public class DataTranslator {
             String temp2Imm8 = originalImm8;
             
             for (int ctdr = 31; ctdr >= 0 && bits8Ctdr < 8; ctdr--){
-                if (temp2Imm8.charAt(ctdr) == '1' && !flag){
+                if (flag){
+                    tempImm8 = temp2Imm8.charAt(ctdr) + tempImm8;
+                    bits8Ctdr++;
+                }
+                else if (temp2Imm8.charAt(ctdr) == '1'){
                     tempImm8 = temp2Imm8.charAt(ctdr) + tempImm8;
                     bits8Ctdr++;
                     flag = true;
                 }
-                else if (temp2Imm8.charAt(ctdr) == '0' && temp2Imm8.charAt(ctdr-1) == '1' && !flag){
+                else if (ctdr == 0){
+                    break;
+                }
+                else if (temp2Imm8.charAt(ctdr) == '0' && temp2Imm8.charAt(ctdr-1) == '1'){
                     tempImm8 = temp2Imm8.charAt(ctdr) + tempImm8;
                     bits8Ctdr++;
                     flag = true;
-                }
-                else if (flag){
-                    tempImm8 = temp2Imm8.charAt(ctdr) + tempImm8;
-                    bits8Ctdr++;
                 }
                 else
                     ctdr--;
@@ -175,7 +191,7 @@ public class DataTranslator {
             String[] array2 = originalImm8.split("");
             int shift = circularShift(array1, array2);
             rot = NumberTranslator.integerToBinary(shift/2);
-            while (rot.length() != 4) {rot = "0" + rot;}
+            while (rot.length() < 4) {rot = "0" + rot;}
         }
     }
     
@@ -202,6 +218,8 @@ public class DataTranslator {
             while (Rd.length() != 4){Rd = "0" + Rd;}
             //Primero se crea el rot, luego se edita el imm8, respetar ese orden
             createRot ();
+            if (rot.length()>4)
+                throw new Exception ("Error en la rotación");
             String instruction = getCond() + getOp() + getI() + getCmd() + getS() +
                                  Rn + Rd + getRot() + imm8; 
             instruction = NumberTranslator.binaryToHex(instruction);
@@ -209,7 +227,7 @@ public class DataTranslator {
             BinaryOutput.writeLine(instruction);
         }
         catch(Exception e){
-            ModuloError.insertError("Error semántico, por favor verificar código.");
+            ModuloError.insertError(e.toString());
         }
     }
     

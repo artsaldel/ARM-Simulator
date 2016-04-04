@@ -380,7 +380,6 @@ System.out.println(registros.get("0000") + "," +registros.get("0001") + ", " +re
                             registros.set(rd, hex.substring(hex.length()-8, hex.length()));
                         }
                         else if (instruccion.substring(27, 28).equals("0") && instruccion.substring(6, 7).equals("0") && instruccion.substring(25, 27).equals("11") && instruccion.substring(20, 24).equals("0000")){
-                            rm = String.format("%32s", Integer.toBinaryString((int)Long.parseLong(registros.get(instruccion.substring(16, 20)), 16))).replace(' ', '0');
                             String result = calculador.rrx(rm, s);
                             String hexDecimal = Long.toHexString(Long.parseLong(result, 2));
                             String hex = String.format("%8s", hexDecimal).replace(' ', '0');

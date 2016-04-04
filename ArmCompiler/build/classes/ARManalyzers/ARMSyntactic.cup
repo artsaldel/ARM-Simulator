@@ -2036,7 +2036,7 @@ Instruction::=
 
 /*********************MVN INSTRUCTION************************/
 
-              | MVN  REGISTER:a COMA REGISTER:b COMA REGISTER:c
+              | MVN  REGISTER:a COMA REGISTER:b
                                 {:
                                     PC += 4;
                                     if (isWrite && !isError){
@@ -2049,11 +2049,11 @@ Instruction::=
                                     DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
                                     DataTranslator.getDataTranslator().setShamt5("0");
                                     DataTranslator.getDataTranslator().setSh("00");
-                                    DataTranslator.getDataTranslator().setRm(c.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRm("0");
                                     DataTranslator.getDataTranslator().writeInstructionRegister();
                                     }
                                 :}
-              | MVN  REGISTER:a COMA REGISTER:b COMA NUMBER:c
+              | MVN  REGISTER:a COMA NUMBER:b
                                 {:
                                     PC += 4;
                                     if (isWrite && !isError){
@@ -2062,14 +2062,14 @@ Instruction::=
                                     DataTranslator.getDataTranslator().setI("1");
                                     DataTranslator.getDataTranslator().setCmd("1111");
                                     DataTranslator.getDataTranslator().setS("0");
-                                    DataTranslator.getDataTranslator().setRn(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRn("0");
                                     DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
                                     //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
-                                    DataTranslator.getDataTranslator().setImm8(c.toString().split("#")[1]);
+                                    DataTranslator.getDataTranslator().setImm8(b.toString().split("#")[1]);
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
                                     }
                                 :}
-              | MVN  REGISTER:a COMA REGISTER:b COMA ADDRESS:c
+              | MVN  REGISTER:a COMA ADDRESS:b
                                 {:
                                     PC += 4;
                                     if (isWrite && !isError){
@@ -2078,12 +2078,12 @@ Instruction::=
                                     DataTranslator.getDataTranslator().setI("1");
                                     DataTranslator.getDataTranslator().setCmd("1111");
                                     DataTranslator.getDataTranslator().setS("1");
-                                    DataTranslator.getDataTranslator().setRn(b.toString().split("r")[1]);
+                                    DataTranslator.getDataTranslator().setRn("0");
                                     DataTranslator.getDataTranslator().setRd(a.toString().split("r")[1]);
                                     //El rot y el imm8 los creo a partir del inmediato en la clase NumberTranslator
                                     DataTranslator.getDataTranslator().setImm8(
                                                 Integer.toString(NumberTranslator.hexToInteger( 
-                                                c.toString().split("#0x")[1])  )  );
+                                                b.toString().split("#0x")[1])  )  );
                                     DataTranslator.getDataTranslator().writeInstructionImmediate();
                                     }
                                 :}
