@@ -1862,6 +1862,8 @@ public class parser extends java_cup.runtime.lr_parser {
             isWrite = isWri;
             parser asin = new parser(
                     new LexicalAnalyzer( new FileReader(args[0])));
+            if (!isWri)
+                asin.PC = -4;
             Object result = asin.parse().value;
             if (isWri){
                 ModuloError.insertError("*** ENSAMBLAJE FINALIZADO ***");

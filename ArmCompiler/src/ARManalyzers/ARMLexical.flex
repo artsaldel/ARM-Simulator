@@ -139,7 +139,7 @@ NUMBER = "#""-"?[0-9]+
     "str"              {  return symbol(sym.STR);   } 
     "ldr"              {  return symbol(sym.LDR);   } 
     "strb"             {  return symbol(sym.STRB);  }
-    "lsdrb"             {  return symbol(sym.LDRB);  }
+    "ldrb"             {  return symbol(sym.LDRB);  }
     "b"                {  return symbol(sym.B);     }
     "bl"               {  return symbol(sym.BL);    }
     "beq"              {  return symbol(sym.BEQ);   }

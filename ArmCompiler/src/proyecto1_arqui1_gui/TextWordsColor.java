@@ -36,7 +36,7 @@ public class TextWordsColor extends JFrame {
                 + "ORRNE|EOR|CMP|CMN|ADD|ADDEQ|ADDLT|ADDGT|ADDNE|SUB|SUBEQ|SUBLT|SUBGT|"
                 + "SUBNE|EOREQ|EORLT|EORGT|EORNE|MUL|MLA|LSL|MOV|ASR|MVN|STR|LDR|STRB|"
                 + "LDRB|BIC|ROR|ROREQ|RORLT|RORGT|RORNE|RRX|SBC|ADC|RSB|RSC|B|BL|BEQ|"
-                + "BNE|BGT|BLT" + 
+                + "BNE|BGT|BLT|" + 
                 "and|andeq|andlt|andgt|andne|orr|orreq|orrlt|orrgt|"
                 + "orrne|eor|cmp|cmn|add|addeq|addlt|addgt|addne|sub|subeq|sublt|subgt|"
                 + "subne|eoeeq|eorlt|eorgt|eorne|mul|mla|lsl|mov|asr|mvn|str|ldr|strb|"

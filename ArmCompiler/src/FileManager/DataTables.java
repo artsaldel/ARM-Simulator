@@ -81,7 +81,7 @@ public class DataTables {
                    intStr = Integer.toString(contador);
                    strHex = Long.toHexString((i*4)+1024);
                    hex = String.format("%8s", strHex).replace(' ', '0');
-                   tablaDatos[i][j] = "0x" + hex; 
+                   tablaDatos[i][j] = hex; 
                 }else
                    tablaDatos[i][j] = "00000000";
             }

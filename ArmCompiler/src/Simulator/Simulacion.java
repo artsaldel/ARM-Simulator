@@ -503,12 +503,10 @@ System.out.println(registros.get("0000") + "," +registros.get("0001") + ", " +re
         long newPc = 8 + Long.parseLong(pc, 16) + (int)(Long.parseLong(bit32 + instruccion.substring(8, 32), 2) << 2);
         String hexPc = String.format("%8s", Long.toHexString(newPc)).replace(' ', '0');
         String lastDir =  String.format("%8s", Long.toHexString(analizador.getNumInst()*4)).replace(' ', '0');
-        if (programa.get(hexPc) != null){
-            if (programa.get(hexPc) != null || hexPc.equals("00000400") || hexPc.equals(lastDir))
+        System.out.println(lastDir);
+        System.out.println(hexPc);
+        if (programa.get(hexPc) != null || hexPc.equals("00000400") || hexPc.equals(lastDir))
                 return hexPc;
-            else
-                return null;
-        }
         else
             return null;
     }
