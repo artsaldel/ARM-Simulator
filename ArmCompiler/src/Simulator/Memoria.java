@@ -55,7 +55,7 @@ public class Memoria {
                 else if (b == 1)
                     data = memoria[i][1].substring(4, 6);
                 else
-                    data = memoria[i][1].substring(8, 8);
+                    data = memoria[i][1].substring(6, 8);
                 break;
             }
         }

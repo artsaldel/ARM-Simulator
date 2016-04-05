@@ -1,0 +1,24 @@
+MOV r0,#0xAB
+MOV r1,#2
+ROR r2,r0,r1
+bic r3,r2,#10
+MVN r4,r3
+MUL r5,r0,r1
+MLA r6,r0,r1,r0
+MOV r7,#2
+CMN r1,r7
+BEQ ETIQUETA1
+MOV r8,#0xEc
+ETIQUETA1 MOV r9,#0x16
+MOV r10,#0x400
+STR r4,[r10]
+STRB r4,[r10,#5]
+LDR r11,[r10,#0x0]
+LDRB r12,[r10,#0x3]
+MOV r13, #0x410
+MOV r14,#0x10
+LDR r15,[r13,-#0x10]
+STRB r12,[r13,-#3]
+STR r5,[r13,-#8]
+STRB r5,[r13,-#0x6]
+LDRB r7,[r13,-#0x10]

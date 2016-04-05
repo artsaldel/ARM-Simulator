@@ -24,7 +24,7 @@ JUMP = \r|\n|\r\n
 SPACE = [ \t\f]
 
 TEXT = ([a-zA-Z] | [0-9] | "_")*
-ADDRESS = "#0x"[[0-9]|[A-F]]+
+ADDRESS = "#0x"[[0-9]|[a-fA-F]]+
 NUMBER = "#""-"?[0-9]+
 
 %% 
