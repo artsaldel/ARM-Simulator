@@ -98,8 +98,6 @@ public class BranchTranslator {
     
     public int createImm24(int actualPc, int labelPc){
         int pcPlus8 = actualPc + 8;
-        System.out.println("*********************PC*********Actual*" + actualPc);
-        System.out.println("*********************PC*********Label**" + labelPc);
         return (labelPc - pcPlus8)/4;
     }
     
