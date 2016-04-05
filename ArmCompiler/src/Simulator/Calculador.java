@@ -135,7 +135,7 @@ public class Calculador {
             }
             case "1100":
             {
-                if (z == 1 && ((n == 1 && v == 1) || (n == 0 && v == 0)))
+                if (z == 0 && ((n == 1 && v == 1) || (n == 0 && v == 0)))
                     break;
                 else{
                     execute = 0;

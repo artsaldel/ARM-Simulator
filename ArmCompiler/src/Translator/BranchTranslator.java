@@ -64,7 +64,6 @@ public class BranchTranslator {
 
     public static void setImm24(String imm24) {
         BranchTranslator.imm24 = imm24;
-        //
     }
     
     public void insertLabel(String label, int PC){
