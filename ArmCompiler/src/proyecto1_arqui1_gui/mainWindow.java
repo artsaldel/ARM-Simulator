@@ -263,6 +263,7 @@ public class mainWindow extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Instructions", jScrollPane4);
 
+        editorTextPane.setSize(769, 422);
         editorTextPane.setEditorKit(new javax.swing.text.StyledEditorKit());
         editorTextPane.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jScrollPane5.setViewportView(editorTextPane);
@@ -423,7 +424,7 @@ public class mainWindow extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jSeparator2)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 769, Short.MAX_VALUE)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jScrollPane5))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(LBL_virtualMemory, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
@@ -440,9 +441,9 @@ public class mainWindow extends javax.swing.JFrame {
                     .addComponent(LBL_editor)
                     .addComponent(LBL_virtualMemory, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane5)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

@@ -218,7 +218,7 @@
                   </Group>
                   <Component id="jSeparator2" alignment="0" max="32767" attributes="0"/>
                   <Component id="jScrollPane1" alignment="0" pref="769" max="32767" attributes="0"/>
-                  <Component id="jScrollPane5" alignment="1" max="32767" attributes="0"/>
+                  <Component id="jScrollPane5" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -241,9 +241,9 @@
                   <Component id="LBL_virtualMemory" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jScrollPane5" max="32767" attributes="0"/>
+                      <Component id="jScrollPane5" min="-2" pref="422" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jSeparator2" min="-2" pref="12" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -398,6 +398,7 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="TextLineNumber tln = new TextLineNumber( editorTextPane );&#xa;TextWordsColor twc = new TextWordsColor(editorTextPane);&#xa;LinePainter painter = new LinePainter(editorTextPane);&#xa;jScrollPane5.setRowHeaderView( tln );"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="editorTextPane.setSize(769, 422);"/>
           </AuxValues>
         </Component>
       </SubComponents>
